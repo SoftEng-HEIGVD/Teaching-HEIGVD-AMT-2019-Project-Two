@@ -73,31 +73,31 @@ The objectives of this project is to design, specify, implement and validate **2
 
 You don't have to follow this sequence if you prefer to do some of the tasks before. However, if you don't know how to start, this is probably a **decomposition** that will help you.
 
-**Week 1 (December 2nd): **
+**Week 1 (December 2nd):**
 
 * Get familiar with the 2 reference projects; be able to build and run them on your machine; be able to run the CucumberJVM tests.
 * Do a first draft of the 2 REST APIs; have them reviewed if you are creating an API for the first time or are not sure about some design choices.
 * Get familiar with the Open API syntax; use the Swagger Editor or one of the IDE plugins to write your spec.
 * Create a git repo for your project. You should have 4 modules: 2 backend and 2 BDD projects. Use the reference projects as a template. Prepare the Docker Compose topology and images. Prepare scripts to build the code and the Docker the images.
 
-**Week 2 (December 9th): **
+**Week 2 (December 9th):**
 
 * Implement a **first endpoint** (one of the 2 main entities) end-to-end. You should be able to perform CRUD operations on the endpoint and validate that it works with Cucumber. One person can focus on the backend, the other on the Cucumber tests.
 * Be mindful that **created resources have an owner**, and that only the owner should be able to access its resources (for RUD operations). Plan for that, even if you don't have your authentication service fully implemented.
 
-**Week 3 (December 16th): **
+**Week 3 (December 16th):**
 
 * Design, implement and validate the **user management** and **authentication** API.
 * Go back to the first endpoint implementation and **enforce security rules**.
 * Implement BDD scenarios to validate that authentication and authorization rules work as expected.
 
-**Week 4 (January 6th): **
+**Week 4 (January 6th):**
 
 * Implement the **second endpoint**, swapping the role (the person working on Spring Boot now works on Cucumber and vice versa)
 * Implement the **third endpoint**, to manage associations between entities (end-to-end, with tests)
 * Add **Traefik** in the Docker topology
 
-**Week 5 (January 13th): **
+**Week 5 (January 13th):**
 
 * Performance tests with JMeter
 * Final packaging and validation
