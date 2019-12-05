@@ -1,0 +1,105 @@
+swagger: '2.0'
+info:
+  version: '0.1.0'
+  title: User API
+  description: Draft API to to test Swagger and Spring Boot
+host: localhost:8080
+basePath: /api
+schemes:
+  - http
+
+parameters:
+  userId:
+    in: path
+    name: userId
+    type: integer
+    format: int64
+    required: true
+  token:
+    in: header
+    name: Authorization
+    type: string
+    required: true
+paths:
+  /user:
+    parameters:
+      - $ref: '#/parameters/token'
+    get:
+      description: get the list of all user
+      operationId: getUsers
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: success
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/User'
+    post:
+      description: create a user
+      operationId: createUser
+      consumes:
+        - application/json
+      parameters:
+        - name: user
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/User'
+      responses:
+        '201':
+          description: created
+          schema:
+            type: object
+  /user/{userId}:
+    parameters:
+      - $ref: '#/parameters/userId'
+      - $ref: '#/parameters/token'
+    get:
+      description: get user by id
+      operationId: getUserById
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: success
+          schema:
+            type: object
+            $ref: '#/definitions/User'
+    delete:
+      description: delete a user
+      operationId: deleteUser
+      consumes:
+        - application/json
+      responses:
+        '200':
+          description: deleted
+    patch:
+      description: update a user
+      operationId: updateUser
+      consumes:
+        - application/json
+      parameters:
+        - name: user
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/User'
+      responses:
+        '201':
+          description: updated
+          schema:
+            type: object
+definitions:
+  User:
+    type: object
+    properties:
+      email:
+        type: string
+      firstname:
+        type: string
+      lastname:
+        type: string
+      password:
+        type: string
