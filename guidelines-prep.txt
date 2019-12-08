@@ -11,9 +11,15 @@ This week, there are 3 activities to do during the lab sessions:
 
 Task 1: what is JWT? If you are not familiar with the authentication method, do some research to understand the basic idea.
 
+JSON Web Token -> https://jwt.io/introduction/.io
+
 Task 2: how can I generate a JWT token in Java code? Surely, there is a library that I can use for that... (hint: do NOT use Spring Security, unless you are ready to dig into quite complex configuration and prefer a more low-level approach)
 
+https://github.com/auth0/java-jwt
+
 Task 3: how can I generate a JWT token online, and how can I see what is inside an existing token? (hint: https://jwt.io/)
+
+La réponse est dans le hint.
 
 Task 4: in one of the Spring Boot tutorials I did last week, I have created a REST endpoint (returning a Greeting payload). How can I extend the code to generate and return a JWT token? How can I make sure that this token contains a user identifier (e.g. e-mail).
 
