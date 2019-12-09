@@ -24,9 +24,15 @@ One can see what is inside a jwt token and also generate one on the [jwt website
 
 **Task 4: in one of the Spring Boot tutorials I did last week, I have created a REST endpoint (returning a Greeting payload). How can I extend the code to generate and return a JWT token? How can I make sure that this token contains a user identifier (e.g. e-mail).**
 
+You can add a filter that will generate jwt token for each new session. To make sure that this token contains a user identifier you can implement a login page and put the identifier (encrypted) in the jwt token or use the session id.
+
 **Task 5: in the same code, how do I protect another endpoint and check that 1) there is a JWT token, 2) it has a valid signature, 3) it contains the expected user identifier? (hint: start by add the authorization code directly in the @RestController).**
 
+In the filter first check if there is a jwt token, then check its signature.
+
 **Task 6: assuming that I have several endpoints to protect, how do I factor the authorization code in a reusable component? Similarly to Servlet Filters, how can I intercept calls to Spring MVC Controllers? (hint: look for HandlerInterceptorAdapter).**
+
+You can use a class `Interceptor extends HandlerInterceptorAdapter` that will intercept and handle the requests to the end point. This class will check the validity of the jwt token and if necessery issue new ones.
 
 
 ### BDD WITH CUCUMBER JVM (~20')
