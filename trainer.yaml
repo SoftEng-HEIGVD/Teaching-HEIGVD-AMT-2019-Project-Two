@@ -1,0 +1,162 @@
+swagger: '2.0'
+info:
+  version: '0.1.0'
+  title: API Pokemon
+  description: An API to manage pokemon trainers
+host: 192.168.99.100
+basePath: /api
+schemes:
+  - http
+paths:
+  /trainers:
+    get:
+      description: get the list of all trainers
+      operationId: getHandlers
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: name
+          type: string
+          description: name of the trainer to return
+        - in: query
+          name: surname
+          type: string
+          description: surname of the trainer to return
+        - in: query
+          name: gender
+          type: string
+          description: gender of the trainer to return
+        - in: query
+          name: age
+          type: integer
+          description: age of the trainer to return
+        - in: query
+          name: numberOfBadges
+          type: integer
+          description: number of badges of the trainer to return
+        - in: query
+          name: favouritePokemon
+          type: string
+          description: favourite Pokemon of the trainer to return
+      responses:
+        '200':
+          description: success
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Trainer'
+    delete:
+      operationId: deletePokemons
+      description: delete the list of all pokemons
+      parameters:
+        - in: query
+          name: name
+          type: string
+          description: name of the trainer to delete
+        - in: query
+          name: surname
+          type: string
+          description: surname of the trainer to delete
+        - in: query
+          name: gender
+          type: string
+          description: gender of the trainer to delete
+        - in: query
+          name: age
+          type: integer
+          description: age of the trainer to delete
+        - in: query
+          name: numberOfBadges
+          type: integer
+          description: number of badges of the trainer to delete
+        - in: query
+          name: favouritePokemon
+          type: string
+          description: favourite Pokemon of the trainer to delete
+      responses:
+        204:
+          description: sucessfully deleted
+    
+    post:
+      description: create a trainer
+      operationId: createTrainer
+      consumes:
+        - application/json
+      parameters:
+        - name: trainer
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Trainer'
+      responses:
+        '201':
+          description: created
+          schema:
+            $ref: '#/definitions/Trainer'
+  /trainers/{id}:
+    get:
+      description: get a trainer by its ID
+      operationId: getTrainerById
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: success
+          schema:
+            $ref: '#/definitions/Trainer'
+      parameters:
+        - in: path
+          name: id
+          required: true
+          type: integer
+          description: The trainer ID
+    delete:
+      description: delete a trainer by its ID
+      operationId: deleteTrainerById
+      parameters:
+        - in: path
+          name: id
+          required: true
+          type: integer
+          description: The trainer ID
+      responses:
+        204:
+          description: sucessfully deleted
+    patch:
+      description: update a trainer by its ID
+      operationId: updateTrainerById
+      parameters:
+        - in: path
+          name: id
+          required: true
+          type: integer
+          description: The pokemon ID
+        - name: pokemon
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Trainer'
+      responses:
+        200:
+          description: success
+    
+    
+    
+definitions:
+  Trainer:
+    type: object
+    properties:
+      name:
+        type: string
+      surname:
+        type: string
+      gender:
+        type: string
+      age:
+        type: integer
+      numberOfBadges:
+        type: string
+      favouritePokemon:
+        type: string
+      
