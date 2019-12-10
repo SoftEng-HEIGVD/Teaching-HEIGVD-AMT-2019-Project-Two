@@ -45,7 +45,7 @@ paths:
           schema:
             type: array
             items:
-              $ref: '#/definitions/Trainer'
+              $ref: '#/definitions/TrainerWithId'
     delete:
       operationId: deletePokemons
       description: delete the list of all pokemons
@@ -93,7 +93,7 @@ paths:
         '201':
           description: created
           schema:
-            $ref: '#/definitions/Trainer'
+            $ref: '#/definitions/TrainerWithId'
   /trainers/{id}:
     get:
       description: get a trainer by its ID
@@ -104,7 +104,7 @@ paths:
         '200':
           description: success
           schema:
-            $ref: '#/definitions/Trainer'
+            $ref: '#/definitions/TrainerWithId'
       parameters:
         - in: path
           name: id
@@ -147,6 +147,24 @@ definitions:
   Trainer:
     type: object
     properties:
+      name:
+        type: string
+      surname:
+        type: string
+      gender:
+        type: string
+      age:
+        type: integer
+      numberOfBadges:
+        type: string
+      favouritePokemon:
+        type: string
+    
+  TrainerWithId: 
+    type: object
+    properties:
+      id:
+        type: integer
       name:
         type: string
       surname:
