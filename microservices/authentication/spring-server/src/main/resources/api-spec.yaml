@@ -101,7 +101,7 @@ paths:
           in: body
           required: true
           schema:
-            type: string
+            $ref: '#/definitions/Password'
 
       responses:
         '202':
@@ -170,7 +170,7 @@ definitions:
       token:
         type: string
   Password:
-    type: string
+    type: object
     properties:
       password:
         type: string

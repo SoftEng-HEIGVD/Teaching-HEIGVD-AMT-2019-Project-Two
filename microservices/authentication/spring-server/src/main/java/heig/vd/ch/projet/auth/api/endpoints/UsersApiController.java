@@ -1,6 +1,7 @@
 package heig.vd.ch.projet.auth.api.endpoints;
 
 
+import heig.vd.ch.projet.auth.api.model.Password;
 import heig.vd.ch.projet.auth.api.model.UserDTO;
 import heig.vd.ch.projet.auth.entities.UserEntity;
 import heig.vd.ch.projet.auth.api.UsersApi;
@@ -175,7 +176,7 @@ public class UsersApiController implements UsersApi {
     }
 
     @Override
-    public ResponseEntity<Void> updateUser(String userEmail, String authorization, @Valid String password) {
+    public ResponseEntity<Void> updateUser(String userEmail, String authorization, @Valid Password password) {
         return null;
     }
 }
