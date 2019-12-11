@@ -8,26 +8,26 @@ basePath: /api
 schemes:
   - http
 paths:
-  /fruits:
+  /actors:
     post:
-      description: create a fruit
-      operationId: createFruit
+      description: create an actor
+      operationId: createActor
       consumes:
         - application/json
       parameters:
-        - name: fruit
+        - name: actor
           in: body
           required: true
           schema:
-            $ref: '#/definitions/Fruit'
+            $ref: '#/definitions/Actor'
       responses:
         '201':
           description: created
           schema:
             type: object
     get:
-      description: get the list of all fruits
-      operationId: getFruits
+      description: get the list of all actors
+      operationId: getActors
       produces:
         - application/json
       responses:
@@ -36,14 +36,12 @@ paths:
           schema:
             type: array
             items:
-              $ref: '#/definitions/Fruit'
+              $ref: '#/definitions/Actor'
 definitions:
-  Fruit:
+  Actor:
     type: object
     properties:
-      kind:
-        type: string
-      colour:
-        type: string
-      size:
+      id:
+        type: integer
+      fullname:
         type: string
