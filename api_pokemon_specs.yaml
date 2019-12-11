@@ -115,7 +115,7 @@ paths:
       responses:
         204:
           description: sucessfully deleted
-    patch:
+    put:
       description: update a pokemon by its ID
       operationId: updatePokemonByID
       parameters:
@@ -248,7 +248,7 @@ paths:
       responses:
         204:
           description: sucessfully deleted
-    patch:
+    put:
       description: update a trainer by its ID
       operationId: updateTrainerById
       parameters:
@@ -266,7 +266,59 @@ paths:
         200:
           description: success
     
-    
+  /captures:
+    post:
+      description: create a capture
+      operationId: createCapture
+      consumes:
+        - application/json
+      parameters: 
+      - name: capture
+        in: body
+        required: true
+        schema:
+            $ref: '#/definitions/Capture'
+      responses:
+        '201':
+          description: created
+          schema:
+            $ref: '#/definitions/CaptureWithId'
+  /captures/trainers/{id_trainer}:
+    get:
+      description: Get a specific trainer with his all pokemons
+      operationId: getTrainerWithPokemons
+      produces:
+        - application/json
+      responses: 
+        '200':
+          description: success
+          schema:
+            $ref: '#/definitions/CaptureTrainerPokemons'
+      parameters:
+        - in: path
+          name: id_trainer
+          required: true
+          type: integer
+          description: trainer ID
+  
+  /captures/pokemons/{id_pokemon}:
+    get:
+      description : Get a specific pokemon with his all trainers
+      operationId: getPokemonWithTrainers
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: success
+          schema:
+            $ref: '#/definitions/CapturePokemonTrainers'
+      parameters:
+        - in: path
+          name: id_pokemon
+          required: true
+          type: integer
+          description: pokemon ID
+          
 definitions:
   Pokemon:
     type: object
@@ -307,3 +359,59 @@ definitions:
         type: integer
     allOf: 
       - $ref: '#/definitions/Trainer'
+      
+  Capture:
+    type: object
+    properties: 
+      id_trainer:
+        type: integer
+      pokemons:
+        type: array
+        items:
+          $ref: '#/definitions/CapturePokemon'
+      
+  CapturePokemon:
+    type: object
+    properties:
+      id_pokemons:
+        type: integer
+      dateCapture:
+        type: string
+        format: date-time
+  
+  CaptureTrainer:
+    type: object
+    properties:
+      id_trainers:
+        type: integer
+      dateCapture:
+        type: string
+        format: date-time
+        
+  CaptureWithId:
+    type: object
+    properties:
+      id:
+        type: integer
+    allOf:
+      - $ref: '#/definitions/Capture'
+      
+  CaptureTrainerPokemons:
+    type: object
+    properties:
+      id:
+        type: integer
+    allOf:
+      - $ref: '#/definitions/Capture'
+        
+  CapturePokemonTrainers:
+    type: object
+    properties: 
+      id:
+        type: integer
+      id_pokemon:
+        type: integer
+      trainers:
+        type: array
+        items:
+          $ref: '#/definitions/CaptureTrainer'
