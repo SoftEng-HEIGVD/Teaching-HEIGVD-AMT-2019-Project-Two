@@ -1,0 +1,134 @@
+swagger: '2.0'
+info:
+  version: '0.1.0'
+  title: Users for Pokemon API
+  description: An API to manage users for Pokemon API
+host: 192.168.99.100
+basePath: /api
+schemes:
+  - http
+paths:
+  /login:
+    post:
+      description: login to get JWT Token
+      operationId: login
+      consumes:
+        - application/json
+      parameters:
+        - name: credentials
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Credentials'
+      responses:
+        '201':
+          description: logged successfully
+          schema:
+            $ref: '#/definitions/ValidCreds'
+  /users/{id}:
+    get:
+      description: get user info by its id
+      operationId: getUserbyID
+      consumes:
+        - application/json
+      parameters:
+        - in: header
+          name: Authorization
+          type: string
+          required: true
+        - in: path
+          name: id
+          required: true
+          type: integer
+      responses:
+        '201':
+          description: retrieved account info
+          schema:
+            $ref: '#/definitions/UserToGet'
+
+  /users:
+    post:
+      description: create an account
+      operationId: createAccount
+      consumes:
+        - application/json
+      parameters:
+        - name: user
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/UserToPost'
+      responses:
+        '201':
+          description: account created
+          schema:
+            $ref: '#/definitions/UserToGet'
+  /password:
+    put:
+      description: change password for its own account
+      operationId: changePassword
+      consumes:
+        - application/json
+      parameters:
+        - in: header
+          name: Authorization
+          type: string
+          required: true
+        - in: body
+          name: queryPassword
+          required: true
+          schema:
+            $ref: '#/definitions/QueryPasswordChange'
+      responses:
+        '201':
+          description: account created
+          schema:
+            $ref: '#/definitions/UserToGet'
+definitions:
+  BaseUser:
+    type: object
+    properties:
+      username:
+        type: string
+      mail:
+        type: string
+      firstname:
+        type: string
+      lastname:
+        type: string
+  UserToPost:
+    type: object
+    allOf:
+      - $ref: '#/definitions/BaseUser'
+    properties:
+      password:
+        type: string
+  UserToGet:
+    type: object
+    allOf:
+      - $ref: '#/definitions/BaseUser'
+    properties:
+      id:
+        type: integer
+  QueryPasswordChange:
+    type: object
+    properties:
+      currentPassword:
+        type: string
+      newPassword:
+        type: string
+  Credentials:
+    type: object
+    properties:
+      username:
+        type: string
+      password:
+        type: string
+  ValidCreds:
+    type: object
+    properties:
+      JWTToken:
+        type: string
+      userID:
+        type: integer
+      
