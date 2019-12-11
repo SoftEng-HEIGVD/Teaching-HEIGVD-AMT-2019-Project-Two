@@ -36,7 +36,6 @@ public class VideogamesApiController implements VideogameApi {
         return ResponseEntity.created(location).build();
     }
 
-
     public ResponseEntity<List<Videogame>> getVideogames() {
         List<Videogame> videogames = new ArrayList<>();
         for (VideogameEntity videogameEntity : videogameRepository.findAll()) {
@@ -54,19 +53,20 @@ public class VideogamesApiController implements VideogameApi {
     }
 
 
+
     private VideogameEntity toVideogameEntity(Videogame videogame) {
         VideogameEntity entity = new VideogameEntity();
-        entity.setColour(videogame.getColour());
         entity.setKind(videogame.getKind());
-        entity.setSize(videogame.getSize());
+        entity.setName(videogame.getName());
+        entity.setSupportedOn(videogame.getSupportedOn());
         return entity;
     }
 
     private Videogame toVideogame(VideogameEntity entity) {
         Videogame videogame = new Videogame();
-        videogame.setColour(entity.getColour());
         videogame.setKind(entity.getKind());
-        videogame.setSize(entity.getSize());
+        videogame.setName(entity.getName());
+        videogame.setSupportedOn(entity.getSupportedOn());
         return videogame;
     }
 

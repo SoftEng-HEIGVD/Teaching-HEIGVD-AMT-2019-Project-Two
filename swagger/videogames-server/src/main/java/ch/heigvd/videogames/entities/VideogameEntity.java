@@ -17,8 +17,8 @@ public class VideogameEntity implements Serializable {
     private long id;
 
     private String kind;
-    private String size;
-    private String colour;
+    private String name;
+    private String supportedOn;
 
     public long getId() {
         return id;
@@ -32,19 +32,19 @@ public class VideogameEntity implements Serializable {
         this.kind = kind;
     }
 
-    public String getSize() {
-        return size;
+    public String getName() {
+        return name;
     }
 
-    public void setSize(String size) {
-        this.size = size;
+    public void setName(String size) {
+        this.name = name;
     }
 
-    public String getColour() {
-        return colour;
+    public String getSupportedOn() {
+        return supportedOn;
     }
 
-    public void setColour(String colour) {
-        this.colour = colour;
+    public void setSupportedOn(String supportedOn) {
+        this.supportedOn = supportedOn;
     }
 }

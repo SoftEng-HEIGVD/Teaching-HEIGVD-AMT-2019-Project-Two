@@ -1,4 +1,4 @@
-Feature: Creation of fruits
+Feature: Creation of videogames
 
   Background:
     Given there is a Videogames server

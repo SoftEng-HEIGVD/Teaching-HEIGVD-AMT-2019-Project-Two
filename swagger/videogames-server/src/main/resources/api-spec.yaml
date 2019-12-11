@@ -37,13 +37,32 @@ paths:
             type: array
             items:
               $ref: '#/definitions/Videogame'
+    put:
+      description: update an existing videogame
+      operationId: updateVideogame
+      produces:
+        - application/json
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Videogame object that need to be added to the store"
+          required: true
+          schema:
+            $ref: '#/definitions/Videogame'
+      responses:
+          400:
+            description: "Invalid Videogame supplied"
+          404:
+            description: "Videogame not found"
+          405:
+            description: "Validation exception"
 definitions:
   Videogame:
     type: object
     properties:
       kind:
         type: string
-      colour:
+      name:
         type: string
-      size:
+      supportedOn:
         type: string

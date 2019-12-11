@@ -37,13 +37,25 @@ paths:
             type: array
             items:
               $ref: '#/definitions/Videogame'
+    patch:
+      description: update a videogame
+      operationId: updateVideogame
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: success update
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Videogame'
 definitions:
   Videogame:
     type: object
     properties:
       kind:
         type: string
-      colour:
+      name:
         type: string
-      size:
-        type: string
+      console:
+        supportedOn: string
