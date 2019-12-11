@@ -1,6 +1,6 @@
 package ch.heigvd.videogames.api.endpoints;
 
-import ch.heigvd.videogames.api.VideogameApi;
+import ch.heigvd.videogames.api.VideogamesApi;
 import ch.heigvd.videogames.entities.VideogameEntity;
 import ch.heigvd.videogames.api.model.Videogame;
 import ch.heigvd.videogames.repositories.VideogameRepository;
@@ -19,7 +19,7 @@ import java.util.List;
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2017-07-26T19:36:34.802Z")
 
 @Controller
-public class VideogamesApiController implements VideogameApi {
+public class VideogamesApiController implements VideogamesApi {
 
     @Autowired
     VideogameRepository videogameRepository;
