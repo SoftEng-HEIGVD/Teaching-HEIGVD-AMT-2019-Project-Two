@@ -1,4 +1,4 @@
-package io.avalia.fruits;
+package ch.heigvd.amt.project2;
 
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 import com.fasterxml.jackson.databind.util.ISO8601Utils;

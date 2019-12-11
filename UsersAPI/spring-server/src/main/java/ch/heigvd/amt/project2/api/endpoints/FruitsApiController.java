@@ -1,9 +1,9 @@
-package io.avalia.fruits.api.endpoints;
+package ch.heigvd.amt.project2.api.endpoints;
 
-import io.avalia.fruits.api.FruitsApi;
-import io.avalia.fruits.entities.FruitEntity;
-import io.avalia.fruits.api.model.Fruit;
-import io.avalia.fruits.repositories.FruitRepository;
+import ch.heigvd.amt.project2.entities.FruitEntity;
+import ch.heigvd.amt.project2.repositories.FruitRepository;
+import ch.heigvd.amt.project2.api.FruitsApi;
+import ch.heigvd.amt.project2.api.model.Fruit;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -23,12 +23,10 @@ public class FruitsApiController implements FruitsApi {
 
     @Autowired
     FruitRepository fruitRepository;
-
     public ResponseEntity<Object> createFruit(@ApiParam(value = "", required = true) @Valid @RequestBody Fruit fruit) {
         FruitEntity newFruitEntity = toFruitEntity(fruit);
         fruitRepository.save(newFruitEntity);
         Long id = newFruitEntity.getId();
-
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest().path("/{id}")
                 .buildAndExpand(newFruitEntity.getId()).toUri();

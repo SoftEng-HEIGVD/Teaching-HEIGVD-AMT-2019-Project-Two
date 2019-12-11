@@ -1,4 +1,4 @@
-package io.avalia.fruits.entities;
+package ch.heigvd.amt.project2.entities;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

@@ -1,4 +1,4 @@
-package io.avalia.fruits;
+package ch.heigvd.amt.project2;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.ExitCodeGenerator;
@@ -10,7 +10,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @SpringBootApplication
 @EnableSwagger2
-@ComponentScan(basePackages = { "io.avalia.fruits", "io.avalia.fruits.api" })
+//@ComponentScan(basePackages = { "io.avalia.fruits", "io.avalia.fruits.api" })
 public class Swagger2SpringBoot implements CommandLineRunner {
 
     @Override
