@@ -9,11 +9,10 @@ schemes:
   - http
 
 parameters:
-  userId:
+  userEmail:
     in: path
-    name: userId
-    type: integer
-    format: int64
+    name: userEmail
+    type: string
     required: true
   token:
     in: header
@@ -21,7 +20,7 @@ parameters:
     type: string
     required: true
 paths:
-  /user:
+  /users:
     parameters:
       - $ref: '#/parameters/token'
     get:
@@ -29,13 +28,19 @@ paths:
       operationId: getUsers
       produces:
         - application/json
+      parameters:
+        - name: pageNumber
+          in: query
+          type: integer
       responses:
         '200':
           description: success
           schema:
             type: array
             items:
-              $ref: '#/definitions/User'
+              $ref: '#/definitions/UserDTO'
+        '403':
+          description: forbidden
     post:
       description: create a user
       operationId: createUser
@@ -49,10 +54,16 @@ paths:
             $ref: '#/definitions/User'
       responses:
         '201':
-          description: created
-  /user/{userId}:
+          description: Created
+        '400':
+          description: Bad request
+        '403':
+          description: Forbidden
+        '409':
+          description: Conflit
+  /users/{userEmail}:
     parameters:
-      - $ref: '#/parameters/userId'
+      - $ref: '#/parameters/userEmail'
       - $ref: '#/parameters/token'
     get:
       description: get user by id
@@ -61,32 +72,70 @@ paths:
         - application/json
       responses:
         '200':
-          description: success
+          description: Success
           schema:
-            type: object
-            $ref: '#/definitions/User'
+            $ref: '#/definitions/UserDTO'
+        '403':
+          description: Forbiden
+        '404':
+          description: Not found
     delete:
       description: delete a user
       operationId: deleteUser
       consumes:
         - application/json
       responses:
-        '200':
-          description: deleted
+        '204':
+          description: Deleted
+        '403':
+          description: Forbiden
+        '404':
+          description: Not found
     patch:
       description: update a user
       operationId: updateUser
       consumes:
         - application/json
       parameters:
-        - name: user
+        - name: password
           in: body
           required: true
           schema:
-            $ref: '#/definitions/User'
+            type: string
+
       responses:
-        '201':
-          description: updated
+        '202':
+          description: Updated
+        '400':
+          description: Bad request
+        '403':
+          description: Forbiden
+        '404':
+          description: Not found
+  /auth:
+    post:
+      description: authenticate a user
+      operationId: authentication
+      consumes:
+        - application/json
+      parameters:
+        - name: authDTO
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/AuthDTO'
+      responses:
+        '200':
+          description: authenticated
+          schema:
+            type: string
+            items:
+              $ref: '#/definitions/Token'
+        '400':
+          description: Bad request
+        '401':
+          description: unauthorized
+
 definitions:
   User:
     type: object
@@ -97,5 +146,31 @@ definitions:
         type: string
       lastname:
         type: string
+      password:
+        type: string
+  UserDTO:
+    type: object
+    properties:
+      email:
+        type: string
+      firstname:
+        type: string
+      lastname:
+        type: string
+  AuthDTO:
+    type: object
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+  Token:
+    type: object
+    properties:
+      token:
+        type: string
+  Password:
+    type: string
+    properties:
       password:
         type: string

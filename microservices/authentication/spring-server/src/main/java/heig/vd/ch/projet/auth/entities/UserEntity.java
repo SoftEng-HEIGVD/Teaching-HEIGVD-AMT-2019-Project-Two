@@ -1,8 +1,6 @@
 package heig.vd.ch.projet.auth.entities;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.io.Serializable;
 
@@ -13,17 +11,10 @@ import java.io.Serializable;
 public class UserEntity implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-
     private String email;
     private String lastname;
     private String firstname;
     private String password;
-
-    public long getId() {
-        return id;
-    }
 
     public String getEmail() {
         return email;

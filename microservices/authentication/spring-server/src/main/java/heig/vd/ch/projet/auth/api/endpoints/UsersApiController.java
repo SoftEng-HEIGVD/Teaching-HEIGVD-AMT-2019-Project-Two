@@ -1,8 +1,9 @@
 package heig.vd.ch.projet.auth.api.endpoints;
 
 
+import heig.vd.ch.projet.auth.api.model.UserDTO;
 import heig.vd.ch.projet.auth.entities.UserEntity;
-import heig.vd.ch.projet.auth.api.UserApi;
+import heig.vd.ch.projet.auth.api.UsersApi;
 import heig.vd.ch.projet.auth.api.model.User;
 import heig.vd.ch.projet.auth.repositories.UserRepository;
 import io.swagger.annotations.ApiParam;
@@ -23,12 +24,12 @@ import java.util.List;
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2017-07-26T19:36:34.802Z")
 
 @Controller
-public class UsersApiController implements UserApi {
+public class UsersApiController implements UsersApi {
 
     @Autowired
     UserRepository userRepository;
 
-    public ResponseEntity<Void> createUser( @ApiParam(value = "" ,required=true) @RequestHeader(value="Authorization", required=true) String authorization,
+    /*public ResponseEntity<Void> createUser( @ApiParam(value = "" ,required=true) @RequestHeader(value="Authorization", required=true) String authorization,
                                               @ApiParam(value = "", required = true) @Valid @RequestBody User user) {
 
         //Verify token
@@ -132,9 +133,7 @@ public class UsersApiController implements UserApi {
 
         //Return an accept status (202)
         return ResponseEntity.accepted().build();
-    }
-
-
+    }*/
 
     /*Utils methods---------------------------------------------------------------------------------------------------*/
     private UserEntity toUserEntity(User user) {
@@ -155,4 +154,28 @@ public class UsersApiController implements UserApi {
         return user;
     }
 
+    @Override
+    public ResponseEntity<Void> createUser(String authorization, @Valid User user) {
+        return null;
+    }
+
+    @Override
+    public ResponseEntity<Void> deleteUser(String userEmail, String authorization) {
+        return null;
+    }
+
+    @Override
+    public ResponseEntity<UserDTO> getUserById(String userEmail, String authorization) {
+        return null;
+    }
+
+    @Override
+    public ResponseEntity<List<UserDTO>> getUsers(String authorization, @Valid Integer pageNumber) {
+        return null;
+    }
+
+    @Override
+    public ResponseEntity<Void> updateUser(String userEmail, String authorization, @Valid String password) {
+        return null;
+    }
 }
