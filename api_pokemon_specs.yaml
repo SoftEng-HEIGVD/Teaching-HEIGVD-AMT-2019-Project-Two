@@ -2,7 +2,7 @@ swagger: '2.0'
 info:
   version: '0.1.0'
   title: API Pokemon
-  description: An API to manage pokemon
+  description: An API to manage Pokemon
 host: 192.168.99.100
 basePath: /api
 schemes:
@@ -42,6 +42,7 @@ paths:
             type: array
             items:
               $ref: '#/definitions/Pokemon'
+    
     delete:
       operationId: deletePokemons
       description: delete the list of all pokemons
@@ -86,6 +87,7 @@ paths:
           description: created
           schema:
             $ref: '#/definitions/Pokemon'
+
   /pokemons/{id}:
     get:
       description: get a pokemon by its ID
@@ -103,6 +105,7 @@ paths:
           required: true
           type: integer
           description: The pokemon ID
+    
     delete:
       description: delete a pokemon by its ID
       operationId: deletePokemonByID
@@ -115,6 +118,7 @@ paths:
       responses:
         204:
           description: sucessfully deleted
+    
     put:
       description: update a pokemon by its ID
       operationId: updatePokemonByID
@@ -171,6 +175,7 @@ paths:
             type: array
             items:
               $ref: '#/definitions/TrainerWithId'
+    
     delete:
       operationId: deleteTrainers
       description: delete the list of all trainers
@@ -219,6 +224,7 @@ paths:
           description: created
           schema:
             $ref: '#/definitions/TrainerWithId'
+  
   /trainers/{id}:
     get:
       description: get a trainer by its ID
@@ -236,6 +242,7 @@ paths:
           required: true
           type: integer
           description: The trainer ID
+    
     delete:
       description: delete a trainer by its ID
       operationId: deleteTrainerById
@@ -248,6 +255,7 @@ paths:
       responses:
         204:
           description: sucessfully deleted
+    
     put:
       description: update a trainer by its ID
       operationId: updateTrainerById
@@ -283,6 +291,7 @@ paths:
           description: created
           schema:
             $ref: '#/definitions/CaptureWithId'
+  
   /captures/trainers/{id_trainer}:
     get:
       description: Get a specific trainer with his all pokemons
@@ -363,17 +372,25 @@ definitions:
   Capture:
     type: object
     properties: 
-      id_trainer:
+      idTrainer:
         type: integer
       pokemons:
         type: array
         items:
           $ref: '#/definitions/CapturePokemon'
+  
+  CaptureWithId:
+    type: object
+    properties:
+      id:
+        type: integer
+    allOf:
+      - $ref: '#/definitions/Capture'
       
   CapturePokemon:
     type: object
     properties:
-      id_pokemons:
+      idPokemon:
         type: integer
       dateCapture:
         type: string
@@ -382,19 +399,11 @@ definitions:
   CaptureTrainer:
     type: object
     properties:
-      id_trainers:
+      idTrainer:
         type: integer
       dateCapture:
         type: string
         format: date-time
-        
-  CaptureWithId:
-    type: object
-    properties:
-      id:
-        type: integer
-    allOf:
-      - $ref: '#/definitions/Capture'
       
   CaptureTrainerPokemons:
     type: object
@@ -409,7 +418,7 @@ definitions:
     properties: 
       id:
         type: integer
-      id_pokemon:
+      idPokemon:
         type: integer
       trainers:
         type: array
