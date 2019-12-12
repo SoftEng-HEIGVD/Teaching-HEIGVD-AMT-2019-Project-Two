@@ -7,7 +7,6 @@ host: localhost:8080
 basePath: /api
 schemes:
   - http
-
 parameters:
   userEmail:
     in: path
@@ -32,6 +31,7 @@ paths:
         - name: pageNumber
           in: query
           type: integer
+          format: int64
       responses:
         '200':
           description: success
@@ -135,7 +135,6 @@ paths:
           description: Bad request
         '401':
           description: unauthorized
-
 definitions:
   User:
     type: object
@@ -148,6 +147,8 @@ definitions:
         type: string
       password:
         type: string
+      role:
+        $ref: '#/definitions/roles'
   UserDTO:
     type: object
     properties:
@@ -157,6 +158,8 @@ definitions:
         type: string
       lastname:
         type: string
+      role:
+        $ref: '#/definitions/roles'
   AuthDTO:
     type: object
     properties:
@@ -174,3 +177,8 @@ definitions:
     properties:
       password:
         type: string
+  roles:
+    type: string
+    enum:
+      - user
+      - admin
