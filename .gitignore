@@ -13,7 +13,7 @@ buildNumber.properties
 
 
 #Avoid push these files (.idea and .iml)
-spring-server/.idea/
-spring-server/.swagger-codegen-ignore
-spring-server/.swagger-codegen/
-spring-server/swagger-spring.iml
+project2-api-pokemon/spring-server/.idea/
+project2-api-pokemon/spring-server/.swagger-codegen-ignore
+project2-api-pokemon/spring-server/.swagger-codegen/
+project2-api-pokemon/spring-server/swagger-spring.iml
