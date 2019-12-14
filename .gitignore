@@ -10,3 +10,10 @@ buildNumber.properties
 
 # Avoid ignoring Maven wrapper jar file (.jar files are usually ignored)
 !/.mvn/wrapper/maven-wrapper.jar
+
+
+#Avoid push these files (.idea and .iml)
+spring-server/.idea/
+spring-server/.swagger-codegen-ignore
+spring-server/.swagger-codegen/
+spring-server/swagger-spring.iml
