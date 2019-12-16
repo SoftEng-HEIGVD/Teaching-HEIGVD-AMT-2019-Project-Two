@@ -3,10 +3,10 @@ package ch.heigvd.amt.project2.users.api.spec.steps;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import io.avalia.fruits.ApiException;
-import io.avalia.fruits.ApiResponse;
-import io.avalia.fruits.api.DefaultApi;
-import io.avalia.fruits.api.dto.Fruit;
+import ch.heigvd.amt.project2.ApiException;
+import ch.heigvd.amt.project2.ApiResponse;
+import ch.heigvd.amt.project2.api.UserApi;
+import ch.heigvd.amt.project2.api.model.User;
 import ch.heigvd.amt.project2.users.api.spec.helpers.Environment;
 
 import static org.junit.Assert.assertNotNull;
@@ -17,8 +17,8 @@ import static org.junit.Assert.assertEquals;
  */
 public class CreationSteps {
 
-    private Environment environment;
-    private DefaultApi api;
+    /*private Environment environment;
+    private UserApi api;
 
     Fruit fruit;
 
@@ -61,6 +61,6 @@ public class CreationSteps {
     @Then("^I receive a (\\d+) status code$")
     public void i_receive_a_status_code(int arg1) throws Throwable {
         assertEquals(201, lastStatusCode);
-    }
+    }*/
 
 }
