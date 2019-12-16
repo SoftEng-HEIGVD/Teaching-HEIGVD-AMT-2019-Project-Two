@@ -9,22 +9,22 @@ basePath: "/api"
 schemes:
   - http
 tags:
-- name: "user"
-  description: "Operations about user"
+  - name: "user"
+    description: "Operations about user"
 paths:
   /users:
     post:
       tags:
-      - "user"
-      description: "create a user"
+        - "user"
+      description: "create a new user"
       operationId: "createUser"
       consumes:
-      - "application/json"
+        - "application/json"
       parameters:
-      - name: "username"
-        in: "body"
-        required: true
-        schema:
+        - name: "user"
+          in: "body"
+          required: true
+          schema:
             $ref: "#/definitions/User"
       responses:
         201:
@@ -33,11 +33,11 @@ paths:
             type: "object"
     get:
       tags:
-      - "user"
+        - "user"
       description: "Get the list of all users"
       operationId: "getUsers"
       produces:
-      - "application/json"
+        - "application/json"
       responses:
         200:
           description: "success"
@@ -48,38 +48,36 @@ paths:
   /users/{userId}:
     patch:
       tags:
-      - "user"
+        - "user"
       description: "change user password"
       operationId: "changePassword"
       consumes:
-      - "application/json"
+        - "application/json"
       parameters:
-      - name: "userId"
-        in: "path"
-        required: true
-        type: "integer"
-        format: "int64"
-      - name: "password"
-        in: "body"
-        required: true
-        schema:
-            $ref: "#/definitions/User"
+        - name: "userId"
+          in: "path"
+          required: true
+          type: "integer"
+          format: "int64"
+        - name: "newPassword"
+          in: "query"
+          type: "string"
       responses:
-        201:
+        200:
           description: "updated"
     get:
       tags:
-      - "user"
+        - "user"
       description: "Get a single user"
       operationId: "getUserById"
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - name: "userId"
-        in: "path"
-        required: true
-        type: "integer"
-        format: "int64"
+        - name: "userId"
+          in: "path"
+          required: true
+          type: "integer"
+          format: "int64"
       responses:
         200:
           description: "success"
@@ -88,20 +86,20 @@ paths:
   /login:
     post:
       tags:
-      - "user"
+        - "user"
       description: "Authenticate a user"
       operationId: "authenticateUser"
       consumes:
-      - "application/x-www-form-urlencoded"
+        - "application/x-www-form-urlencoded"
       parameters:
-      - name: "username"
-        in: "formData"
-        required: true
-        type: "string"
-      - name: "password"
-        in: "formData"
-        required: true
-        type: "string"
+        - name: "username"
+          in: "formData"
+          required: true
+          type: "string"
+        - name: "password"
+          in: "formData"
+          required: true
+          type: "string"
       responses:
         200:
           description: "OK"
@@ -109,11 +107,11 @@ paths:
             type: "object"
     get:
       tags:
-      - "user"
+        - "user"
       description: "Get the login"
       operationId: "getLoginPage"
       produces:
-      - "application/json"
+        - "application/json"
       responses:
         200:
           description: "success"

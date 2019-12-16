@@ -6,11 +6,12 @@ import ch.heigvd.amt.project2.entities.UserEntity;
 import ch.heigvd.amt.project2.repositories.UserRepository;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
@@ -38,16 +39,15 @@ public class UsersApiController implements UsersApi {
 
     @Override
     public ResponseEntity<User> getUserById(@ApiParam(value = "",required=true) @PathVariable("userId") Long userId) {
-        return null;
+        Optional<UserEntity> userEntity = userRepository.findById(userId);
+        User user = toUser(userEntity.get());
+        return ResponseEntity.ok(user);
     }
 
     @Override
-    public Optional<NativeWebRequest> getRequest() {
-        return Optional.empty();
-    }
-    @Override
-    public ResponseEntity<Void> changePassword(@ApiParam(value = "",required=true) @PathVariable("userId") Long userId,@ApiParam(value = "" ,required=true )  @Valid @RequestBody User password) {
-        return null;
+    public ResponseEntity<Void> changePassword(@ApiParam(value = "",required=true) @PathVariable("userId") Long userId, @ApiParam(value = "") @Valid @RequestParam(value = "newPassword", required = false) String newPassword) {
+        userRepository.changePassword(newPassword, userId);
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
     @Override
