@@ -1,4 +1,4 @@
-package io.avalia.fruits.api.spec;
+package ch.heigvd.amt.project2.users.api.spec;
 
 import cucumber.api.CucumberOptions;
 import cucumber.api.junit.Cucumber;

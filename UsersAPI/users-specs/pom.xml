@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>io.avalia</groupId>
-  <artifactId>fruitsSpecification</artifactId>
+  <groupId>io.swagger</groupId>
+  <artifactId>usersSpecification</artifactId>
   <version>1.0-SNAPSHOT</version>
   <packaging>jar</packaging>
   <properties>
@@ -34,7 +34,7 @@
               <goal>generate</goal>
             </goals>
             <configuration>
-              <inputSpec>src/main/resources/api-spec.yaml</inputSpec>
+              <inputSpec>src/main/resources/user-api-spec.yaml</inputSpec>
               <generatorName>java</generatorName>
               <!--
               <library>jersey2</library>
@@ -43,8 +43,8 @@
               <configOptions>
                 <sourceFolder>.</sourceFolder>
                 <dateLibrary>joda</dateLibrary>
-                <modelPackage>io.avalia.fruits.api.dto</modelPackage>
-                <apiPackage>io.avalia.fruits.api</apiPackage>
+                <modelPackage>ch.heigvd.amt.project2.api.model</modelPackage>
+                <apiPackage>ch.heigvd.amt.project2.api</apiPackage>
               </configOptions>
               <output>target/generated-sources/swagger</output>
             </configuration>

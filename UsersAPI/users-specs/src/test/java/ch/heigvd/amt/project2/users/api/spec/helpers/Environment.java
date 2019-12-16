@@ -1,26 +1,27 @@
-package io.avalia.fruits.api.spec.helpers;
+package ch.heigvd.amt.project2.users.api.spec.helpers;
 
-import io.avalia.fruits.api.DefaultApi;
+import ch.heigvd.amt.project2.api.UserApi;
 
 import java.io.IOException;
 import java.util.Properties;
 
 /**
  * Created by Olivier Liechti on 24/06/17.
+ * Modified by Nathanaël Mizutani
  */
 public class Environment {
 
-    private DefaultApi api = new DefaultApi();
+    private UserApi api = new UserApi();
 
     public Environment() throws IOException {
         Properties properties = new Properties();
         properties.load(this.getClass().getClassLoader().getResourceAsStream("environment.properties"));
-        String url = properties.getProperty("io.avalia.fruits.server.url");
+        String url = properties.getProperty("ch.heigvd.amt.project2.users.server.url");
         api.getApiClient().setBasePath(url);
 
     }
 
-    public DefaultApi getApi() {
+    public UserApi getApi() {
         return api;
     }
 
