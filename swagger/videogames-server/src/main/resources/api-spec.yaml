@@ -43,8 +43,8 @@ paths:
       produces:
         - application/json
       parameters:
-        - in: "body"
-          name: "body"
+        - name: videogame
+          in: body
           description: "Videogame object that need to be added to the store"
           required: true
           schema:

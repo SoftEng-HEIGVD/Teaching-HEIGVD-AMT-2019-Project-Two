@@ -53,7 +53,6 @@ public class VideogamesApiController implements VideogamesApi {
     }
 
 
-
     private VideogameEntity toVideogameEntity(Videogame videogame) {
         VideogameEntity entity = new VideogameEntity();
         entity.setKind(videogame.getKind());
