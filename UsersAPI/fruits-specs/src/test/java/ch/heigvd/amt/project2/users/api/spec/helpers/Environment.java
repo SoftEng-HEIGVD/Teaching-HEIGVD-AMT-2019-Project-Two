@@ -1,4 +1,4 @@
-package io.avalia.fruits.api.spec.helpers;
+package ch.heigvd.amt.project2.users.api.spec.helpers;
 
 import io.avalia.fruits.api.DefaultApi;
 
