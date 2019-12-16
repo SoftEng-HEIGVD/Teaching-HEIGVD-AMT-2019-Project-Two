@@ -36,7 +36,7 @@ public class VideogameEntity implements Serializable {
         return name;
     }
 
-    public void setName(String size) {
+    public void setName(String name) {
         this.name = name;
     }
 
