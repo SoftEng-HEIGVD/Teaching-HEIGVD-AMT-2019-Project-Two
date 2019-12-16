@@ -14,6 +14,8 @@ paths:
       operationId: createVideogame
       consumes:
         - application/json
+      produces:
+        - application/json
       parameters:
         - name: videogame
           in: body
@@ -56,6 +58,24 @@ paths:
             description: "Videogame not found"
           405:
             description: "Validation exception"
+
+  /videogame/{id}:
+    delete:
+      description: delete a videogame using his id
+      operationId: deleteVideogame
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: videogame to delete
+          required: true
+          type: integer
+      responses:
+        400:
+          description: "Invalid videogame supplied"
+        404:
+          description: "Videogame not found"
 definitions:
   Videogame:
     type: object
