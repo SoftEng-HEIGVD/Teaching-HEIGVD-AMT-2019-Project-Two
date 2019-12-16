@@ -110,8 +110,7 @@ public class UsersApiController implements UsersApi {
     }
 
     @Override
-    public ResponseEntity<List<UserDTO>> getUsers(@ApiParam(value = "" ,required=true) @RequestHeader(value="Authorization", required=true) String authorization,
-                                                  @ApiParam(value = "" ,required=true) @RequestParam(value = "pageNumber", required = false) @Valid Long pageNumber) {
+    public ResponseEntity<List<UserDTO>> getUsers(@ApiParam(value = "" ,required=true) @RequestHeader(value="Authorization", required=true) String authorization) {
 
         List<UserDTO> usersDTO = new ArrayList<>();
 

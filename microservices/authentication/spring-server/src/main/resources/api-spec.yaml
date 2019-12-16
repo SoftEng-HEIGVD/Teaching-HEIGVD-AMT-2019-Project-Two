@@ -27,11 +27,6 @@ paths:
       operationId: getUsers
       produces:
         - application/json
-      parameters:
-        - name: pageNumber
-          in: query
-          type: integer
-          format: int64
       responses:
         '200':
           description: success
