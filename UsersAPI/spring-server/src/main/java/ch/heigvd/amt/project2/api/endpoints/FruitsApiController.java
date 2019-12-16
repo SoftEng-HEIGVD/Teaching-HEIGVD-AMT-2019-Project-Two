@@ -1,3 +1,4 @@
+/*
 package ch.heigvd.amt.project2.api.endpoints;
 
 import ch.heigvd.amt.project2.entities.FruitEntity;
@@ -19,10 +20,11 @@ import java.util.List;
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2017-07-26T19:36:34.802Z")
 
 @Controller
-public class FruitsApiController implements FruitsApi {
+public class FruitsApiController implements FruitApi {
 
     @Autowired
     FruitRepository fruitRepository;
+
     public ResponseEntity<Object> createFruit(@ApiParam(value = "", required = true) @Valid @RequestBody Fruit fruit) {
         FruitEntity newFruitEntity = toFruitEntity(fruit);
         fruitRepository.save(newFruitEntity);
@@ -47,7 +49,7 @@ public class FruitsApiController implements FruitsApi {
         staticFruit.setSize("medium");
         List<Fruit> fruits = new ArrayList<>();
         fruits.add(staticFruit);
-        */
+        *//*
         return ResponseEntity.ok(fruits);
     }
 
@@ -69,3 +71,4 @@ public class FruitsApiController implements FruitsApi {
     }
 
 }
+*/
