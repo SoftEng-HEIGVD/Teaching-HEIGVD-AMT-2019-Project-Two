@@ -18,16 +18,13 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
-@Controller
+@RestController
 public class PokemonsApiControllers implements PokemonsApi {
 
     public Optional<NativeWebRequest> getRequest() {
         return Optional.empty();
     }
 
-    @ApiOperation(value = "", nickname = "createPokemon", notes = "create a pokemon", response = Pokemon.class, tags={  })
-    @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "created", response = Pokemon.class) })
     @RequestMapping(value = "/pokemons",
             produces = { "*/*" },
             consumes = { "application/json" },
