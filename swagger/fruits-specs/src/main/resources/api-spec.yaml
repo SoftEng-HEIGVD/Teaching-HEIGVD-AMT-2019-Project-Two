@@ -1,33 +1,33 @@
 swagger: '2.0'
 info:
   version: '0.1.0'
-  title: my simple api
-  description: An API to demonstrate Swagger
-host: localhost:8080
-basePath: /api
+  title: Boozify
+  description: An API to manage the different user
+host: 192.168.99.100
+basePath: /boozify
 schemes:
   - http
 paths:
-  /fruits:
+  /users:
     post:
-      description: create a fruit
-      operationId: createFruit
+      description: create a user
+      operationId: createUser
       consumes:
         - application/json
       parameters:
-        - name: fruit
+        - name: user
           in: body
           required: true
           schema:
-            $ref: '#/definitions/Fruit'
+            $ref: '#/definitions/User'
       responses:
         '201':
           description: created
           schema:
             type: object
     get:
-      description: get the list of all fruits
-      operationId: getFruits
+      description: get the list of all users
+      operationId: getUsers
       produces:
         - application/json
       responses:
@@ -36,14 +36,18 @@ paths:
           schema:
             type: array
             items:
-              $ref: '#/definitions/Fruit'
+              $ref: '#/definitions/User'
 definitions:
-  Fruit:
+  User:
     type: object
     properties:
-      kind:
+      id_user:
+        type: integer
+      name:
         type: string
-      colour:
+      password:
         type: string
-      size:
+      email:
         type: string
+      administrateur:
+        type: boolean 
