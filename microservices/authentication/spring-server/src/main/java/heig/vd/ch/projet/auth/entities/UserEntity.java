@@ -3,8 +3,8 @@ package heig.vd.ch.projet.auth.entities;
 import heig.vd.ch.projet.auth.api.model.Roles;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
@@ -14,11 +14,23 @@ import java.io.Serializable;
 @Getter
 @Setter
 @NoArgsConstructor
+@Table(name = "User")
 public class UserEntity implements Serializable {
     @Id
+    @Column(name = "email")
     private String email;
+
+    @Column(name = "lastname")
     private String lastname;
+
+    @Column(name = "firstname")
     private String firstname;
+
+    @NotNull
+    @Column(name = "password")
     private String password;
-    private Roles role;
+
+    @NotNull
+    @Column(name = "role")
+    private String role;
 }

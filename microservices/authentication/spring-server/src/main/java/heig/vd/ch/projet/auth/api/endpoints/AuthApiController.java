@@ -6,6 +6,7 @@ import heig.vd.ch.projet.auth.api.AuthApi;
 import heig.vd.ch.projet.auth.api.model.AuthDTO;
 import heig.vd.ch.projet.auth.api.model.Token;
 import heig.vd.ch.projet.auth.api.service.AuthenticateService;
+import heig.vd.ch.projet.auth.api.service.JWTService;
 import heig.vd.ch.projet.auth.entities.UserEntity;
 import heig.vd.ch.projet.auth.repositories.UserRepository;
 import io.swagger.annotations.ApiParam;
@@ -29,6 +30,9 @@ public class AuthApiController implements AuthApi {
     @Autowired
     AuthenticateService authenticateService;
 
+    @Autowired
+    JWTService jwtService;
+
     @Override
     public ResponseEntity<String> authentication(@ApiParam(value = "", required = true) @Valid @RequestBody AuthDTO authDTO) {
 
@@ -40,15 +44,11 @@ public class AuthApiController implements AuthApi {
             boolean check = authenticateService.checkPassord(authDTO.getPassword(),userEntity.getPassword());
 
             if(check){
-                //Create the token
-                Algorithm algorithm = Algorithm.HMAC256("secret");
-                String jwttoken = JWT.create()
-                        .withClaim("email",userEntity.getEmail())
-                        .withClaim("role",userEntity.getRole().name())
-                        .sign(algorithm);
+                //Create a token
+                String token = jwtService.createToken(userEntity);
 
                 //Return a ok status with token in the body
-                return ResponseEntity.ok(jwttoken);
+                return ResponseEntity.ok(token);
             }else {
                 //Return an unauthorized status (401) if authenticate fail
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();

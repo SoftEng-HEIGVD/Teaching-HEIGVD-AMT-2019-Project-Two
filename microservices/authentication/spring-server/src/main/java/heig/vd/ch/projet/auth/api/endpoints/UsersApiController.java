@@ -1,9 +1,13 @@
 package heig.vd.ch.projet.auth.api.endpoints;
 
 
+import com.auth0.jwt.exceptions.JWTVerificationException;
 import heig.vd.ch.projet.auth.api.model.Password;
+import heig.vd.ch.projet.auth.api.model.Roles;
 import heig.vd.ch.projet.auth.api.model.UserDTO;
 import heig.vd.ch.projet.auth.api.service.AuthenticateService;
+import heig.vd.ch.projet.auth.api.service.DecodedToken;
+import heig.vd.ch.projet.auth.api.service.JWTService;
 import heig.vd.ch.projet.auth.entities.UserEntity;
 import heig.vd.ch.projet.auth.api.UsersApi;
 import heig.vd.ch.projet.auth.api.model.User;
@@ -34,6 +38,9 @@ public class UsersApiController implements UsersApi {
     @Autowired
     AuthenticateService authenticateService;
 
+    @Autowired
+    JWTService jwtService;
+
     @Override
     public ResponseEntity<Void> createUser(@ApiParam(value = "" ,required=true) @RequestHeader(value="Authorization", required=true) String authorization,
                                            @ApiParam(value = "", required = true) @Valid @RequestBody User user) {
@@ -55,6 +62,8 @@ public class UsersApiController implements UsersApi {
         //Save the user
         userRepository.save(newUserEntity);
 
+        //TODO send email with email + password un body
+
         //Return a created status (201)
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
@@ -65,22 +74,32 @@ public class UsersApiController implements UsersApi {
                                            @ApiParam(value = "" ,required=true) @RequestHeader(value="Authorization", required=true) String authorization) {
 
         //Verify token TODO --> change and make function
-        if(!authorization.equals("myToken")){
+        /*if(!authorization.equals("myToken")){
             //Return an forbidden status (403)
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-        }
+        }*/
 
         try {
-            //Get the existing user
-            UserEntity userEntity = userRepository.findById(userEmail).get();
+            DecodedToken decodedToken = jwtService.verifyToken(authorization);
+            if(decodedToken.getRole().equals(Roles.ADMIN.toString())){
+                //Get the existing user
+                UserEntity userEntity = userRepository.findById(userEmail).get();
 
-            //Delete the user
-            userRepository.delete(userEntity);
+                //Delete the user
+                userRepository.delete(userEntity);
 
-            //Return an accept status (202)
-            return ResponseEntity.accepted().build();
+                //Return an accept status (202)
+                return ResponseEntity.accepted().build();
+            }else {
+                //Return an forbidden (403)
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+            }
         }catch (NoSuchElementException e){
+            //Return an not found status status (404)
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }catch (JWTVerificationException | NullPointerException ex){
+            //Return an unauthorized status (401)
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
     }
 
@@ -89,22 +108,34 @@ public class UsersApiController implements UsersApi {
     public ResponseEntity<UserDTO> getUserById(@ApiParam(value = "",required=true ) @PathVariable("userEmail") String userEmail,
                                                @ApiParam(value = "" ,required=true) @RequestHeader(value="Authorization", required=true) String authorization) {
         //Verify token TODO --> change and make function
-        if(!authorization.equals("myToken")){
+        /*if(!authorization.equals("myToken")){
             //Return an forbidden status (403)
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-        }
+        }*/
 
         try {
-            //Get the existing user
-            UserEntity userEntity = userRepository.findById(userEmail).get();
 
-            //Change userEntity to userDTO
-            UserDTO userDTO = toUserDTO(userEntity);
+            DecodedToken decodedToken = jwtService.verifyToken(authorization);
+            if((decodedToken.getEmail().equals(userEmail) && decodedToken.getRole().equals(Roles.USER.toString())) || decodedToken.getRole().equals(Roles.ADMIN.toString())) {
+                //Get the existing user
+                UserEntity userEntity = userRepository.findById(userEmail).get();
 
-            //Return the user and ok status (200)
-            return ResponseEntity.ok(userDTO);
+                //Change userEntity to userDTO
+                UserDTO userDTO = toUserDTO(userEntity);
+
+                //Return the user and ok status (200)
+                return ResponseEntity.ok(userDTO);
+            }else {
+                //Return an forbidden status (403)
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+            }
+
         }catch(NoSuchElementException e) {
+            //Return an not found status (404)
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }catch (JWTVerificationException | NullPointerException ex){
+            //Return an unauthorized status (401)
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
 
     }
@@ -115,18 +146,29 @@ public class UsersApiController implements UsersApi {
         List<UserDTO> usersDTO = new ArrayList<>();
 
         //Verify token TODO --> change and make function
-        if(!authorization.equals("myToken")){
+        /*if(!authorization.equals("myToken")){
             //Return an forbidden status (403)
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-        }
+        }*/
 
-        //Get all users
-        for (UserEntity userEntity : userRepository.findAll()) {
-            usersDTO.add(toUserDTO(userEntity));
-        }
+        try {
+            DecodedToken decodedToken = jwtService.verifyToken(authorization);
+            if(decodedToken.getRole().equals(Roles.ADMIN.toString())){
+                //Get all users
+                for (UserEntity userEntity : userRepository.findAll()) {
+                    usersDTO.add(toUserDTO(userEntity));
+                }
 
-        //Return an array of user and an ok status (200)
-        return ResponseEntity.ok(usersDTO);
+                //Return an array of user and an ok status (200)
+                return ResponseEntity.ok(usersDTO);
+            }else {
+                //Return an forbidden status (403)
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+            }
+        }catch (JWTVerificationException | NullPointerException ex){
+            //Return an unauthorized status (401)
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
     }
 
     @Override
@@ -135,38 +177,45 @@ public class UsersApiController implements UsersApi {
                                            @ApiParam(value = "", required = true) @Valid @RequestBody Password password) {
 
         //Verify token TODO --> change and make function
-        if(!authorization.equals("myToken")){
+        /*if(!authorization.equals("myToken")){
             //Return an forbidden status (403)
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-        }
+        }*/
 
         try {
-            //Get the existing user
-            UserEntity userEntity = userRepository.findById(userEmail).get();
+            DecodedToken decodedToken = jwtService.verifyToken(authorization);
+            if((decodedToken.getEmail().equals(userEmail) && decodedToken.getRole().equals(Roles.USER.toString()))
+                    || decodedToken.getRole().equals(Roles.ADMIN.toString())){
 
-            //Update the user password
-            String hashedPassword = authenticateService.hashPassword(password.getPassword());
-            userEntity.setPassword(hashedPassword);
+                //Get the existing user
+                UserEntity userEntity = userRepository.findById(userEmail).get();
 
-            //Save the user
-            userRepository.save(userEntity);
+                //Update the user password
+                String hashedPassword = authenticateService.hashPassword(password.getPassword());
+                userEntity.setPassword(hashedPassword);
 
-            //Return an accept status (202)
-            return ResponseEntity.accepted().build();
+                //Save the user
+                userRepository.save(userEntity);
 
+                //Return an accept status (202)
+                return ResponseEntity.accepted().build();
+
+            }else{
+                //Return an forbidden status (403)
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+            }
         }catch (NoSuchElementException e){
+            //Return an not found status (404)
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }catch (JWTVerificationException | NullPointerException ex){
+            //Return an unauthorized status (401)
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
 
     }
 
 
     /*Utils methods---------------------------------------------------------------------------------------------------*/
-
-    private void verifyToken(String token){
-        //TODO
-    }
-
     private UserEntity toUserEntity(User user) {
         UserEntity entity = new UserEntity();
         entity.setEmail(user.getEmail());
@@ -174,9 +223,10 @@ public class UsersApiController implements UsersApi {
         entity.setFirstname(user.getFirstname());
 
         String hashedPassword = authenticateService.hashPassword(user.getPassword());
+        System.out.println(hashedPassword);
         entity.setPassword(hashedPassword);
 
-        entity.setRole(user.getRole());
+        entity.setRole(user.getRole().toString());
         return entity;
     }
 
@@ -186,7 +236,7 @@ public class UsersApiController implements UsersApi {
         user.setLastname(entity.getLastname());
         user.setFirstname(entity.getFirstname());
         user.setPassword(entity.getPassword());
-        user.setRole(entity.getRole());
+        user.setRole(Roles.fromValue(entity.getRole()));
         return user;
     }
 
@@ -195,7 +245,7 @@ public class UsersApiController implements UsersApi {
         userDTO.setEmail(entity.getEmail());
         userDTO.setLastname(entity.getLastname());
         userDTO.setFirstname(entity.getFirstname());
-        userDTO.setRole(entity.getRole());
+        userDTO.setRole(Roles.fromValue(entity.getRole()));
 
         return userDTO;
     }

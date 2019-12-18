@@ -24,13 +24,12 @@ USE `authentication_api` ;
 DROP TABLE IF EXISTS `authentication_api`.`User` ;
 
 CREATE TABLE IF NOT EXISTS `authentication_api`.`User` (
-  `idUser` INT NOT NULL AUTO_INCREMENT,
-  `email` VARCHAR(45) NOT NULL UNIQUE,
-  `firstname` VARCHAR(45) NULL,
-  `lastname` VARCHAR(45) NULL,
-  `password` VARCHAR(255) NULL,
-  PRIMARY KEY (`idUser`),
-  UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE)
+  `email` VARCHAR(255) NOT NULL,
+  `firstname` VARCHAR(255) NULL,
+  `lastname` VARCHAR(255) NULL,
+  `password` VARCHAR(255) NOT NULL,
+  `role` VARCHAR(255) NOT NULL,
+  PRIMARY KEY (`email`))
 ENGINE = InnoDB;
 
 SET SQL_MODE=@OLD_SQL_MODE;
