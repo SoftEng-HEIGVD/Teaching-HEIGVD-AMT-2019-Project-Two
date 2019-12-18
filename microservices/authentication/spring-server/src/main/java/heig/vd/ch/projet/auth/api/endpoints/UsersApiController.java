@@ -223,7 +223,6 @@ public class UsersApiController implements UsersApi {
         entity.setFirstname(user.getFirstname());
 
         String hashedPassword = authenticateService.hashPassword(user.getPassword());
-        System.out.println(hashedPassword);
         entity.setPassword(hashedPassword);
 
         entity.setRole(user.getRole().toString());

@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="bc9bf3c1-9d6e-484b-992a-a6886feabb34" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/../../../docker-images/mysql/Dockerfile" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../docker-images/mysql/data/a-auth-db.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../docker-images/mysql/data/b-trip-db.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../docker-images/phpmyadmin/Dockerfile" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../topology/docker-compose.yml" beforeDir="false" />
-    </list>
+    <list default="true" id="bc9bf3c1-9d6e-484b-992a-a6886feabb34" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -521,7 +515,7 @@
       <workItem from="1576488152253" duration="7452000" />
       <workItem from="1576594316851" duration="2909000" />
       <workItem from="1576656045758" duration="11441000" />
-      <workItem from="1576673406958" duration="10752000" />
+      <workItem from="1576673406958" duration="11551000" />
     </task>
     <servers />
   </component>
