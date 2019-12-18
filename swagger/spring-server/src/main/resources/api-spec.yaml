@@ -3,8 +3,8 @@ info:
   version: '0.1.0'
   title: Boozify
   description: An API to manage the different user
-host: 192.168.99.100
-basePath: /boozify
+host: localhost:8090
+basePath: /api
 schemes:
   - http
 paths:
