@@ -11,27 +11,19 @@ import javax.persistence.Id;
 
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 
 @Entity
 public class PokemonEntity {
     @Id
-    @Column(name = "pokeDexId")
-    private Integer pokeDex;
+    private Integer pokeDexId;
 
-    @Column(name = "name")
     private String name;
 
-    @Column(name = "type")
     private String type;
 
-    @Column(name = "category")
     private String category;
 
-    @Column(name = "height")
     private Integer height;
 
-    @Column(name = "hp")
     private Integer hp;
 }
