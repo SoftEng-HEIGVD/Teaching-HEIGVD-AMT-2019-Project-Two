@@ -16,8 +16,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.NativeWebRequest;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
+import java.net.URI;
 import java.util.*;
 
 @RestController
@@ -26,9 +28,19 @@ public class PokemonsApiControllers implements PokemonsApi {
     @Autowired
     private PokemonRepository pokemonRepository;
 
-    /*public ResponseEntity<Object> createPokemon(@ApiParam(value = "" ,required=true )  @Valid @RequestBody Pokemon pokemon) {
+    /*
+       URL : /pokemons
+       method : POST with JSON
+     */
+    public ResponseEntity<Pokemon> createPokemon(@ApiParam(value = "" ,required=true )  @Valid @RequestBody Pokemon pokemon) {
+        PokemonEntity pokemonEntity = toEntity(pokemon);
 
-    }*/
+        PokemonEntity createdPokemonEntity = pokemonRepository.save(pokemonEntity);
+
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/pokemons/{id}").buildAndExpand(createdPokemonEntity.getPokeDexId()).toUri();
+
+        return ResponseEntity.created(uri).body(toPokemon(createdPokemonEntity));
+    }
 
 
     @ApiOperation(value = "", nickname = "deletePokemonByID", notes = "delete a pokemon by its ID", tags={  })
