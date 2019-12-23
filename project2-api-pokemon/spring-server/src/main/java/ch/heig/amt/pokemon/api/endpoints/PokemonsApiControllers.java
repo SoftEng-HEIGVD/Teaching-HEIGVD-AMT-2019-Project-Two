@@ -93,15 +93,25 @@ public class PokemonsApiControllers implements PokemonsApi {
         return ResponseEntity.ok(pokemons);
     }
 
-
-    @ApiOperation(value = "", nickname = "updatePokemonByID", notes = "update a pokemon by its ID", tags={  })
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "success") })
-    @RequestMapping(value = "/pokemons/{id}",
-            method = RequestMethod.PUT)
+    /*
+       URL : /pokemons/{id}
+       method : PUT
+     */
     public ResponseEntity<Void> updatePokemonByID(@ApiParam(value = "The pokemon ID",required=true) @PathVariable("id") Integer id,@ApiParam(value = "" ,required=true )  @Valid @RequestBody Pokemon pokemon) {
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+        Optional<PokemonEntity> pokemonEntityOptional = pokemonRepository.findBypokeDexId(id);
 
+        Pokemon pokemonToUpdate = toPokemon(pokemonEntityOptional.get());
+
+        pokemonToUpdate.setPokedexId(pokemon.getPokedexId());
+        pokemonToUpdate.setType(pokemon.getType());
+        pokemonToUpdate.setHp(pokemon.getHp());
+        pokemonToUpdate.setHeight(pokemon.getHeight());
+        pokemonToUpdate.setCategory(pokemon.getCategory());
+        pokemonToUpdate.setCategory(pokemon.getCategory());
+
+        pokemonRepository.save(toEntity(pokemonToUpdate));
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     /* Entity to POJO conversion */
