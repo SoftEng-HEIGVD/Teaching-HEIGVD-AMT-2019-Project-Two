@@ -31,6 +31,8 @@ public class PokemonsApiControllers implements PokemonsApi {
     /*
        URL : /pokemons
        method : POST with JSON
+       Be careful to add Accept : application/json in header request
+       may be implement in a TODO
      */
     public ResponseEntity<Pokemon> createPokemon(@ApiParam(value = "" ,required=true )  @Valid @RequestBody Pokemon pokemon) {
         PokemonEntity pokemonEntity = toEntity(pokemon);
@@ -42,15 +44,13 @@ public class PokemonsApiControllers implements PokemonsApi {
         return ResponseEntity.created(uri).body(toPokemon(createdPokemonEntity));
     }
 
-
-    @ApiOperation(value = "", nickname = "deletePokemonByID", notes = "delete a pokemon by its ID", tags={  })
-    @ApiResponses(value = {
-            @ApiResponse(code = 204, message = "sucessfully deleted") })
-    @RequestMapping(value = "/pokemons/{id}",
-            method = RequestMethod.DELETE)
+    /*
+       URL : /pokemons/{id}
+       method : DELETE
+     */
     public ResponseEntity<Void> deletePokemonByID(@ApiParam(value = "The pokemon ID",required=true) @PathVariable("id") Integer id) {
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-
+        pokemonRepository.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 
 
