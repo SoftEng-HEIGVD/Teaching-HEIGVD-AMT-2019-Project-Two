@@ -53,15 +53,13 @@ public class PokemonsApiControllers implements PokemonsApi {
         return ResponseEntity.noContent().build();
     }
 
-
-    @ApiOperation(value = "", nickname = "deletePokemons", notes = "delete the list of all pokemons", tags={  })
-    @ApiResponses(value = {
-            @ApiResponse(code = 204, message = "sucessfully deleted") })
-    @RequestMapping(value = "/pokemons",
-            method = RequestMethod.DELETE)
+    /*
+       URL : /pokemons/
+       method : DELETE
+     */
     public ResponseEntity<Void> deletePokemons(@ApiParam(value = "name of the pokemon to delete") @Valid @RequestParam(value = "name", required = false) String name,@ApiParam(value = "type of the pokemon to delete") @Valid @RequestParam(value = "type", required = false) String type,@ApiParam(value = "category of the pokemon to delete") @Valid @RequestParam(value = "category", required = false) String category,@ApiParam(value = "height of the pokemon to delete") @Valid @RequestParam(value = "height", required = false) Integer height,@ApiParam(value = "hp of the pokemon to delete") @Valid @RequestParam(value = "hp", required = false) Integer hp) {
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-
+        pokemonRepository.deleteAll();
+        return new ResponseEntity<>(HttpStatus.valueOf(204));
     }
 
     /*
