@@ -5,7 +5,8 @@ USE users_amt;
 CREATE TABLE IF NOT EXISTS users
 ( 
     id_user INT UNIQUE NOT NULL AUTO_INCREMENT, 
-    username VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL UNIQUE, 
+    first_name VARCHAR(255) NOT NULL, 
+    last_name VARCHAR(255) NOT NULL,
     `password` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
     email VARCHAR(255) PRIMARY KEY UNIQUE NOT NULL,
     role SMALLINT NOT NULL DEFAULT 0
@@ -13,7 +14,7 @@ CREATE TABLE IF NOT EXISTS users
 
 
 
-INSERT INTO users(`username`, `password`, `email`, `role`) VALUES
-('admin', 'test123', 'admin@boozify.ch', 1),
-('user','1234', 'user@boozify.ch', 0);
+INSERT INTO users(`first_name`, `last_name`, `password`, `email`, `role`) VALUES
+('julien','huguet', 'test123', 'julien@boozify.ch', 1),
+('test', 'test', '1234', 'test@boozify.ch', 0);
 
