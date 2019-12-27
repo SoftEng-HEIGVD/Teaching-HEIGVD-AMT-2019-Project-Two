@@ -55,18 +55,6 @@ paths:
           description: created
           schema:
             type: object
-    get:
-      description: get the list of all users
-      operationId: getAllUsers
-      produces:
-        - application/json
-      responses:
-        '200':
-          description: success
-          schema:
-            type: array
-            items:
-              $ref: '#/definitions/User'
 
   /users/{email}:
     get:
@@ -111,8 +99,6 @@ definitions:
   User:
     type: object
     properties:
-      id_user:
-        type: integer
       first_name:
         type: string
       last_name:
