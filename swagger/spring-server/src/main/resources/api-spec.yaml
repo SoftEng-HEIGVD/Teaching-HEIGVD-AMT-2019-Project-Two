@@ -1,15 +1,45 @@
 swagger: '2.0'
 info:
   version: '0.1.0'
-  title: Boozify
+  title: Boozify Account Manager
   description: An API to manage the different user
 host: localhost:8090
 basePath: /api
 schemes:
   - http
+securityDefinitions:
+  Bearer:
+    type: apiKey
+    name: Login
+    in: header
 paths:
+  /login:
+    post:
+      description: Login for user
+      operationId: loginUser
+      consumes:
+        - application/json
+      parameters:
+        - name: logins
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/UserLogin'
+      responses:
+        '200':
+          description: login successful
+          schema:
+            type: string
+          headers:
+            Authorization:
+              type: string
+              description: Login token
+        '400':
+          description: Invalid email/password
   /users:
     post:
+      security:
+        - Bearer: []
       description: create a user
       operationId: createUser
       consumes:
@@ -27,7 +57,7 @@ paths:
             type: object
     get:
       description: get the list of all users
-      operationId: getUsers
+      operationId: getAllUsers
       produces:
         - application/json
       responses:
@@ -37,17 +67,67 @@ paths:
             type: array
             items:
               $ref: '#/definitions/User'
+
+  /users/{email}:
+    get:
+      description: get a user
+      operationId: getUser
+      produces:
+        - application/json
+      parameters:
+        - name: email
+          in: path
+          required: true
+          type: string
+      responses:
+        '200':
+          description: success
+          schema:
+            $ref: '#/definitions/User'
+    patch:
+      security:
+        - Bearer: []
+      description: Update password of user
+      operationId: updateUser
+      consumes:
+        - text/html
+      parameters:
+        - name: email
+          in: path
+          required: true
+          type: string
+        - name: password
+          in: body
+          required: true
+          schema:
+            type: string
+      responses:
+        '201':
+          description: User updated success
+        '404':
+          description: No user found
+
 definitions:
   User:
     type: object
     properties:
       id_user:
         type: integer
-      name:
+      first_name:
+        type: string
+      last_name:
         type: string
       password:
         type: string
       email:
         type: string
-      administrateur:
-        type: boolean 
+      role:
+        type: boolean
+
+  UserLogin:
+    type: object
+    properties:
+      email:
+        type: string
+      password:
+        type: string
