@@ -17,8 +17,6 @@ public class UserEntity implements Serializable {
     @Id
     private String email;
 
-
-    private Integer idUser;
     private String firstName;
     private String lastName;
     private String password;
@@ -30,14 +28,6 @@ public class UserEntity implements Serializable {
 
     public void setEmail(String email){
         this.email = email;
-    }
-
-    public Integer getIdUser(){
-        return idUser;
-    }
-
-    public void setIdUser(Integer idUser){
-        this.idUser = idUser;
     }
 
     public String getFirstName(){
