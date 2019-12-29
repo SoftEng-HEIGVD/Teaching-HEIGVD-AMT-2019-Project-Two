@@ -2,128 +2,104 @@ package ch.heig.amt.pokemon.api.endpoints;
 
 import ch.heig.amt.pokemon.api.ApiUtil;
 import ch.heig.amt.pokemon.api.TrainersApi;
+import ch.heig.amt.pokemon.api.model.Pokemon;
 import ch.heig.amt.pokemon.api.model.Trainer;
 import ch.heig.amt.pokemon.api.model.TrainerWithId;
+import ch.heig.amt.pokemon.entities.PokemonEntity;
+import ch.heig.amt.pokemon.entities.TrainerEntity;
+import ch.heig.amt.pokemon.repositories.PokemonRepository;
+import ch.heig.amt.pokemon.repositories.TrainerRepository;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.NativeWebRequest;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
+import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @RestController
 public class TrainersApiControllers implements TrainersApi {
 
-    public Optional<NativeWebRequest> getRequest() {
-        return Optional.empty();
-    }
+    @Autowired
+    private TrainerRepository trainerRepository;
 
-    @ApiOperation(value = "", nickname = "createTrainer", notes = "create a trainer", response = TrainerWithId.class, tags={  })
-    @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "created", response = TrainerWithId.class),
-            @ApiResponse(code = 400, message = "Bad request") })
-    @RequestMapping(value = "/trainers",
-            produces = { "*/*" },
-            consumes = { "application/json" },
-            method = RequestMethod.POST)
     public ResponseEntity<TrainerWithId> createTrainer(@ApiParam(value = "" ,required=true )  @Valid @RequestBody Trainer trainer) {
-        getRequest().ifPresent(request -> {
-            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
-                if (mediaType.isCompatibleWith(MediaType.valueOf("*/*"))) {
-                    String exampleString = "null";
-                    ApiUtil.setExampleResponse(request, "*/*", exampleString);
-                    break;
-                }
-            }
-        });
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+        TrainerEntity trainerEntity = toTrainerEntity(trainer);
+        TrainerEntity createdTrainerEntity = trainerRepository.save(trainerEntity);
 
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/trainers/{id}").buildAndExpand(createdTrainerEntity.getTrainerId()).toUri();
+
+
+        return ResponseEntity.created(uri).body(toTrainerWithId(createdTrainerEntity));
     }
 
 
-    @ApiOperation(value = "", nickname = "deleteTrainerById", notes = "delete a trainer by its ID", tags={  })
-    @ApiResponses(value = {
-            @ApiResponse(code = 204, message = "sucessfully deleted"),
-            @ApiResponse(code = 404, message = "Not found") })
-    @RequestMapping(value = "/trainers/{id}",
-            method = RequestMethod.DELETE)
     public ResponseEntity<Void> deleteTrainerById(@ApiParam(value = "The trainer ID",required=true) @PathVariable("id") Integer id) {
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-
+        return ResponseEntity.notFound().build();
     }
 
 
-    @ApiOperation(value = "", nickname = "deleteTrainers", notes = "delete the list of all trainers", tags={  })
-    @ApiResponses(value = {
-            @ApiResponse(code = 204, message = "sucessfully deleted") })
-    @RequestMapping(value = "/trainers",
-            method = RequestMethod.DELETE)
     public ResponseEntity<Void> deleteTrainers(@ApiParam(value = "name of the trainer to delete") @Valid @RequestParam(value = "name", required = false) String name,@ApiParam(value = "surname of the trainer to delete") @Valid @RequestParam(value = "surname", required = false) String surname,@ApiParam(value = "gender of the trainer to delete") @Valid @RequestParam(value = "gender", required = false) String gender,@ApiParam(value = "age of the trainer to delete") @Valid @RequestParam(value = "age", required = false) Integer age,@ApiParam(value = "number of badges of the trainer to delete") @Valid @RequestParam(value = "numberOfBadges", required = false) Integer numberOfBadges) {
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-
+        return ResponseEntity.notFound().build();
     }
 
-
-    @ApiOperation(value = "", nickname = "getTrainerById", notes = "get a trainer by its ID", response = TrainerWithId.class, tags={  })
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "success", response = TrainerWithId.class),
-            @ApiResponse(code = 404, message = "Not found") })
-    @RequestMapping(value = "/trainers/{id}",
-            produces = { "application/json" },
-            method = RequestMethod.GET)
     public ResponseEntity<TrainerWithId> getTrainerById(@ApiParam(value = "The trainer ID",required=true) @PathVariable("id") Integer id) {
-        getRequest().ifPresent(request -> {
-            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "null";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-            }
-        });
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-
+        return ResponseEntity.notFound().build();
     }
 
 
-    @ApiOperation(value = "", nickname = "getTrainers", notes = "get the list of all trainers", response = TrainerWithId.class, responseContainer = "List", tags={  })
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "success", response = TrainerWithId.class, responseContainer = "List") })
-    @RequestMapping(value = "/trainers",
-            produces = { "application/json" },
-            method = RequestMethod.GET)
     public ResponseEntity<List<TrainerWithId>> getTrainers(@ApiParam(value = "name of the trainer to return") @Valid @RequestParam(value = "name", required = false) String name,@ApiParam(value = "surname of the trainer to return") @Valid @RequestParam(value = "surname", required = false) String surname,@ApiParam(value = "gender of the trainer to return") @Valid @RequestParam(value = "gender", required = false) String gender,@ApiParam(value = "age of the trainer to return") @Valid @RequestParam(value = "age", required = false) Integer age,@ApiParam(value = "number of badges of the trainer to return") @Valid @RequestParam(value = "numberOfBadges", required = false) Integer numberOfBadges) {
-        getRequest().ifPresent(request -> {
-            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "null";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-            }
-        });
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+        List<TrainerWithId> trainers = new ArrayList<>();
+        List<TrainerEntity> trainerEntities = new ArrayList<>();
 
+        trainerEntities = (List<TrainerEntity>) trainerRepository.findAll();
+
+            for(TrainerEntity trainerEntity : trainerEntities) {
+                trainers.add(toTrainerWithId(trainerEntity));
+            }
+
+            return ResponseEntity.ok(trainers);
     }
 
-
-    @ApiOperation(value = "", nickname = "updateTrainerById", notes = "update a trainer by its ID", tags={  })
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "success"),
-            @ApiResponse(code = 404, message = "Not found") })
-    @RequestMapping(value = "/trainers/{id}",
-            method = RequestMethod.PUT)
     public ResponseEntity<Void> updateTrainerById(@ApiParam(value = "The pokemon ID",required=true) @PathVariable("id") Integer id,@ApiParam(value = "" ,required=true )  @Valid @RequestBody Trainer pokemon) {
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+        return ResponseEntity.notFound().build();
+    }
 
+    /* Entity to POJO conversion */
+    private TrainerWithId toTrainerWithId(TrainerEntity trainerEntity) {
+        TrainerWithId trainerWithId = new TrainerWithId();
+
+        trainerWithId.setId(trainerEntity.getTrainerId());
+        trainerWithId.setAge(trainerEntity.getAge());
+        trainerWithId.setGender(trainerEntity.getGender());
+        trainerWithId.setName(trainerEntity.getName());
+        trainerWithId.setNumberOfBadges(trainerEntity.getNumberOfBadges());
+        trainerWithId.setSurname(trainerEntity.getSurname());
+
+        return trainerWithId;
+    }
+
+    private TrainerEntity toTrainerEntity(Trainer trainer) {
+        TrainerEntity trainerEntity = new TrainerEntity();
+
+        trainerEntity.setAge(trainer.getAge());
+        trainerEntity.setGender(trainer.getGender());
+        trainerEntity.setName(trainer.getName());
+        trainerEntity.setNumberOfBadges(trainer.getNumberOfBadges());
+        trainerEntity.setSurname(trainer.getSurname());
+
+        return trainerEntity;
     }
 
 }

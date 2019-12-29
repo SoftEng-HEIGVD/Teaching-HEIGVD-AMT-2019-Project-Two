@@ -48,11 +48,12 @@ public class PokemonsApiControllers implements PokemonsApi {
         return ResponseEntity.created(uri).body(toPokemon(createdPokemonEntity));
     }
 
+    /*
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public void handleCreationError(HttpMessageNotReadableException ex) {
         throw new PokemonBadRequestException("Pokemon not insered, bad JSON payload");
     }
-
+    */
     /*
        URL : /pokemons/{id}
        method : DELETE
@@ -135,7 +136,7 @@ public class PokemonsApiControllers implements PokemonsApi {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    /* Entity to POJO conversion */
+    /* POHO to Entity conversion */
     private PokemonEntity toEntity(Pokemon pokemon) {
         PokemonEntity pokemonEntity = new PokemonEntity();
 
@@ -149,7 +150,7 @@ public class PokemonsApiControllers implements PokemonsApi {
         return pokemonEntity;
     }
 
-    /* POJO to Entity conversion */
+    /* Entity to POJO conversion */
     private Pokemon toPokemon(PokemonEntity pokemonEntity) {
         Pokemon pokemon = new Pokemon();
 

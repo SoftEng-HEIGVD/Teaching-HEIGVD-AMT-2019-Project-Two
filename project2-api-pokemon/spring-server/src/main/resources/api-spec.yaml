@@ -374,11 +374,13 @@ definitions:
         type: integer
 
   TrainerWithId:
-    type: object
-    properties:
-      id:
-        type: integer
     allOf:
+      - type: object
+        required:
+          - id
+        properties:
+          id:
+            type: integer
       - $ref: '#/definitions/Trainer'
 
   Capture:
