@@ -19,20 +19,11 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
-@Controller
+@RestController
 public class TrainersApiControllers implements TrainersApi {
 
-    public Optional<NativeWebRequest> getRequest() {
-        return Optional.empty();
-    }
 
-    @ApiOperation(value = "", nickname = "createTrainer", notes = "create a trainer", response = TrainerWithId.class, tags={  })
-    @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "created", response = TrainerWithId.class) })
-    @RequestMapping(value = "/trainers",
-            produces = { "*/*" },
-            consumes = { "application/json" },
-            method = RequestMethod.POST)
+
     public ResponseEntity<TrainerWithId> createTrainer(@ApiParam(value = "" ,required=true )  @Valid @RequestBody Trainer trainer) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {

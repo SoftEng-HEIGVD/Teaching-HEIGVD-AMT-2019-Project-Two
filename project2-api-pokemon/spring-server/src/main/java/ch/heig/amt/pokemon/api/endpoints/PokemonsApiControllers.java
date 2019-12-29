@@ -2,6 +2,9 @@ package ch.heig.amt.pokemon.api.endpoints;
 
 import ch.heig.amt.pokemon.api.ApiUtil;
 import ch.heig.amt.pokemon.api.PokemonsApi;
+import ch.heig.amt.pokemon.api.exceptions.NotFoundException;
+import ch.heig.amt.pokemon.api.exceptions.PokemonBadRequestException;
+import ch.heig.amt.pokemon.api.exceptions.PokemonNotFoundException;
 import ch.heig.amt.pokemon.api.model.Pokemon;
 import ch.heig.amt.pokemon.entities.PokemonEntity;
 import ch.heig.amt.pokemon.repositories.PokemonRepository;
@@ -13,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.NativeWebRequest;
@@ -44,13 +48,24 @@ public class PokemonsApiControllers implements PokemonsApi {
         return ResponseEntity.created(uri).body(toPokemon(createdPokemonEntity));
     }
 
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public void handleCreationError(HttpMessageNotReadableException ex) {
+        throw new PokemonBadRequestException("Pokemon not insered, bad JSON payload");
+    }
+
     /*
        URL : /pokemons/{id}
        method : DELETE
      */
     public ResponseEntity<Void> deletePokemonByID(@ApiParam(value = "The pokemon ID",required=true) @PathVariable("id") Integer id) {
+        Optional<PokemonEntity> optionalPokemonEntity = pokemonRepository.findBypokeDexId(id);
+
+        if(!optionalPokemonEntity.isPresent()) {
+            throw new PokemonNotFoundException("Pokemon " + id + " not found");
+        }
+
         pokemonRepository.deleteById(id);
-        return ResponseEntity.noContent().build();
+        return new ResponseEntity<>(HttpStatus.valueOf(204));
     }
 
     /*
@@ -68,6 +83,10 @@ public class PokemonsApiControllers implements PokemonsApi {
      */
     public ResponseEntity<Pokemon> getPokemonByID(@ApiParam(value = "The pokemon ID",required=true) @PathVariable("id") Integer id) {
         Optional<PokemonEntity> optionalPokemonEntity = pokemonRepository.findBypokeDexId(id);
+
+        if(!optionalPokemonEntity.isPresent()) {
+            throw new PokemonNotFoundException("Pokemon " + id + " not found");
+        }
 
         PokemonEntity pokemonEntity = optionalPokemonEntity.get();
 
@@ -97,6 +116,10 @@ public class PokemonsApiControllers implements PokemonsApi {
      */
     public ResponseEntity<Void> updatePokemonByID(@ApiParam(value = "The pokemon ID",required=true) @PathVariable("id") Integer id,@ApiParam(value = "" ,required=true )  @Valid @RequestBody Pokemon pokemon) {
         Optional<PokemonEntity> pokemonEntityOptional = pokemonRepository.findBypokeDexId(id);
+
+        if(!pokemonEntityOptional.isPresent()) {
+            throw new PokemonNotFoundException("Pokemon " + id + " not found");
+        }
 
         Pokemon pokemonToUpdate = toPokemon(pokemonEntityOptional.get());
 
