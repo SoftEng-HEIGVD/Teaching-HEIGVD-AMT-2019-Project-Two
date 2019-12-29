@@ -129,7 +129,6 @@ public class PokemonsApiControllers implements PokemonsApi {
         pokemonToUpdate.setHp(pokemon.getHp());
         pokemonToUpdate.setHeight(pokemon.getHeight());
         pokemonToUpdate.setCategory(pokemon.getCategory());
-        pokemonToUpdate.setCategory(pokemon.getCategory());
 
         pokemonRepository.save(toEntity(pokemonToUpdate));
 

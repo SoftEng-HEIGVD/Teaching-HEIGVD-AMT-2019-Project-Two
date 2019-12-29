@@ -270,8 +270,8 @@ paths:
           name: id
           required: true
           type: integer
-          description: The pokemon ID
-        - name: pokemon
+          description: The trainer ID
+        - name: trainer
           in: body
           required: true
           schema:

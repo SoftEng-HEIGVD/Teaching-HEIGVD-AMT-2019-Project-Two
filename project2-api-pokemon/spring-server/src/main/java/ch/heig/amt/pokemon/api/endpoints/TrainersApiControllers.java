@@ -2,17 +2,12 @@ package ch.heig.amt.pokemon.api.endpoints;
 
 import ch.heig.amt.pokemon.api.ApiUtil;
 import ch.heig.amt.pokemon.api.TrainersApi;
-import ch.heig.amt.pokemon.api.model.Pokemon;
+import ch.heig.amt.pokemon.api.exceptions.TrainerNotFoundException;
 import ch.heig.amt.pokemon.api.model.Trainer;
 import ch.heig.amt.pokemon.api.model.TrainerWithId;
-import ch.heig.amt.pokemon.entities.PokemonEntity;
 import ch.heig.amt.pokemon.entities.TrainerEntity;
-import ch.heig.amt.pokemon.repositories.PokemonRepository;
 import ch.heig.amt.pokemon.repositories.TrainerRepository;
-import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -46,16 +41,32 @@ public class TrainersApiControllers implements TrainersApi {
 
 
     public ResponseEntity<Void> deleteTrainerById(@ApiParam(value = "The trainer ID",required=true) @PathVariable("id") Integer id) {
-        return ResponseEntity.notFound().build();
+        Optional<TrainerEntity> optionalTrainerEntity = trainerRepository.findById(id);
+
+        if(!optionalTrainerEntity.isPresent()) {
+            throw new TrainerNotFoundException("Trainer not found");
+        }
+
+        trainerRepository.deleteById(id);
+        return new ResponseEntity<>(HttpStatus.valueOf(204));
     }
 
 
     public ResponseEntity<Void> deleteTrainers(@ApiParam(value = "name of the trainer to delete") @Valid @RequestParam(value = "name", required = false) String name,@ApiParam(value = "surname of the trainer to delete") @Valid @RequestParam(value = "surname", required = false) String surname,@ApiParam(value = "gender of the trainer to delete") @Valid @RequestParam(value = "gender", required = false) String gender,@ApiParam(value = "age of the trainer to delete") @Valid @RequestParam(value = "age", required = false) Integer age,@ApiParam(value = "number of badges of the trainer to delete") @Valid @RequestParam(value = "numberOfBadges", required = false) Integer numberOfBadges) {
-        return ResponseEntity.notFound().build();
+        trainerRepository.deleteAll();
+        return new ResponseEntity<>(HttpStatus.valueOf(204));
     }
 
     public ResponseEntity<TrainerWithId> getTrainerById(@ApiParam(value = "The trainer ID",required=true) @PathVariable("id") Integer id) {
-        return ResponseEntity.notFound().build();
+        Optional<TrainerEntity> optionalTrainerEntity = trainerRepository.findById(id);
+
+        if(!optionalTrainerEntity.isPresent()) {
+            throw new TrainerNotFoundException("Trainer not found");
+        }
+
+        TrainerEntity trainerEntity = optionalTrainerEntity.get();
+
+        return ResponseEntity.ok(toTrainerWithId(trainerEntity));
     }
 
 
@@ -72,8 +83,28 @@ public class TrainersApiControllers implements TrainersApi {
             return ResponseEntity.ok(trainers);
     }
 
-    public ResponseEntity<Void> updateTrainerById(@ApiParam(value = "The pokemon ID",required=true) @PathVariable("id") Integer id,@ApiParam(value = "" ,required=true )  @Valid @RequestBody Trainer pokemon) {
-        return ResponseEntity.notFound().build();
+    public ResponseEntity<Void> updateTrainerById(@ApiParam(value = "The trainer ID",required=true) @PathVariable("id") Integer id,@ApiParam(value = "" ,required=true )  @Valid @RequestBody Trainer trainer) {
+        Optional<TrainerEntity> optionalTrainerEntity = trainerRepository.findById(id);
+
+        if(!optionalTrainerEntity.isPresent()) {
+            throw new TrainerNotFoundException("Trainer not found");
+        }
+
+        TrainerWithId updatedTrainer = addID(id,trainer);
+        trainerRepository.save(toTrainerEntity(updatedTrainer));
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    private TrainerWithId addID(int id, Trainer trainer){
+        TrainerWithId trainerWithId = new TrainerWithId();
+        trainerWithId.setId(id);
+        trainerWithId.setSurname(trainer.getSurname());
+        trainerWithId.setName(trainer.getName());
+        trainerWithId.setNumberOfBadges(trainer.getNumberOfBadges());
+        trainerWithId.setGender(trainer.getGender());
+        trainerWithId.setAge(trainer.getAge());
+        return trainerWithId;
     }
 
     /* Entity to POJO conversion */
@@ -98,6 +129,19 @@ public class TrainersApiControllers implements TrainersApi {
         trainerEntity.setName(trainer.getName());
         trainerEntity.setNumberOfBadges(trainer.getNumberOfBadges());
         trainerEntity.setSurname(trainer.getSurname());
+
+        return trainerEntity;
+    }
+
+    private TrainerEntity toTrainerEntity(TrainerWithId trainerWithId) {
+        TrainerEntity trainerEntity = new TrainerEntity();
+
+        trainerEntity.setTrainerId(trainerWithId.getId());
+        trainerEntity.setAge(trainerWithId.getAge());
+        trainerEntity.setGender(trainerWithId.getGender());
+        trainerEntity.setName(trainerWithId.getName());
+        trainerEntity.setNumberOfBadges(trainerWithId.getNumberOfBadges());
+        trainerEntity.setSurname(trainerWithId.getSurname());
 
         return trainerEntity;
     }
