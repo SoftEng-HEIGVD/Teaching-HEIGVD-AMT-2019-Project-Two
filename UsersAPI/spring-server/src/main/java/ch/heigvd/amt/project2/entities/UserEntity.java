@@ -25,6 +25,7 @@ public class UserEntity implements Serializable {
     private String username;
     @Getter @Setter
     private String password;
+    @Id
     @Getter @Setter
     private String email;
     @Getter @Setter
