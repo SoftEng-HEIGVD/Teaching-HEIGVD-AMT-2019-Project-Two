@@ -17,8 +17,8 @@ public class SwaggerDocumentationConfig {
 
     ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-            .title("Users API")
-            .description("An API to manage Users")
+            .title("AMT - Project 2")
+            .description("This is the documentation of the AMT Project 2")
             .license("")
             .licenseUrl("")
             .termsOfServiceUrl("")

@@ -1,53 +1,45 @@
 package ch.heigvd.amt.project2.api.endpoints;
 
-import ch.heigvd.amt.project2.api.UsersApi;
+import ch.heigvd.amt.project2.api.SignUpApi;
 import ch.heigvd.amt.project2.api.model.User;
 import ch.heigvd.amt.project2.entities.UserEntity;
 import ch.heigvd.amt.project2.repositories.UserRepository;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2019-12-16T19:36:34.802Z")
-
 @RestController
-public class UsersApiController implements UsersApi {
+public class SignUpApiController implements SignUpApi {
 
     @Autowired
     UserRepository userRepository;
 
-    @Override
-    public ResponseEntity<List<User>> getUsers() {
-        List<User> users = new ArrayList<>();
-        for (UserEntity userEntity : userRepository.findAll()) {
-            users.add(toUser(userEntity));
-        }
-        return ResponseEntity.ok(users);
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    public SignUpApiController() {
+        this.bCryptPasswordEncoder = new BCryptPasswordEncoder();
     }
 
     @Override
-    public ResponseEntity<User> getUserById(@ApiParam(value = "",required=true) @PathVariable("userId") Long userId) {
-        Optional<UserEntity> userEntity = userRepository.findById(userId);
-        User user = toUser(userEntity.get());
-        return ResponseEntity.ok(user);
-    }
+    public ResponseEntity<Void> createUser(@ApiParam(value = "" ,required=true )  @Valid @RequestBody User user) {
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        UserEntity newUserEntity = toUserEntity(user);
+        userRepository.save(newUserEntity);
+        Long id = newUserEntity.getId();
+        URI location = ServletUriComponentsBuilder
+                .fromCurrentContextPath().path("/users/{id}")
+                .buildAndExpand(newUserEntity.getId()).toUri();
 
-    @Override
-    public ResponseEntity<Void> changePassword(@ApiParam(value = "",required=true) @PathVariable("userId") Long userId, @ApiParam(value = "") @Valid @RequestParam(value = "newPassword", required = false) String newPassword) {
-        userRepository.changePassword(newPassword, userId);
-        return new ResponseEntity(HttpStatus.NO_CONTENT);
+        return ResponseEntity.created(location).build();
     }
 
     private UserEntity toUserEntity(User user) {

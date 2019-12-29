@@ -11,30 +11,14 @@ schemes:
 tags:
   - name: "user"
     description: "Operations about user"
+  - name: "authentication"
+    description: "Operations about authentication (sign-up, login, logout, etc)"
 paths:
   /users:
-    post:
-      tags:
-        - "user"
-      description: "create a new user"
-      operationId: "createUser"
-      consumes:
-        - "application/json"
-      parameters:
-        - name: "user"
-          in: "body"
-          required: true
-          schema:
-            $ref: "#/definitions/User"
-      responses:
-        201:
-          description: "created"
-          schema:
-            type: "object"
     get:
       tags:
         - "user"
-      description: "Get the list of all users"
+      description: "Get the list of all users details. Only admins can do this operation."
       operationId: "getUsers"
       produces:
         - "application/json"
@@ -49,7 +33,7 @@ paths:
     patch:
       tags:
         - "user"
-      description: "change user password"
+      description: "change user password. An authenticated user can only change his password."
       operationId: "changePassword"
       consumes:
         - "application/json"
@@ -68,7 +52,7 @@ paths:
     get:
       tags:
         - "user"
-      description: "Get a single user"
+      description: "Get a user details. An authenticated user can only see his details."
       operationId: "getUserById"
       produces:
         - "application/json"
@@ -83,38 +67,23 @@ paths:
           description: "success"
           schema:
             $ref: "#/definitions/User"
-  /login:
+  /sign-up:
     post:
       tags:
-        - "user"
-      description: "Authenticate a user"
-      operationId: "authenticateUser"
+        - "authentication"
+      description: "create a new user"
+      operationId: "createUser"
       consumes:
-        - "application/x-www-form-urlencoded"
-      parameters:
-        - name: "username"
-          in: "formData"
-          required: true
-          type: "string"
-        - name: "password"
-          in: "formData"
-          required: true
-          type: "string"
-      responses:
-        200:
-          description: "OK"
-          schema:
-            type: "object"
-    get:
-      tags:
-        - "user"
-      description: "Get the login"
-      operationId: "getLoginPage"
-      produces:
         - "application/json"
+      parameters:
+        - name: "user"
+          in: "body"
+          required: true
+          schema:
+            $ref: "#/definitions/User"
       responses:
-        200:
-          description: "success"
+        201:
+          description: "created"
 definitions:
   User:
     type: "object"
@@ -131,6 +100,8 @@ definitions:
       password:
         type: "string"
       email:
+        type: "string"
+      role:
         type: "string"
     xml:
       name: "User"
