@@ -172,10 +172,6 @@ paths:
           name: numberOfBadges
           type: integer
           description: number of badges of the trainer to return
-        - in: query
-          name: favouritePokemon
-          type: string
-          description: favourite Pokemon of the trainer to return
       responses:
         '200':
           description: success
@@ -208,10 +204,6 @@ paths:
           name: numberOfBadges
           type: integer
           description: number of badges of the trainer to delete
-        - in: query
-          name: favouritePokemon
-          type: string
-          description: favourite Pokemon of the trainer to delete
       responses:
         204:
           description: sucessfully deleted
@@ -379,9 +371,7 @@ definitions:
       age:
         type: integer
       numberOfBadges:
-        type: string
-      favouritePokemon:
-        type: string
+        type: integer
 
   TrainerWithId:
     type: object
