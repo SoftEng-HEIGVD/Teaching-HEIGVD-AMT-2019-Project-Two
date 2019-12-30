@@ -1,0 +1,92 @@
+swagger: '2.0'
+info:
+  version: '0.1.0'
+  title: User API
+  description: An API for users
+host: localhost:8080
+basePath: /api
+schemes:
+  - http
+  - https
+paths:
+  /users:
+    post:
+      tags:
+        - user
+      summary: Create user
+      description: Create a new user.
+      operationId: createUser
+      consumes:
+        - application/json
+      parameters:
+        - name: user
+          in: body
+          description: Created user object
+          required: true
+          schema:
+            $ref: '#/definitions/User'
+      responses:
+        '201':
+          description: created
+          schema:
+            type: object
+
+  /users/{username}:
+    get:
+      tags:
+        - user
+      summary: Get user by username
+      description: ""
+      operationId: getUserByName
+      produces:
+        - application/json
+      parameters:
+        - name: username
+          in: path
+          description: The username of the user to be fetched.
+          required: true
+          type: string
+      responses:
+        '200':
+          description: success
+          schema:
+            type: object
+            items:
+              $ref: '#/definitions/User'
+    patch:
+      tags:
+        - user
+      summary: change user password
+      description: Change user password only if he is autenticated.
+      operationId: changeUserPassword
+      parameters:
+        - name: username
+          in: path
+          description: "username of the user who wishes to change his password"
+          required: true
+          type: "string"
+        - name: password
+          in: body
+          description: New password
+          required: true
+          schema:
+            $ref: '#/definitions/User'
+      responses:
+        200:
+          description: OK
+
+
+definitions:
+  User:
+    type: object
+    properties:
+      username:
+        type: string
+      email:
+        type: string
+      firstName:
+        type: string
+      lastName:
+        type: string
+      password:
+        type: string

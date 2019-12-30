@@ -1,0 +1,184 @@
+swagger: '2.0'
+# Actor Film Role (rolename, awards, casting)
+# yml validation? project two modules? commands and pagination? API opinion
+# update certain attributes like revenue for films
+info:
+  version: '0.1.0'
+  title: Movies API
+  description: An API for a movies library with actors and roles.
+host: localhost:8080
+basePath: /api
+schemes:
+  - http
+  - https
+paths:
+  /movies:
+    post:
+      tags:
+        - movie
+      summary: Create movie
+      description: Create a new movie.
+      operationId: createMovie
+      consumes:
+        - application/json
+      parameters:
+        - name: movie
+          in: body
+          description: Created movie object
+          required: true
+          schema:
+            $ref: '#/definitions/Movie'
+      responses:
+        201:
+          description: created
+          schema:
+            type: object
+    get:
+      tags:
+        - movie
+      summary: Get movies
+      description: Get all movies.
+      operationId: getMovies
+      produces:
+        - application/json
+      responses:
+        200:
+          description: success
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Movie'
+  /screenwriters:
+    post:
+      tags:
+        - screenwriter
+      summary: Create screenwriter
+      description: Create a new screenwriter
+      consumes:
+        - application/json
+      parameters:
+        - name: screenwriter
+          in: body
+          description: Created screenwriter object
+          required: true
+          schema:
+            $ref: '#/definitions/Screenwriter'
+      responses:
+        201:
+          description: created
+          schema:
+            type: object
+    get:
+      tags:
+        - screenwriter
+      summary: Get screenwriters
+      description: Get all screenwriters.
+      operationId: getScreenwriters
+      produces:
+        - application/json
+      responses:
+        200:
+          description: success
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Screenwriter'
+  /screenwriters/{screenwriterId}:
+    get:
+      tags:
+        - screenwriter
+      summary: Find screenwriter by id
+      description: Returns a single screenwriter
+      operationId: getScreenwriterById
+      produces:
+        - application/json
+      parameters:
+        - name: screenwriterId
+          in: path
+          description: ID of screenwriter to return
+          required: true
+          type: integer
+          format: int64
+      responses:
+        200:
+          description: success
+          schema:
+            $ref: '#/definitions/Screenwriter'
+        400:
+          description: Invalid ID supplied
+        404:
+          description: Screewriter not found
+    delete:
+      tags:
+        - screenwriter
+      summary: Deletes a screenwriter
+      description: Deletes a screewriter by Id
+      operationId: deleteScreenwriter
+      produces:
+        - application/json
+      parameters:
+        - name: screenwriterId
+          in: path
+          description: Screenwriter id to delete
+          required: true
+          type: integer
+          format: int64
+      responses:
+        400:
+          description: Invalid ID supplied
+        404:
+          description: Screenwriter not found
+
+
+
+definitions:
+  Movie:
+    type: object
+    properties:
+      title:
+        type: string
+      director:
+        type: string
+      studio:
+        type: string
+      production:
+        type: number
+        description:
+          production value of the movie made
+      revenue:
+        type: number
+      rating:
+        type: number
+  Screenwriter:
+    type: object
+    properties:
+      firstname:
+        type: string
+      lastname:
+        type: string
+      professional:
+        type: string
+        description: Full time or Freelancer
+        enum:
+          - freelancer
+          - full-time
+
+  Screenplay:
+    type: object
+    properties:
+      screenwriterId:
+        type: integer
+      movieId:
+        type: integer
+      synopsis:
+        type: string
+      original:
+        type: boolean
+        description: Original or an adaptation
+        enum:
+          - original
+          - adaptation-time
+      awarded:
+        type: boolean
+      awards:
+        type: string
