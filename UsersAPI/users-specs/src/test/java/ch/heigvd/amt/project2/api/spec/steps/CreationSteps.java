@@ -1,66 +1,66 @@
-package ch.heigvd.amt.project2.users.api.spec.steps;
+package ch.heigvd.amt.project2.api.spec.steps;
 
-import cucumber.api.java.en.Given;
-import cucumber.api.java.en.Then;
-import cucumber.api.java.en.When;
 import ch.heigvd.amt.project2.ApiException;
 import ch.heigvd.amt.project2.ApiResponse;
 import ch.heigvd.amt.project2.api.UserApi;
 import ch.heigvd.amt.project2.api.model.User;
-import ch.heigvd.amt.project2.users.api.spec.helpers.Environment;
+import ch.heigvd.amt.project2.api.spec.helpers.Environment;
+import cucumber.api.java.en.Given;
+import cucumber.api.java.en.Then;
+import cucumber.api.java.en.When;
 
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 /**
- * Created by Olivier Liechti on 27/07/17.
+ * Based on the CreationSteps class of Fruits, written by Olivier Liechti
+ * @author Nathanaël Mizutani
  */
 public class CreationSteps {
 
-    /*private Environment environment;
+    private Environment environment;
     private UserApi api;
 
-    Fruit fruit;
+    User user;
 
     private ApiResponse lastApiResponse;
     private ApiException lastApiException;
     private boolean lastApiCallThrewException;
     private int lastStatusCode;
 
-    public CreationSteps(Environment environment) {
+    public CreationSteps(Environment environment){
         this.environment = environment;
         this.api = environment.getApi();
     }
 
-    @Given("^there is a Fruits server$")
-    public void there_is_a_Fruits_server() throws Throwable {
+    @Given("^There is a User Api server$")
+    public void there_is_a_User_API_server() throws Throwable {
         assertNotNull(api);
     }
 
-    @Given("^I have a fruit payload$")
-    public void i_have_a_fruit_payload() throws Throwable {
-        fruit = new io.avalia.fruits.api.dto.Fruit();
+    @Given("^I have a user payload$")
+    public void i_have_a_user_payload() throws Throwable {
+        user = new ch.heigvd.amt.project2.api.model.User();
     }
 
-    @When("^I POST it to the /fruits endpoint$")
-    public void i_POST_it_to_the_fruits_endpoint() throws Throwable {
-        try {
-            lastApiResponse = api.createFruitWithHttpInfo(fruit);
+    @When("^I POST it to the /users endpoint$")
+    public void i_POST_it_to_the_users_endpoint() throws  Throwable {
+        try{
+            lastApiResponse = api.createUserWithHttpInfo(user);
             lastApiCallThrewException = false;
             lastApiException = null;
             lastStatusCode = lastApiResponse.getStatusCode();
         } catch (ApiException e) {
-            lastApiCallThrewException = true;
             lastApiResponse = null;
+            lastApiCallThrewException = true;
             lastApiException = e;
             lastStatusCode = lastApiException.getCode();
         }
-
     }
 
     @Then("^I receive a (\\d+) status code$")
     public void i_receive_a_status_code(int arg1) throws Throwable {
         assertEquals(201, lastStatusCode);
-    }*/
+    }
 
 }
