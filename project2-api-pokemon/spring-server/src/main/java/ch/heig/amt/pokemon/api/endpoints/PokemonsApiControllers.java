@@ -43,7 +43,7 @@ public class PokemonsApiControllers implements PokemonsApi {
 
         PokemonEntity createdPokemonEntity = pokemonRepository.save(pokemonEntity);
 
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/pokemons/{id}").buildAndExpand(createdPokemonEntity.getPokeDexId()).toUri();
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(createdPokemonEntity.getPokeDexId()).toUri();
 
         return ResponseEntity.created(uri).body(toPokemon(createdPokemonEntity));
     }

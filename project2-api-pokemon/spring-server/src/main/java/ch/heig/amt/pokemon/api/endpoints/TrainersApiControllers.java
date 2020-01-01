@@ -33,10 +33,11 @@ public class TrainersApiControllers implements TrainersApi {
         TrainerEntity trainerEntity = toTrainerEntity(trainer);
         TrainerEntity createdTrainerEntity = trainerRepository.save(trainerEntity);
 
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/trainers/{id}").buildAndExpand(createdTrainerEntity.getTrainerId()).toUri();
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(createdTrainerEntity.getTrainerId()).toUri();
 
+        TrainerWithId createdTrainerWithId = toTrainerWithId(createdTrainerEntity);
 
-        return ResponseEntity.created(uri).body(toTrainerWithId(createdTrainerEntity));
+        return ResponseEntity.created(uri).body(createdTrainerWithId);
     }
 
 
