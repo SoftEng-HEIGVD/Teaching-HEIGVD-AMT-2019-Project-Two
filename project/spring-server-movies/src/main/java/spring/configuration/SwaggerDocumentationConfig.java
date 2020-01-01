@@ -17,13 +17,13 @@ public class  SwaggerDocumentationConfig {
 
     ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-            .title("Fruits API")
-            .description("An API to demonstrate Swagger and Spring Boot")
+            .title("Movies API")
+            .description("An API for a movies library with actors and their roles.")
             .license("")
             .licenseUrl("http://unlicense.org")
             .termsOfServiceUrl("")
             .version("0.1.0")
-            .contact(new Contact("","", ""))
+            .contact(new Contact("Stephane Selim","", "stephan.selim@heig-vd.ch"))
             .build();
     }
 
@@ -31,7 +31,7 @@ public class  SwaggerDocumentationConfig {
     public Docket customImplementation(){
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
-                    .apis(RequestHandlerSelectors.basePackage("io.avalia.fruits.api"))
+                    .apis(RequestHandlerSelectors.basePackage("spring.api"))
                     .build()
                 .directModelSubstitute(org.joda.time.LocalDate.class, java.sql.Date.class)
                 .directModelSubstitute(org.joda.time.DateTime.class, java.util.Date.class)

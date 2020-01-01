@@ -14,8 +14,6 @@ schemes:
 paths:
   /movies:
     post:
-      tags:
-        - movie
       summary: Create movie
       description: Create a new movie.
       operationId: createMovie
@@ -34,8 +32,6 @@ paths:
           schema:
             type: object
     get:
-      tags:
-        - movie
       summary: Get movies
       description: Get all movies.
       operationId: getMovies
@@ -43,83 +39,123 @@ paths:
         - application/json
       responses:
         200:
-          description: success
+          description: Success
           schema:
             type: array
             items:
               $ref: '#/definitions/Movie'
-  /screenwriters:
+  /movies/{movieId}:
+    get:
+      summary: Find movie by ID
+      description: Returns a single movie with specified ID
+      operationId: findMovieById
+      produces:
+        - application/json
+      parameters:
+        - name: movieId
+          in: path
+          description: ID of the movie to fetch
+          required: true
+          type: integer
+          format: int64
+      responses:
+        200:
+          description: Success
+          schema:
+            $ref: '#/definitions/Movie'
+        400:
+          description: Invalid ID supplied
+        404:
+          description: Movie not found
+    delete:
+      summary: Deletes a movie
+      description: Deletes a movie by Id
+      operationId: deleteMovie
+      produces:
+        - application/json
+      parameters:
+        - name: movieId
+          in: path
+          description: the id of the movie to delete
+          required: true
+          type: integer
+          format: int64
+      responses:
+        204:
+          description: Success
+        400:
+          description: Invalid ID supplied
+        404:
+          description: Movie not found
+
+  /actors:
     post:
-      tags:
-        - screenwriter
-      summary: Create screenwriter
-      description: Create a new screenwriter
+      summary: Create actor
+      description: Create a new actor.
+      operationId: createActor
       consumes:
         - application/json
       parameters:
-        - name: screenwriter
+        - name: actor
           in: body
-          description: Created screenwriter object
+          description: Create actor object
           required: true
           schema:
-            $ref: '#/definitions/Screenwriter'
+            $ref: '#/definitions/Actor'
       responses:
         201:
-          description: created
+          description: Created
           schema:
             type: object
+
     get:
-      tags:
-        - screenwriter
-      summary: Get screenwriters
-      description: Get all screenwriters.
-      operationId: getScreenwriters
+      summary: Get actors
+      description: Get all actors.
+      operationId: getActors
       produces:
         - application/json
       responses:
         200:
-          description: success
+          description: Success
           schema:
             type: array
             items:
-              $ref: '#/definitions/Screenwriter'
-  /screenwriters/{screenwriterId}:
+              $ref: '#/definitions/Actor'
+
+  /actors/{actorId}:
     get:
-      tags:
-        - screenwriter
-      summary: Find screenwriter by id
-      description: Returns a single screenwriter
-      operationId: getScreenwriterById
+      summary: Find actor by id
+      description: Returns a single actor
+      operationId: findActorById
       produces:
         - application/json
       parameters:
-        - name: screenwriterId
+        - name: actorId
           in: path
-          description: ID of screenwriter to return
+          description: ID of actor to fetch
           required: true
           type: integer
           format: int64
       responses:
         200:
-          description: success
+          description: Success
           schema:
-            $ref: '#/definitions/Screenwriter'
+            $ref: '#/definitions/Actor'
         400:
           description: Invalid ID supplied
         404:
-          description: Screewriter not found
+          description: Actor not found
+
     delete:
-      tags:
-        - screenwriter
-      summary: Deletes a screenwriter
-      description: Deletes a screewriter by Id
-      operationId: deleteScreenwriter
+      summary: Deletes an actor
+      description: Deletes an actor by Id
+      operationId: deleteActor
       produces:
         - application/json
       parameters:
-        - name: screenwriterId
+        - name: actorId
           in: path
-          description: Screenwriter id to delete
+          description: Actor id to delete
           required: true
           type: integer
           format: int64
@@ -127,9 +163,7 @@ paths:
         400:
           description: Invalid ID supplied
         404:
-          description: Screenwriter not found
-
-
+          description: Actor not found
 
 definitions:
   Movie:
@@ -143,44 +177,39 @@ definitions:
         type: string
       production:
         type: number
+        format: double
         description:
           production value of the movie made
       revenue:
         type: number
+        format: double
       rating:
         type: number
-  Screenwriter:
+        format: double
+  Actor:
     type: object
     properties:
       firstname:
         type: string
       lastname:
         type: string
-      professional:
+      expertise:
         type: string
-        description: Full time or Freelancer
+        description: TV, film or theatre actor
         enum:
-          - freelancer
-          - full-time
-      union:
-        type: string
-        description: the union the screenwriter is part of
+          - theater
+          - television
+          - film
 
-  Screenplay:
+  Role:
     type: object
     properties:
-      screenwriterId:
+      actorId:
         type: integer
       movieId:
         type: integer
-      synopsis:
+      character:
         type: string
-      original:
-        type: boolean
-        description: Original or an adaptation
-        enum:
-          - original
-          - adaptation-time
       awarded:
         type: boolean
       awards:
