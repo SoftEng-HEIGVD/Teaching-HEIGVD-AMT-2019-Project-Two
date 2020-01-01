@@ -135,7 +135,7 @@ public class PokemonsApiControllers implements PokemonsApi {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    /* POHO to Entity conversion */
+    /* POJO to Entity conversion */
     private PokemonEntity toEntity(Pokemon pokemon) {
         PokemonEntity pokemonEntity = new PokemonEntity();
 
