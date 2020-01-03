@@ -87,6 +87,8 @@ paths:
           description: created
           schema:
             $ref: '#/definitions/Pokemon'
+        '400':
+          description: Bad request
 
   /pokemons/{id}:
     get:
@@ -99,6 +101,8 @@ paths:
           description: success
           schema:
             $ref: '#/definitions/Pokemon'
+        '404':
+          description: pokemon not found
       parameters:
         - in: path
           name: id
@@ -118,6 +122,8 @@ paths:
       responses:
         204:
           description: sucessfully deleted
+        '404':
+          description: Not found
 
     put:
       description: update a pokemon by its ID
@@ -136,6 +142,8 @@ paths:
       responses:
         200:
           description: success
+        '404':
+          description: Not found
 
   /trainers:
     get:
@@ -164,10 +172,6 @@ paths:
           name: numberOfBadges
           type: integer
           description: number of badges of the trainer to return
-        - in: query
-          name: favouritePokemon
-          type: string
-          description: favourite Pokemon of the trainer to return
       responses:
         '200':
           description: success
@@ -200,10 +204,6 @@ paths:
           name: numberOfBadges
           type: integer
           description: number of badges of the trainer to delete
-        - in: query
-          name: favouritePokemon
-          type: string
-          description: favourite Pokemon of the trainer to delete
       responses:
         204:
           description: sucessfully deleted
@@ -224,6 +224,8 @@ paths:
           description: created
           schema:
             $ref: '#/definitions/TrainerWithId'
+        '400':
+          description: Bad request
 
   /trainers/{id}:
     get:
@@ -236,6 +238,8 @@ paths:
           description: success
           schema:
             $ref: '#/definitions/TrainerWithId'
+        '404':
+          description: Not found
       parameters:
         - in: path
           name: id
@@ -255,6 +259,8 @@ paths:
       responses:
         204:
           description: sucessfully deleted
+        '404':
+          description: Not found
 
     put:
       description: update a trainer by its ID
@@ -264,8 +270,8 @@ paths:
           name: id
           required: true
           type: integer
-          description: The pokemon ID
-        - name: pokemon
+          description: The trainer ID
+        - name: trainer
           in: body
           required: true
           schema:
@@ -273,6 +279,8 @@ paths:
       responses:
         200:
           description: success
+        '404':
+          description: Not found
 
   /captures:
     post:
@@ -291,6 +299,8 @@ paths:
           description: created
           schema:
             $ref: '#/definitions/CaptureWithId'
+        '400':
+          description: Bad request
 
   /captures/trainers/{id_trainer}:
     get:
@@ -303,6 +313,8 @@ paths:
           description: success
           schema:
             $ref: '#/definitions/CaptureTrainerPokemons'
+        '404':
+          description: Not found
       parameters:
         - in: path
           name: id_trainer
@@ -321,6 +333,8 @@ paths:
           description: success
           schema:
             $ref: '#/definitions/CapturePokemonTrainers'
+        '404':
+          description: Not found
       parameters:
         - in: path
           name: id_pokemon
@@ -357,16 +371,16 @@ definitions:
       age:
         type: integer
       numberOfBadges:
-        type: string
-      favouritePokemon:
-        type: string
+        type: integer
 
   TrainerWithId:
-    type: object
-    properties:
-      id:
-        type: integer
     allOf:
+      - type: object
+        required:
+          - id
+        properties:
+          id:
+            type: integer
       - $ref: '#/definitions/Trainer'
 
   Capture:
