@@ -44,7 +44,7 @@ public class UsersApiController implements UsersApi {
         return ResponseEntity.ok(user);
     }
 
-    @Override
+    //@Override
     public ResponseEntity<Void> changePassword(@ApiParam(value = "",required=true) @PathVariable("userId") Long userId, @ApiParam(value = "") @Valid @RequestParam(value = "newPassword", required = false) String newPassword) {
         userRepository.changePassword(newPassword, userId);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
