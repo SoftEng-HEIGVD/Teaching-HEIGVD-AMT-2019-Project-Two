@@ -3,7 +3,7 @@ info:
   version: '0.1.0'
   title: Users for Pokemon API
   description: An API to manage users for Pokemon API
-host: 192.168.99.100
+host: localhost:8090
 basePath: /api
 schemes:
   - http
@@ -25,6 +25,8 @@ paths:
           description: logged successfully
           schema:
             $ref: '#/definitions/ValidCreds'
+        '401':
+          description: bad login
   /users/{id}:
     get:
       description: get user info by its id
@@ -97,19 +99,25 @@ definitions:
       lastname:
         type: string
   UserToPost:
-    type: object
     allOf:
+      - type: object
+        required:
+          - password
+        properties:
+          password:
+            type: string
       - $ref: '#/definitions/BaseUser'
-    properties:
-      password:
-        type: string
+
   UserToGet:
-    type: object
     allOf:
+      - type: object
+        required:
+          - id
+        properties:
+          id:
+            type: integer
       - $ref: '#/definitions/BaseUser'
-    properties:
-      id:
-        type: integer
+
   QueryPasswordChange:
     type: object
     properties:
@@ -131,4 +139,3 @@ definitions:
         type: string
       userID:
         type: integer
-      
