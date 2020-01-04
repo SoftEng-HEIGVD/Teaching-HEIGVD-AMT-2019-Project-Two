@@ -27,10 +27,10 @@ paths:
             $ref: '#/definitions/ValidCreds'
         '401':
           description: bad login
-  /users/{id}:
+  /users:
     get:
-      description: get user info by its id
-      operationId: getUserbyID
+      description: get user info
+      operationId: getUser
       consumes:
         - application/json
       parameters:
@@ -38,17 +38,11 @@ paths:
           name: Authorization
           type: string
           required: true
-        - in: path
-          name: id
-          required: true
-          type: integer
       responses:
         '201':
           description: retrieved account info
           schema:
             $ref: '#/definitions/UserToGet'
-
-  /users:
     post:
       description: create an account
       operationId: createAccount

@@ -4,8 +4,10 @@ import ch.heig.amt.login.api.ApiUtil;
 import ch.heig.amt.login.api.UsersApi;
 import ch.heig.amt.login.api.model.UserToGet;
 import ch.heig.amt.login.api.model.UserToPost;
+import ch.heig.amt.login.api.util.UtilsJWT;
 import ch.heig.amt.login.entities.UserEntity;
 import ch.heig.amt.login.repositories.UserRepository;
+import io.jsonwebtoken.Claims;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
@@ -37,8 +39,13 @@ public class UsersApiController implements UsersApi {
 
 
 
-    public ResponseEntity<UserToGet> getUserbyID(@ApiParam(value = "" ,required=true) @RequestHeader(value="Authorization", required=true) String authorization, @ApiParam(value = "",required=true) @PathVariable("id") Integer id) {
-        return null;
+    public ResponseEntity<UserToGet> getUser(@ApiParam(value = "" ,required=true) @RequestHeader(value="Authorization", required=true) String authorization) {
+        Claims claims = UtilsJWT.decodeJWT(authorization);
+        String username = claims.getSubject();
+        UserEntity fetchedUser = userRepository.findByusername(username);
+        UserToGet userToGet = toUserToGet(fetchedUser);
+
+        return ResponseEntity.ok(userToGet);
     }
 
     public UserEntity toUserEntity(UserToPost user){
@@ -51,7 +58,7 @@ public class UsersApiController implements UsersApi {
         return userEntity;
     }
 
-    public UserToGet toUserToGet(UserEntity userEntity){
+    public static UserToGet toUserToGet(UserEntity userEntity){
         UserToGet userToGet = new UserToGet();
         userToGet.setFirstname(userEntity.getFirstname());
         userToGet.setId(userEntity.getId());
