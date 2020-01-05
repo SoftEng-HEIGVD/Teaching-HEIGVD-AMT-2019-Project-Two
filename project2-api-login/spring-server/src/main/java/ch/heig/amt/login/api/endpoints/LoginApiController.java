@@ -4,6 +4,7 @@ import ch.heig.amt.login.api.LoginApi;
 import ch.heig.amt.login.api.exceptions.BadLoginException;
 import ch.heig.amt.login.api.model.Credentials;
 import ch.heig.amt.login.api.model.ValidCreds;
+import ch.heig.amt.login.api.util.PasswordHash;
 import ch.heig.amt.login.api.util.UtilsJWT;
 import ch.heig.amt.login.entities.UserEntity;
 import ch.heig.amt.login.repositories.UserRepository;
@@ -22,9 +23,21 @@ public class LoginApiController implements LoginApi {
     private UserRepository userRepository;
 
     public ResponseEntity<ValidCreds> login(@ApiParam(value = "" ,required=true )  @Valid @RequestBody Credentials credentials) {
+        PasswordHash ph = new PasswordHash();
+
+
+
         UserEntity fetchedUserEntity = userRepository.findByusername(credentials.getUsername());
         ValidCreds validCreds = new ValidCreds();
-        if(fetchedUserEntity.getPassword().equals(credentials.getPassword())){
+
+        Boolean validPass;
+        try{
+            validPass = ph.validatePassword(credentials.getPassword(), fetchedUserEntity.getPassword());
+        } catch (Exception e){
+            throw new RuntimeException();
+        }
+
+        if(validPass){
             validCreds.setUserID(fetchedUserEntity.getId());
             validCreds.setJwTToken(UtilsJWT.createJWT("Login API For Pokemon API", fetchedUserEntity.getUsername(),UtilsJWT.VALIDITY));
         } else{

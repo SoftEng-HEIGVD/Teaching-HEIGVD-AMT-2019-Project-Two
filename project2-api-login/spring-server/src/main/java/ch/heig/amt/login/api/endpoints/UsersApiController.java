@@ -4,6 +4,7 @@ import ch.heig.amt.login.api.ApiUtil;
 import ch.heig.amt.login.api.UsersApi;
 import ch.heig.amt.login.api.model.UserToGet;
 import ch.heig.amt.login.api.model.UserToPost;
+import ch.heig.amt.login.api.util.PasswordHash;
 import ch.heig.amt.login.api.util.UtilsJWT;
 import ch.heig.amt.login.entities.UserEntity;
 import ch.heig.amt.login.repositories.UserRepository;
@@ -32,6 +33,16 @@ public class UsersApiController implements UsersApi {
 
     public ResponseEntity<UserToGet> createAccount(@ApiParam(value = "" ,required=true )  @Valid @RequestBody UserToPost user) {
         UserEntity userEntity = toUserEntity(user);
+
+        // Password is hashed to be entered in database
+        PasswordHash ph = new PasswordHash();
+        String finalHashedPass = "";
+        try {
+            finalHashedPass = ph.createHash(userEntity.getPassword());
+        } catch (Exception e){
+            throw new RuntimeException();
+        }
+        userEntity.setPassword(finalHashedPass);
         UserEntity createdUserEntity = userRepository.save(userEntity);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(createdUserEntity.getId()).toUri();
         return ResponseEntity.created(uri).body(toUserToGet(createdUserEntity));
