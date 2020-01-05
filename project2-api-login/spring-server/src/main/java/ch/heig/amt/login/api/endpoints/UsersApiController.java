@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.net.URI;
 import java.nio.file.AccessDeniedException;
@@ -34,11 +35,10 @@ public class UsersApiController implements UsersApi {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private HttpServletRequest request;
+
     public ResponseEntity<UserToGet> createAccount(@ApiParam(value = "" ,required=true) @RequestHeader(value="Authorization", required=true) String authorization,@ApiParam(value = "" ,required=true )  @Valid @RequestBody UserToPost user) {
-        Claims claims = UtilsJWT.decodeJWT(authorization);
-        if(!(Boolean) claims.get("isadmin")){
-            throw new ForbiddenException("You must be admin to create an account");
-        }
 
         UserEntity userEntity = toUserEntity(user);
 
@@ -59,9 +59,7 @@ public class UsersApiController implements UsersApi {
 
 
     public ResponseEntity<UserToGet> getUser(@ApiParam(value = "" ,required=true) @RequestHeader(value="Authorization", required=true) String authorization) {
-        Claims claims = UtilsJWT.decodeJWT(authorization);
-        String username = claims.getSubject();
-        UserEntity fetchedUser = userRepository.findByusername(username);
+        UserEntity fetchedUser = userRepository.findByusername((String) request.getAttribute("username"));
         UserToGet userToGet = toUserToGet(fetchedUser);
 
         return ResponseEntity.ok(userToGet);

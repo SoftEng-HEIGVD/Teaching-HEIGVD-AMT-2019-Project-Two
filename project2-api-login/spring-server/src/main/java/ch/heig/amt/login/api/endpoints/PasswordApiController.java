@@ -24,18 +24,20 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 @RestController
 public class PasswordApiController implements PasswordApi {
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private HttpServletRequest request;
 
 
     public ResponseEntity<UserToGet> changePassword(@ApiParam(value = "" ,required=true) @RequestHeader(value="Authorization", required=true) String authorization, @ApiParam(value = "" ,required=true )  @Valid @RequestBody QueryPasswordChange queryPassword) {
-        Claims claims = UtilsJWT.decodeJWT(authorization);
-        String username = claims.getSubject();
-        UserEntity fetchedUser = userRepository.findByusername(username);
+        UserEntity fetchedUser = userRepository.findByusername((String) request.getAttribute("username"));
 
         PasswordHash ph = new PasswordHash();
         boolean validPass;

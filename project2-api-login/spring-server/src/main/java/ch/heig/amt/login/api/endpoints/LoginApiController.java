@@ -39,7 +39,7 @@ public class LoginApiController implements LoginApi {
 
         if(validPass){
             validCreds.setUserID(fetchedUserEntity.getId());
-            validCreds.setJwTToken(UtilsJWT.createJWT("Login API For Pokemon API", fetchedUserEntity.getUsername(),UtilsJWT.VALIDITY, fetchedUserEntity.getIsadmin()));
+            validCreds.setJwTToken(UtilsJWT.createJWT(fetchedUserEntity.getUsername(),UtilsJWT.VALIDITY, fetchedUserEntity.getIsadmin(), fetchedUserEntity.getId()));
         } else{
             throw new BadLoginException("Bad login");
         }
