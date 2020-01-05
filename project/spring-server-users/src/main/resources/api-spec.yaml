@@ -9,10 +9,108 @@ schemes:
   - http
   - https
 paths:
-  /users:
+  /registrations:
     post:
       tags:
         - user
+      description: Create a new user.
+      summary: Create user
+      operationId: registerUser
+      consumes:
+        - application/json
+      parameters:
+        - name: user
+          in: body
+          description: Created user object
+          required: true
+          schema:
+            $ref: '#/definitions/User'
+      responses:
+        '201':
+          description: created
+          schema:
+            type: object
+        '400':
+          description: Bad Request
+
+  /login:
+    post:
+      tags:
+        - user
+      description: Login user with username and password, returns a jwt token for authorizazion
+      summary: Login with credentials
+      operationId: loginUser
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: user
+          in: body
+          description: credentials
+          required: true
+          schema:
+            $ref: '#/definitions/User'
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/JwtToken'
+        '400':
+          description: Bad Credentials
+        '404':
+          description: Not found
+
+  /passwords:
+    patch:
+      tags:
+        - user
+      summary: change user Password
+      description: Change user password only if he is autenticated.
+      operationId: changePassword
+      consumes:
+        - text/plain
+      parameters:
+        - name: newPassword
+          in: body
+          required: true
+          description: User's new password.
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Success
+        '400':
+          description: Bad Request
+
+
+
+
+
+
+
+  /users:
+    get:
+      tags:
+        - admin
+      summary: Get all users
+      description: An admin operation to fetch all users in the database
+      operationId: findAllUsers
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Success
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/User'
+        '400':
+          description: Not found
+
+    post:
+      tags:
+        - admin
       summary: Create user
       description: Create a new user.
       operationId: createUser
@@ -30,13 +128,15 @@ paths:
           description: created
           schema:
             type: object
+        '400':
+          description: Bad Request
 
   /users/{username}:
     get:
       tags:
-        - user
+        - admin
       summary: Get user by username
-      description: ""
+      description: Get user using his username.
       operationId: getUserByName
       produces:
         - application/json
@@ -55,7 +155,7 @@ paths:
               $ref: '#/definitions/User'
     patch:
       tags:
-        - user
+        - changePassword
       summary: change user password
       description: Change user password only if he is autenticated.
       operationId: changeUserPassword
@@ -89,4 +189,9 @@ definitions:
       lastName:
         type: string
       password:
+        type: string
+  JwtToken:
+    type: object
+    properties:
+      token:
         type: string
