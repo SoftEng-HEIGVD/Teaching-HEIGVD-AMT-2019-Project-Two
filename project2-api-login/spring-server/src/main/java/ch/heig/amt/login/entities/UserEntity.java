@@ -20,4 +20,5 @@ public class UserEntity {
     private String firstname;
     private String lastname;
     private String password;
+    private Boolean isadmin;
 }

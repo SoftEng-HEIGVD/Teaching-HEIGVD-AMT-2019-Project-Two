@@ -2,6 +2,7 @@ package ch.heig.amt.login.api.endpoints;
 
 import ch.heig.amt.login.api.ApiUtil;
 import ch.heig.amt.login.api.UsersApi;
+import ch.heig.amt.login.api.exceptions.ForbiddenException;
 import ch.heig.amt.login.api.model.UserToGet;
 import ch.heig.amt.login.api.model.UserToPost;
 import ch.heig.amt.login.api.util.PasswordHash;
@@ -23,6 +24,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.nio.file.AccessDeniedException;
+import java.security.AccessControlException;
 import java.util.Optional;
 
 @RestController
@@ -31,7 +34,12 @@ public class UsersApiController implements UsersApi {
     @Autowired
     private UserRepository userRepository;
 
-    public ResponseEntity<UserToGet> createAccount(@ApiParam(value = "" ,required=true )  @Valid @RequestBody UserToPost user) {
+    public ResponseEntity<UserToGet> createAccount(@ApiParam(value = "" ,required=true) @RequestHeader(value="Authorization", required=true) String authorization,@ApiParam(value = "" ,required=true )  @Valid @RequestBody UserToPost user) {
+        Claims claims = UtilsJWT.decodeJWT(authorization);
+        if(!(Boolean) claims.get("isadmin")){
+            throw new ForbiddenException("You must be admin to create an account");
+        }
+
         UserEntity userEntity = toUserEntity(user);
 
         // Password is hashed to be entered in database
@@ -66,6 +74,7 @@ public class UsersApiController implements UsersApi {
         userEntity.setMail(user.getMail());
         userEntity.setPassword(user.getPassword());
         userEntity.setUsername(user.getUsername());
+        userEntity.setIsadmin(user.getIsadmin());
         return userEntity;
     }
 
@@ -76,6 +85,7 @@ public class UsersApiController implements UsersApi {
         userToGet.setUsername(userEntity.getUsername());
         userToGet.setLastname(userEntity.getLastname());
         userToGet.setMail(userEntity.getMail());
+        userToGet.setIsadmin(userEntity.getIsadmin());
         return userToGet;
     }
 }

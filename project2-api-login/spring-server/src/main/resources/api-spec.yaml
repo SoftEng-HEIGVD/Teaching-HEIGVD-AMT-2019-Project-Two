@@ -49,6 +49,10 @@ paths:
       consumes:
         - application/json
       parameters:
+        - in: header
+          name: Authorization
+          type: string
+          required: true
         - name: user
           in: body
           required: true
@@ -59,6 +63,9 @@ paths:
           description: account created
           schema:
             $ref: '#/definitions/UserToGet'
+        '403':
+          description: Access denied
+
   /password:
     put:
       description: change password for its own account
@@ -92,6 +99,8 @@ definitions:
         type: string
       lastname:
         type: string
+      isadmin:
+        type: boolean
   UserToPost:
     allOf:
       - type: object

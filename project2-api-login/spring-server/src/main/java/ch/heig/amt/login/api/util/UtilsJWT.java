@@ -11,7 +11,7 @@ public class UtilsJWT {
     private static String SECRET_KEY = "Les carottes sont cuites.";
     public static Long VALIDITY = 31556952000L;
     //Sample method to construct a JWT
-    public static String createJWT(String issuer, String subject, long ttlMillis) {
+    public static String createJWT(String issuer, String subject, long ttlMillis, boolean isadmin) {
 
         //The JWT signature algorithm we will be using to sign the token
         SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
@@ -25,6 +25,7 @@ public class UtilsJWT {
 
         //Let's set the JWT Claims
         JwtBuilder builder = Jwts.builder()
+                .claim("isadmin",isadmin)
                 .setIssuedAt(now)
                 .setSubject(subject)
                 .setIssuer(issuer)
