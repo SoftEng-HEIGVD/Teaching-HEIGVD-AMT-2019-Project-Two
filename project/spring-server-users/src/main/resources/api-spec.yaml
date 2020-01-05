@@ -71,6 +71,10 @@ paths:
       consumes:
         - text/plain
       parameters:
+        - name: Authorization
+          in: header
+          type: string
+          required: true
         - name: newPassword
           in: body
           required: true
@@ -82,12 +86,6 @@ paths:
           description: Success
         '400':
           description: Bad Request
-
-
-
-
-
-
 
   /users:
     get:
@@ -153,28 +151,29 @@ paths:
             type: object
             items:
               $ref: '#/definitions/User'
-    patch:
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+    delete:
       tags:
-        - changePassword
-      summary: change user password
-      description: Change user password only if he is autenticated.
-      operationId: changeUserPassword
+        - admin
+      summary: Delete a user
+      description: Delete a user by username
+      operationId: deleteUser
       parameters:
         - name: username
           in: path
-          description: "username of the user who wishes to change his password"
+          description: username of the user
           required: true
-          type: "string"
-        - name: password
-          in: body
-          description: New password
-          required: true
-          schema:
-            $ref: '#/definitions/User'
+          type: string
       responses:
-        200:
-          description: OK
-
+        '204':
+          description: success
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
 
 definitions:
   User:
@@ -190,6 +189,8 @@ definitions:
         type: string
       password:
         type: string
+      isAdmin:
+        type: boolean
   JwtToken:
     type: object
     properties:

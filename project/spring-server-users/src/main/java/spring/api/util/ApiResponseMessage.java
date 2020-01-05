@@ -1,4 +1,4 @@
-package io.avalia.fruits.api.util;
+package spring.api.util;
 
 import javax.xml.bind.annotation.XmlTransient;
 

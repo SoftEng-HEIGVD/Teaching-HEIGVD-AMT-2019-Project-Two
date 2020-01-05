@@ -4,8 +4,11 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.ExitCodeGenerator;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 
+import spring.entities.UserEntity;
+import spring.repositories.UserRepository;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @SpringBootApplication
@@ -32,5 +35,14 @@ public class Swagger2SpringBoot implements CommandLineRunner {
             return 10;
         }
 
+    }
+
+    @Bean
+    public CommandLineRunner demo(UserRepository repository) {
+        return (args) -> {
+            UserEntity admin = new UserEntity("admin", "root");
+            admin.setAdmin(true);
+            repository.save(admin);
+        };
     }
 }

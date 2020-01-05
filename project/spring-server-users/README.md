@@ -16,3 +16,13 @@ You can view the api documentation in swagger-ui by pointing to
 http://localhost:8080/  
 
 Change default port value in application.properties
+
+## Model
+Film students, create films bla bla
+
+## Questions:
+Do I need to add annotations in subclass?
+How about the commands and different paths, need different controllers?
+Autowired class with only static methods?
+Use header token subject as parameter for username?
+Duplicate jwt classes in both projects
