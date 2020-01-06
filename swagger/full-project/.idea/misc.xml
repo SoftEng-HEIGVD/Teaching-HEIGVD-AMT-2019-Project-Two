@@ -6,6 +6,7 @@
         <option value="$PROJECT_DIR$/../spring-server/pom.xml" />
         <option value="$PROJECT_DIR$/../fruits-specs/pom.xml" />
         <option value="$PROJECT_DIR$/../userManagement-server/pom.xml" />
+        <option value="$PROJECT_DIR$/../videogames-server/pom.xml" />
       </list>
     </option>
   </component>
