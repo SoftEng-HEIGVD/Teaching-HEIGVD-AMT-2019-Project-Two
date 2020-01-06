@@ -29,7 +29,7 @@ paths:
             type: "array"
             items:
               $ref: "#/definitions/User"
-  /users/{userId}:
+  /user/{userId}:
     patch:
       tags:
         - "user"
@@ -67,7 +67,7 @@ paths:
           description: "success"
           schema:
             $ref: "#/definitions/User"
-  /sign-up:
+  /user/sign-up:
     post:
       tags:
         - "authentication"

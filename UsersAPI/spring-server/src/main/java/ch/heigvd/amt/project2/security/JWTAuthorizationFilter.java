@@ -18,6 +18,7 @@ import static ch.heigvd.amt.project2.security.SecurityConstants.HEADER_STRING;
 import static ch.heigvd.amt.project2.security.SecurityConstants.SECRET;
 import static ch.heigvd.amt.project2.security.SecurityConstants.TOKEN_PREFIX;
 
+// https://auth0.com/blog/implementing-jwt-authentication-on-spring-boot/
 public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 
     public JWTAuthorizationFilter(AuthenticationManager authManager) {

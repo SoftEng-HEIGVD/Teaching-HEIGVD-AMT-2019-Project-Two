@@ -1,14 +1,17 @@
 package ch.heigvd.amt.project2.api.endpoints;
 
-import ch.heigvd.amt.project2.api.SignUpApi;
+import ch.heigvd.amt.project2.api.UserApi;
 import ch.heigvd.amt.project2.api.model.User;
 import ch.heigvd.amt.project2.entities.UserEntity;
 import ch.heigvd.amt.project2.repositories.UserRepository;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -18,7 +21,7 @@ import java.net.URI;
 import java.util.Optional;
 
 @RestController
-public class SignUpApiController implements SignUpApi {
+public class SignUpApiController implements UserApi {
 
     @Autowired
     UserRepository userRepository;
@@ -27,6 +30,19 @@ public class SignUpApiController implements SignUpApi {
 
     public SignUpApiController() {
         this.bCryptPasswordEncoder = new BCryptPasswordEncoder();
+    }
+
+    @Override
+    public ResponseEntity<Void> changePassword(@ApiParam(value = "",required=true) @PathVariable("userId") Long userId, @ApiParam(value = "") @Valid @RequestParam(value = "newPassword", required = false) String newPassword) {
+        userRepository.changePassword(newPassword, userId);
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
+    }
+
+    @Override
+    public ResponseEntity<User> getUserById(@ApiParam(value = "",required=true) @PathVariable("userId") Long userId) {
+        Optional<UserEntity> userEntity = userRepository.findById(userId);
+        User user = toUser(userEntity.get());
+        return ResponseEntity.ok(user);
     }
 
     @Override

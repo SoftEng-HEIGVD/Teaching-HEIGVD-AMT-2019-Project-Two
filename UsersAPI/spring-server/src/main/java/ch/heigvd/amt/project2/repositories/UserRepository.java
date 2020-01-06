@@ -16,8 +16,6 @@ public interface UserRepository extends CrudRepository<UserEntity, Long> {
 
     UserEntity findByUsername(String username);
 
-    UserEntity findByEmail(String email);
-
     @Transactional
     @Modifying(clearAutomatically = true) // (flushAutomatically = true)
     @Query("update UserEntity ue set ue.password = ?1 where ue.id = ?2")

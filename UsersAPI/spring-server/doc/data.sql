@@ -1,0 +1,1 @@
+-- INSERT INTO USER_ENTITY(id, firstname, lastname, username, password, email, role) VALUES (1, 'Olivier', 'Koffi', 'x0ff1', '$2a$10$oJ29lgmOV6Vsz9QD41PDSOyfp1lvcXjTqe3BykYvs4n6n42Mt3G.O', 'olivier.koffi@heig-vd.ch', 'admin');
