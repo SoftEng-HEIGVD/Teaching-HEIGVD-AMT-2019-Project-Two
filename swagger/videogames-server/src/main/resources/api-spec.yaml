@@ -39,27 +39,35 @@ paths:
             type: array
             items:
               $ref: '#/definitions/Videogame'
+
     put:
       description: update an existing videogame
       operationId: updateVideogame
       produces:
-        - application/json
+      - application/json
       parameters:
-        - name: videogame
-          in: body
-          description: "Videogame object that need to be added to the store"
-          required: true
-          schema:
-            $ref: '#/definitions/Videogame'
+      - name: id
+        in: path
+        description: "Videogame object that need to be added to the store"
+        required: true
+        type: "integer"
+      - name: body
+        in: body
+        description: "Body to update"
+        required: true
+        schema:
+          $ref: '#/definitions/Videogame'
       responses:
-          400:
-            description: "Invalid Videogame supplied"
-          404:
-            description: "Videogame not found"
-          405:
-            description: "Validation exception"
+        200:
+          description: "Update Done"
+        400:
+          description: "Invalid Videogame supplied"
+        404:
+          description: "Videogame not found"
+        405:
+          description: "Validation exception"
 
-  /videogame/{id}:
+  /videogames/{id}:
     delete:
       description: delete a videogame using his id
       operationId: deleteVideogame
@@ -68,21 +76,36 @@ paths:
       parameters:
         - name: id
           in: path
-          description: videogame to delete
+          description: "videogame to delete"
           required: true
-          type: integer
+          type: "Long"
       responses:
+        200:
+          description: 'Delete done'
+          schema:
+            $ref: '#/definitions/Videogame'
         400:
           description: "Invalid videogame supplied"
         404:
           description: "Videogame not found"
+
+
 definitions:
   Videogame:
     type: object
     properties:
+      id:
+        type: integer
       kind:
         type: string
       name:
         type: string
       supportedOn:
         type: string
+  User:
+    type: object
+    properties:
+      email:
+        type: string
+
+

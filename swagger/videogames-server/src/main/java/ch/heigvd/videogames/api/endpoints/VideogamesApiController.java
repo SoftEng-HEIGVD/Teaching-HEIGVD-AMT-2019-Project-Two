@@ -49,12 +49,15 @@ public class VideogamesApiController implements VideogamesApi {
     }
 
     public ResponseEntity<Void> updateVidegame(@ApiParam(value = "Videogame object that needs to be added to the store" ,required=true )  @Valid @RequestBody Videogame videogame) {
-        // To be implemented
+        //VideogameEntity videogameEntity = toVideogameEntity(videogame);
+
         return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
     }
 
-    public ResponseEntity<Void> deleteVideogame(@ApiParam(value = "Videogame to delete", required=true) @PathVariable("id") long id) {
-        // To be implemented
+    public ResponseEntity<Void> deleteVideogame(@ApiParam(value = "Videogame to delete", required=true) @PathVariable("id") Long id) {
+        VideogameEntity videogameEntity = videogameRepository.findById(id).get();
+
+        videogameRepository.delete(videogameEntity);
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 

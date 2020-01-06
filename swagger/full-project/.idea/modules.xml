@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/../videogames-server/swagger-spring.iml" filepath="$PROJECT_DIR$/../videogames-server/swagger-spring.iml" />
       <module fileurl="file://$PROJECT_DIR$/../videogames-specs/videogamesSpecification.iml" filepath="$PROJECT_DIR$/../videogames-specs/videogamesSpecification.iml" />
     </modules>
   </component>
