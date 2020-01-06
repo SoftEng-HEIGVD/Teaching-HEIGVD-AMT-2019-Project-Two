@@ -49,10 +49,10 @@
                                 <useBeanValidation>true</useBeanValidation>
                                 <interfaceOnly>true</interfaceOnly>
                                 <delegatePattern>false</delegatePattern>
-                                <apiPackage>ch.heigvd.boozify.users.api</apiPackage>
-                                <configPackage>ch.heigvd.boozify.users.config</configPackage>
-                                <basePackage>ch.heigvd.boozify.users</basePackage>
-                                <modelPackage>ch.heigvd.boozify.users.model</modelPackage>
+                                <apiPackage>ch.heigvd.amt.users.api</apiPackage>
+                                <configPackage>ch.heigvd.amt.users.config</configPackage>
+                                <basePackage>ch.heigvd.amt.users</basePackage>
+                                <modelPackage>ch.heigvd.amt.users.api.model</modelPackage>
                             </configOptions>
                         </configuration>
                     </execution>
