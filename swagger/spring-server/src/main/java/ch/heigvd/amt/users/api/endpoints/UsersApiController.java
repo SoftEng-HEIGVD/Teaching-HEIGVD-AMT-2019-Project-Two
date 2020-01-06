@@ -2,13 +2,16 @@ package ch.heigvd.amt.users.api.endpoints;
 
 
 import ch.heigvd.amt.users.api.UsersApi;
+import ch.heigvd.amt.users.api.model.InlineObject;
 import ch.heigvd.amt.users.api.model.User;
 import ch.heigvd.amt.users.entities.UserEntity;
 import ch.heigvd.amt.users.repositories.UserRepository;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -25,7 +28,7 @@ public class UsersApiController implements UsersApi {
     @Autowired
     UserRepository userRepository;
 
-    public ResponseEntity<Object> createFruit(@ApiParam(value = "", required = true) @Valid @RequestBody User user) {
+    public ResponseEntity<Void> createUser(@ApiParam(value = "", required = true) @Valid @RequestBody User user) {
         UserEntity newUserEntity = toUserEntity(user);
         userRepository.save(newUserEntity);
         String email = newUserEntity.getEmail();
@@ -38,20 +41,9 @@ public class UsersApiController implements UsersApi {
     }
 
 
-    public ResponseEntity<List<User>> getFruits() {
-        List<User> users = new ArrayList<>();
-        for (UserEntity userEntity : userRepository.findAll()) {
-            users.add(toUser(userEntity));
-        }
-        /*
-        Fruit staticFruit = new Fruit();
-        staticFruit.setColour("red");
-        staticFruit.setKind("banana");
-        staticFruit.setSize("medium");
-        List<Fruit> fruits = new ArrayList<>();
-        fruits.add(staticFruit);
-        */
-        return ResponseEntity.ok(users);
+    public ResponseEntity<Void> updateUser(@ApiParam(value = "",required=true) @PathVariable("email") String email, @ApiParam(value = "" ,required=true )  @Valid @RequestBody InlineObject password) {
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
     }
 
 

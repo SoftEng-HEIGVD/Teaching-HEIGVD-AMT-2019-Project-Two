@@ -115,5 +115,6 @@
     <orderEntry type="library" name="Maven: joda-time:joda-time:2.10.5" level="project" />
     <orderEntry type="library" name="Maven: org.openapitools:jackson-databind-nullable:0.2.0" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: javax.validation:validation-api:2.0.1.Final" level="project" />
+    <orderEntry type="library" name="Maven: io.jsonwebtoken:jjwt:0.9.1" level="project" />
   </component>
 </module>
