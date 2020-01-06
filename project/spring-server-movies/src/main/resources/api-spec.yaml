@@ -195,7 +195,7 @@ definitions:
         type: string
       expertise:
         type: string
-        description: TV, film or theatre actor
+        description: TV, film or theater actor
         enum:
           - theater
           - television
