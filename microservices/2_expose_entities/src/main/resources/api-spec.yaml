@@ -1,0 +1,117 @@
+swagger: '2.0'
+info:
+  version: '1.0.0'
+  title: Manage account
+  description: An API to manage account of actors
+host: localhost:8080
+basePath: /api/v1
+schemes:
+  - http
+paths:
+  /actors:
+    post:
+      description: create an actor
+      operationId: createActor
+      consumes:
+        - application/json
+      parameters:
+        - name: actor
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Actor'
+      responses:
+        '201':
+          description: created
+          schema:
+            type: object
+    get:
+      description: get the list of all actors
+      operationId: getActors
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: success
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Actor'
+    patch:
+      description: modify the password of an actor
+      operationId: modifyPassword
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: patchActor
+          description: The data to modify
+          schema:
+            type: object
+            required:
+              - email
+            properties:
+              email:
+                type: string
+              newPass:
+                type: string
+              isBlocked:
+                type: boolean
+              isValidated:
+                type: boolean
+      responses:
+        201:
+          description: Modified
+
+  /login:
+    post:
+      description: login - receive JWT token
+      operationId: login
+      consumes:
+        - application/json
+      parameters:
+        - name: login
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/JWTToken'
+      responses:
+        '200':
+          description: success
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/JWTToken'
+definitions:
+  Actor:
+    type: object
+    properties:
+      email:
+        type: string
+      first_name:
+        type: string
+      last_name:
+        type: string
+      password:
+        type: string
+      isBlocked:
+        type: boolean
+      isValidated:
+        type: boolean
+      isAdmin:
+        type: boolean
+    required:
+      - email
+      - first_name
+      - last_name
+      - password
+      - isBlocked
+      - isValidated
+      - isAdmin
+  JWTToken:
+    type: object
+    properties:
+      token:
+        type: string
+    required:
+      - token
