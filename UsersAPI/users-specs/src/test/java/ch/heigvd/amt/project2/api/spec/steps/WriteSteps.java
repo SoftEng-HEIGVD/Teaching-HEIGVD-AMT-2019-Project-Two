@@ -6,6 +6,7 @@ import ch.heigvd.amt.project2.api.UserApi;
 import ch.heigvd.amt.project2.api.model.User;
 import ch.heigvd.amt.project2.api.spec.helpers.Environment;
 import cucumber.api.PendingException;
+import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -70,10 +71,14 @@ public class WriteSteps {
         assertEquals(201, lastStatusCode);
     }
 
-    @Given("^I have a new password and a user id$")
-    public void i_have_a_new_password_and_a_user_id() throws Throwable {
+    @Given("^I have a new password$")
+    public void i_have_a_new_password() throws Throwable {
         assertNotNull(NEW_PASSWORD);
-        assertNotNull(user);
+    }
+
+    @And("^a user id$")
+    public void a_user_id() {
+        assertNotNull(user.getId());
     }
 
     @When("^I PATCH the /users/userId endpoint$")
