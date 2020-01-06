@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.ArrayList;
@@ -28,31 +29,47 @@ public class UsersApiController implements UsersApi {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    HttpServletRequest httpServletRequest;
+
     public ResponseEntity<Void> createUser(@ApiParam(value = "", required = true) @Valid @RequestBody User user) {
-        UserEntity newUserEntity = toUserEntity(user);
-        userRepository.save(newUserEntity);
-        String email = newUserEntity.getEmail();
+        String role = (String) httpServletRequest.getAttribute("role");
 
-        URI location = ServletUriComponentsBuilder
-                .fromCurrentRequest().path("/{id}")
-                .buildAndExpand(newUserEntity.getEmail()).toUri();
-
-        return ResponseEntity.created(location).build();
+        if(role.equals("1")){
+            UserEntity newUserEntity = toUserEntity(user);
+            UserEntity verifUser = userRepository.findByMail(user.getEmail());
+            if(verifUser == null){
+                userRepository.save(newUserEntity);
+                return new ResponseEntity<>(null, HttpStatus.CREATED);
+            }else{
+                return new ResponseEntity<>(null, HttpStatus.CONFLICT);
+            }
+        }else{
+            return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
+        }
     }
 
 
     public ResponseEntity<Void> updateUser(@ApiParam(value = "",required=true) @PathVariable("email") String email, @ApiParam(value = "" ,required=true )  @Valid @RequestBody InlineObject password) {
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+        String token = (String) httpServletRequest.getAttribute("email");
 
+        if(token.equals(email)){
+            UserEntity userEntity = userRepository.findByMail(token);
+            //Todo create fonction for hash
+            userEntity.setPassword();
+            userRepository.save(userEntity);
+            return new ResponseEntity<>(null, HttpStatus.CREATED);
+        }
     }
 
 
     private UserEntity toUserEntity(User user) {
         UserEntity entity = new UserEntity();
         entity.setEmail(user.getEmail());
-        entity.setEmail(user.getFirstName());
+        entity.setFirstName(user.getFirstName());
         entity.setLastName(user.getLastName());
         entity.setPassword(user.getPassword());
+        entity.setAdministrator(user.getAdministrator());
         return entity;
     }
 
