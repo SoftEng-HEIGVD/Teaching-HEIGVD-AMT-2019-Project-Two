@@ -45,27 +45,38 @@ public class UsersApiController implements UsersApi {
     public ResponseEntity<Void> createUser(@ApiParam(value = "" ,required=true) @RequestHeader(value="Authorization", required=true) String authorization,
                                            @ApiParam(value = "", required = true) @Valid @RequestBody User user) {
         //Verify token TODO --> change and make function
-        if(!authorization.equals("myToken")){
+        /*if(!authorization.equals("myToken")){
             //Return an forbidden status (403)
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }*/
+
+        try{
+            DecodedToken decodedToken = jwtService.verifyToken(authorization);
+            if(decodedToken.getRole().equals(Roles.ADMIN.toString())){
+                //Check if email is used
+                if(userRepository.existsById(user.getEmail())){
+                    //Return a conflict status
+                    return ResponseEntity.status(HttpStatus.CONFLICT).build();
+                }
+
+                //create a user
+                UserEntity newUserEntity = toUserEntity(user);
+
+                //Save the user
+                userRepository.save(newUserEntity);
+
+                //Return a created status (201)
+                return ResponseEntity.status(HttpStatus.CREATED).build();
+
+            }else {
+                //Return an forbidden (403)
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+            }
+
+        }catch (JWTVerificationException | NullPointerException ex){
+            //Return an unauthorized status (401)
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
-
-        //Check if email is used
-        if(userRepository.existsById(user.getEmail())){
-            //Return a conflict status
-            return ResponseEntity.status(HttpStatus.CONFLICT).build();
-        }
-
-        //create a user
-        UserEntity newUserEntity = toUserEntity(user);
-
-        //Save the user
-        userRepository.save(newUserEntity);
-
-        //TODO send email with email + password un body
-
-        //Return a created status (201)
-        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
 
