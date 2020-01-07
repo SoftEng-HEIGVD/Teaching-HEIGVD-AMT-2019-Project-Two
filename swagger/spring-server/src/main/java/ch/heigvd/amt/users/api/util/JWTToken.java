@@ -1,3 +1,5 @@
+//Source: https://developer.okta.com/blog/2018/10/31/jwts-with-java
+
 package ch.heigvd.amt.users.api.util;
 
 import javax.crypto.spec.SecretKeySpec;
