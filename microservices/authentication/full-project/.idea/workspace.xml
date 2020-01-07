@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="bc9bf3c1-9d6e-484b-992a-a6886feabb34" name="Default" comment="" />
+    <list default="true" id="bc9bf3c1-9d6e-484b-992a-a6886feabb34" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/../../../topology/auth/docker-compose.yml" beforeDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,6 +41,7 @@
   <component name="ProjectId" id="1UWbb8eDsLnLV6x86Dj199nkZ4g" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
+    <property name="ExpandSpringBootJavaOptionsPanel" value="true" />
     <property name="RequestMappingsPanelOrder0" value="0" />
     <property name="RequestMappingsPanelOrder1" value="1" />
     <property name="RequestMappingsPanelOrder2" value="2" />
@@ -49,8 +52,8 @@
     <property name="WebServerToolWindowFactoryState" value="true" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="dynamic.classpath" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../../../Cours/Teaching-HEIGVD-AMT-2019-First-Steps-With-SpringBoot/gs-rest-service/initial" />
-    <property name="project.structure.last.edited" value="Facets" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../spring-server/src/main/resources/.env" />
+    <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="recentsLimit" value="5" />
@@ -379,6 +382,22 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="SpecificationTest (1)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="fruitsSpecification" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="heig.vd.ch.projet.auth.api.spec.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="heig.vd.ch.projet.auth.api.spec" />
+      <option name="MAIN_CLASS_NAME" value="heig.vd.ch.projet.auth.api.spec.SpecificationTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="SpecificationTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="fruitsSpecification" />
       <extension name="coverage">
@@ -405,13 +424,14 @@
     <configuration name="Execute with Spring Boot" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
       <module name="swagger-spring" />
       <extension name="net.ashald.envfile">
-        <option name="IS_ENABLED" value="false" />
+        <option name="IS_ENABLED" value="true" />
         <option name="IS_SUBST" value="false" />
         <option name="IS_PATH_MACRO_SUPPORTED" value="false" />
         <option name="IS_IGNORE_MISSING_FILES" value="false" />
         <option name="IS_ENABLE_EXPERIMENTAL_INTEGRATIONS" value="false" />
         <ENTRIES>
           <ENTRY IS_ENABLED="true" PARSER="runconfig" />
+          <ENTRY IS_ENABLED="true" PARSER="env" PATH="$PROJECT_DIR$/../spring-server/src/main/resources/.env" />
         </ENTRIES>
       </extension>
       <option name="SPRING_BOOT_MAIN_CLASS" value="heig.vd.ch.projet.auth.Swagger2SpringBoot" />
@@ -452,10 +472,12 @@
       <item itemvalue="Cucumber java.Feature: creation" />
       <item itemvalue="Cucumber java.All Features in: test" />
       <item itemvalue="JUnit.SpecificationTest" />
+      <item itemvalue="JUnit.SpecificationTest (1)" />
       <item itemvalue="Spring Boot.Execute with Spring Boot" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.SpecificationTest (1)" />
         <item itemvalue="JUnit.SpecificationTest" />
         <item itemvalue="Cucumber java.All Features in: test" />
         <item itemvalue="Cucumber java.All Features in: fruits-specs" />
@@ -476,12 +498,12 @@
           <expand>
             <path>
               <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@49ad0e7" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@5f9da2fd" type="7427dc5b:ServiceModel$ServiceGroupNode" />
             </path>
             <path>
               <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@49ad0e7" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@cf745a39" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@5f9da2fd" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@41e86c33" type="7427dc5b:ServiceModel$ServiceGroupNode" />
             </path>
           </expand>
           <select />
@@ -515,7 +537,9 @@
       <workItem from="1576488152253" duration="7452000" />
       <workItem from="1576594316851" duration="2909000" />
       <workItem from="1576656045758" duration="11441000" />
-      <workItem from="1576673406958" duration="11551000" />
+      <workItem from="1576673406958" duration="11989000" />
+      <workItem from="1578297739283" duration="6563000" />
+      <workItem from="1578306082930" duration="12203000" />
     </task>
     <servers />
   </component>
@@ -547,6 +571,11 @@
           <url>file://$PROJECT_DIR$/../spring-server/src/main/java/heig/vd/ch/projet/auth/api/endpoints/UsersApiController.java</url>
           <line>117</line>
           <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/../fruits-specs/src/test/java/heig/vd/ch/projet/auth/api/spec/steps/CreationSteps.java</url>
+          <line>53</line>
+          <option name="timeStamp" value="4" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
