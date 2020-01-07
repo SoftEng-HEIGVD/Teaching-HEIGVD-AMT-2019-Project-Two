@@ -3,12 +3,39 @@ info:
   version: '0.1.0'
   title: User API
   description: Draft API to to test Swagger and Spring Boot
-host: <docker_host>:8080
+host: localhost:8080
 basePath: /api
 schemes:
   - http
+parameters:
+  userEmail:
+    in: path
+    name: userEmail
+    type: string
+    required: true
+  token:
+    in: header
+    name: Authorization
+    type: string
+    required: true
 paths:
   /users:
+    parameters:
+      - $ref: '#/parameters/token'
+    get:
+      description: get the list of all user
+      operationId: getUsers
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: success
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/UserDTO'
+        '403':
+          description: forbidden
     post:
       description: create a user
       operationId: createUser
@@ -22,21 +49,87 @@ paths:
             $ref: '#/definitions/User'
       responses:
         '201':
-          description: created
-          schema:
-            type: object
+          description: Created
+        '400':
+          description: Bad request
+        '403':
+          description: Forbidden
+        '409':
+          description: Conflit
+  /users/{userEmail}:
+    parameters:
+      - $ref: '#/parameters/userEmail'
+      - $ref: '#/parameters/token'
     get:
-      description: get the list of all user
-      operationId: getUsers
+      description: get user by id
+      operationId: getUserById
       produces:
         - application/json
       responses:
         '200':
-          description: success
+          description: Success
           schema:
-            type: array
+            $ref: '#/definitions/UserDTO'
+        '403':
+          description: Forbiden
+        '404':
+          description: Not found
+    delete:
+      description: delete a user
+      operationId: deleteUser
+      consumes:
+        - application/json
+      responses:
+        '204':
+          description: Deleted
+        '403':
+          description: Forbiden
+        '404':
+          description: Not found
+    patch:
+      description: update a user
+      operationId: updateUser
+      consumes:
+        - application/json
+      parameters:
+        - name: password
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Password'
+
+      responses:
+        '202':
+          description: Updated
+        '400':
+          description: Bad request
+        '403':
+          description: Forbiden
+        '404':
+          description: Not found
+  /auth:
+    post:
+      description: authenticate a user
+      operationId: authentication
+      consumes:
+        - application/json
+      parameters:
+        - name: authDTO
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/AuthDTO'
+      responses:
+        '200':
+          description: authenticated
+          schema:
+            type: string
             items:
-              $ref: '#/definitions/User'
+              $ref: '#/definitions/Token'
+        '400':
+          description: Bad request
+        '401':
+          description: unauthorized
 definitions:
   User:
     type: object
@@ -49,3 +142,38 @@ definitions:
         type: string
       password:
         type: string
+      role:
+        $ref: '#/definitions/roles'
+  UserDTO:
+    type: object
+    properties:
+      email:
+        type: string
+      firstname:
+        type: string
+      lastname:
+        type: string
+      role:
+        $ref: '#/definitions/roles'
+  AuthDTO:
+    type: object
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+  Token:
+    type: object
+    properties:
+      token:
+        type: string
+  Password:
+    type: object
+    properties:
+      password:
+        type: string
+  roles:
+    type: string
+    enum:
+      - user
+      - admin
