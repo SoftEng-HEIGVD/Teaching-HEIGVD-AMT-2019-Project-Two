@@ -4,6 +4,7 @@ package ch.heigvd.amt.users.api.endpoints;
 import ch.heigvd.amt.users.api.UsersApi;
 import ch.heigvd.amt.users.api.model.InlineObject;
 import ch.heigvd.amt.users.api.model.User;
+import ch.heigvd.amt.users.api.util.HashPassword;
 import ch.heigvd.amt.users.entities.UserEntity;
 import ch.heigvd.amt.users.repositories.UserRepository;
 import io.swagger.annotations.ApiParam;
@@ -32,10 +33,13 @@ public class UsersApiController implements UsersApi {
     @Autowired
     HttpServletRequest httpServletRequest;
 
-    public ResponseEntity<Void> createUser(@ApiParam(value = "", required = true) @Valid @RequestBody User user) {
-        String role = (String) httpServletRequest.getAttribute("role");
+    @Autowired
+    HashPassword hashPassword;
 
-        if(role.equals("1")){
+    public ResponseEntity<Void> createUser(@ApiParam(value = "", required = true) @Valid @RequestBody User user) {
+        Boolean role = (Boolean) httpServletRequest.getAttribute("role");
+
+        if(role){
             UserEntity newUserEntity = toUserEntity(user);
             UserEntity verifUser = userRepository.findByMail(user.getEmail());
             if(verifUser == null){
@@ -55,11 +59,12 @@ public class UsersApiController implements UsersApi {
 
         if(token.equals(email)){
             UserEntity userEntity = userRepository.findByMail(token);
-            //Todo create fonction for hash
-            userEntity.setPassword();
+
+            userEntity.setPassword(hashPassword.hashPassword(password.getPassword()));
             userRepository.save(userEntity);
             return new ResponseEntity<>(null, HttpStatus.CREATED);
         }
+        return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
     }
 
 

@@ -38,6 +38,14 @@ public class JWTToken {
         return builder.compact();
     }
 
+    public boolean isTokenValid(Claims decodeJWT){
+        String email = decodeJWT.getSubject();
+        if(userRepository.findByMail(email) != null){
+            return true;
+        }
+        return false;
+    }
+
     public Claims decodeJWT(String jwt){
         Claims claims = Jwts.parser().setSigningKey(DatatypeConverter.parseBase64Binary(SECRET)).parseClaimsJws(jwt).getBody();
         return claims;
