@@ -2,7 +2,7 @@ package heig.vd.ch.projet.auth.api.endpoints;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import heig.vd.ch.projet.auth.api.AuthApi;
+import heig.vd.ch.projet.auth.api.AuthenticationApi;
 import heig.vd.ch.projet.auth.api.model.AuthDTO;
 import heig.vd.ch.projet.auth.api.model.Token;
 import heig.vd.ch.projet.auth.api.service.AuthenticateService;
@@ -22,7 +22,7 @@ import java.util.NoSuchElementException;
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2017-07-26T19:36:34.802Z")
 
 @Controller
-public class AuthApiController implements AuthApi {
+public class AuthenticationApiController implements AuthenticationApi {
 
     @Autowired
     UserRepository userRepository;

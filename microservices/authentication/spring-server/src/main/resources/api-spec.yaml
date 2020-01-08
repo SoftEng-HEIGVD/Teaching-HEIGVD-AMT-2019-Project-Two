@@ -107,7 +107,7 @@ paths:
           description: Forbiden
         '404':
           description: Not found
-  /auth:
+  /authentication:
     post:
       description: authenticate a user
       operationId: authentication
