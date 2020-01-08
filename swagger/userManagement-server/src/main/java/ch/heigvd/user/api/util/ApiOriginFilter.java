@@ -1,4 +1,4 @@
-package io.swagger.api;
+package ch.heigvd.user.api.util;
 
 import java.io.IOException;
 

@@ -3,10 +3,10 @@ CREATE DATABASE secondeApi;
 USE secondeApi;
 
 CREATE TABLE `videogame_entity` (
-  `id` INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  `id` INT(6) UNSIGNED AUTO_INCREMENT,
   `kind` varchar(255) NOT NULL,
   `name` varchar(255) NOT NULL,
-  `supported_on` varchar(255) NOT NULL
+  `supported_on` varchar(255) NOT NULL,
 
   CONSTRAINT FK_videoGame_ID PRIMARY KEY (id)
 );

@@ -1,21 +1,33 @@
 version: '3'
 services:
-  mysql:
-    build: ../images/mysql
+  mysql_user:
+    build: ../images/firstBackEnd
     restart: always
     environment:
       - MYSQL_ROOT_PASSWORD=admin
-      - MYSQL_USER=admin
-      - MYSQL_PASSWORD=admin
-      - MYSQL_DATABASE=api
+      - MYSQL_USER= admin
+      - MYSQL_PASSWORD= admin
+      - MYSQL_DATABASE= firstApi
     ports:
       - '3306:3306'
+  mysql_game:
+    build: ../images/secondBackEnd
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD= admin
+      - MYSQL_USER= admin
+      - MYSQL_PASSWORD= admin
+      - MYSQL_DATABASE= secondeApi
+    ports:
+      - '3307:3306'
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:latest
     environment:
-      - MYSQL_ROOT_PASSWORD=admin
+      - MYSQL_USER=admin
+      - MYSQL_ROOT_PASSWORD= admin
     ports:
       - '6060:80'
     links:
-      - mysql:db
+      - mysql_user:db_firstApi
+      - mysql_game:db_secondeApi
