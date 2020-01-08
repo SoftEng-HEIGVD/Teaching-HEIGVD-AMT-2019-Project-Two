@@ -20,7 +20,7 @@ public class JWTService implements IJWTService{
     public DecodedToken verifyToken(String token)  throws JWTVerificationException,NullPointerException{
         String[] jwt = token.split(" ");
 
-        if (jwt[0].equals("bearer") && jwt.length == 2){
+        if (jwt[0].equals("Bearer") && jwt.length == 2){
             Algorithm algorithm = Algorithm.HMAC256(secret);
             JWTVerifier verifier = JWT.require(algorithm)
                                       .build(); //Reusable verifier instance
