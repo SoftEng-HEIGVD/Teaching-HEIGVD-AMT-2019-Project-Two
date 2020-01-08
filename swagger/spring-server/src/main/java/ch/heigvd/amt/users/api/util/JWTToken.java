@@ -21,7 +21,7 @@ public class JWTToken {
     final static String SECRET = "secret";
 
     public String createJWT(UserLogin credentials){
-        UserEntity userEntity = userRepository.findByMail(credentials.getEmail());
+        UserEntity userEntity = userRepository.findByEmail(credentials.getEmail());
 
         SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
 
@@ -40,7 +40,7 @@ public class JWTToken {
 
     public boolean isTokenValid(Claims decodeJWT){
         String email = decodeJWT.getSubject();
-        if(userRepository.findByMail(email) != null){
+        if(userRepository.findByEmail(email) != null){
             return true;
         }
         return false;

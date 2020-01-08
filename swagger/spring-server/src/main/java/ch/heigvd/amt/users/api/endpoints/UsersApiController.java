@@ -14,13 +14,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.net.URI;
-import java.util.ArrayList;
-import java.util.List;
 
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2017-07-26T19:36:34.802Z")
 
@@ -41,7 +37,7 @@ public class UsersApiController implements UsersApi {
 
         if(role){
             UserEntity newUserEntity = toUserEntity(user);
-            UserEntity verifUser = userRepository.findByMail(user.getEmail());
+            UserEntity verifUser = userRepository.findByEmail(user.getEmail());
             if(verifUser == null){
                 userRepository.save(newUserEntity);
                 return new ResponseEntity<>(null, HttpStatus.CREATED);
@@ -58,7 +54,7 @@ public class UsersApiController implements UsersApi {
         String token = (String) httpServletRequest.getAttribute("email");
 
         if(token.equals(email)){
-            UserEntity userEntity = userRepository.findByMail(token);
+            UserEntity userEntity = userRepository.findByEmail(token);
 
             userEntity.setPassword(hashPassword.hashPassword(password.getPassword()));
             userRepository.save(userEntity);
