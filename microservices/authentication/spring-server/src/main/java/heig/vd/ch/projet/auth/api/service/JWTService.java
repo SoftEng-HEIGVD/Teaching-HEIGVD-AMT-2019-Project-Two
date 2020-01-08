@@ -45,6 +45,5 @@ public class JWTService implements IJWTService{
                 .sign(algorithm);
 
         return "Bearer " + jwttoken;
-
     }
 }

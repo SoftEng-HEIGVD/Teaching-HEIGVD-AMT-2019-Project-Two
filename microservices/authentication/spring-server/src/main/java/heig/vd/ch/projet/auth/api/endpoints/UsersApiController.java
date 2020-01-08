@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +42,9 @@ public class UsersApiController implements UsersApi {
     @Autowired
     JWTService jwtService;
 
+    @Autowired
+    HttpServletRequest request;
+
     @Override
     public ResponseEntity<Void> createUser(@ApiParam(value = "" ,required=true) @RequestHeader(value="Authorization", required=true) String authorization,
                                            @ApiParam(value = "", required = true) @Valid @RequestBody User user) {
@@ -50,7 +54,7 @@ public class UsersApiController implements UsersApi {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }*/
 
-        try{
+        /*try{
             DecodedToken decodedToken = jwtService.verifyToken(authorization);
             if(decodedToken.getRole().equals(Roles.ADMIN.toString())){
                 //Check if email is used
@@ -76,6 +80,28 @@ public class UsersApiController implements UsersApi {
         }catch (JWTVerificationException | NullPointerException ex){
             //Return an unauthorized status (401)
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }*/
+
+        DecodedToken decodedToken = (DecodedToken) request.getAttribute("decodedToken");
+        if(decodedToken.getRole().equals(Roles.ADMIN.toString())){
+            //Check if email is used
+            if(userRepository.existsById(user.getEmail())){
+                //Return a conflict status
+                return ResponseEntity.status(HttpStatus.CONFLICT).build();
+            }
+
+            //create a user
+            UserEntity newUserEntity = toUserEntity(user);
+
+            //Save the user
+            userRepository.save(newUserEntity);
+
+            //Return a created status (201)
+            return ResponseEntity.status(HttpStatus.CREATED).build();
+
+        }else {
+            //Return an forbidden (403)
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
     }
 
