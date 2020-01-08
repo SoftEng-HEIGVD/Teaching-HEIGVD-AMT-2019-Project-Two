@@ -39,42 +39,12 @@ public class UsersApiController implements UsersApi {
     @Autowired
     AuthenticateService authenticateService;
 
-    /*@Autowired
-    JWTService jwtService;*/
-
     @Autowired
     HttpServletRequest request;
 
     @Override
     public ResponseEntity<Void> createUser(@ApiParam(value = "" ,required=true) @RequestHeader(value="Authorization", required=true) String authorization,
                                            @ApiParam(value = "", required = true) @Valid @RequestBody User user) {
-        /*try{
-            DecodedToken decodedToken = jwtService.verifyToken(authorization);
-            if(decodedToken.getRole().equals(Roles.ADMIN.toString())){
-                //Check if email is used
-                if(userRepository.existsById(user.getEmail())){
-                    //Return a conflict status
-                    return ResponseEntity.status(HttpStatus.CONFLICT).build();
-                }
-
-                //create a user
-                UserEntity newUserEntity = toUserEntity(user);
-
-                //Save the user
-                userRepository.save(newUserEntity);
-
-                //Return a created status (201)
-                return ResponseEntity.status(HttpStatus.CREATED).build();
-
-            }else {
-                //Return an forbidden (403)
-                return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-            }
-
-        }catch (JWTVerificationException | NullPointerException ex){
-            //Return an unauthorized status (401)
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        }*/
 
         DecodedToken decodedToken = (DecodedToken) request.getAttribute("decodedToken");
         if(decodedToken.getRole().equals(Roles.ADMIN.toString())){
@@ -104,29 +74,6 @@ public class UsersApiController implements UsersApi {
     public ResponseEntity<Void> deleteUser(@ApiParam(value = "",required=true ) @PathVariable("userEmail") String userEmail,
                                            @ApiParam(value = "" ,required=true) @RequestHeader(value="Authorization", required=true) String authorization) {
 
-        /*try {
-            DecodedToken decodedToken = jwtService.verifyToken(authorization);
-            if(decodedToken.getRole().equals(Roles.ADMIN.toString())){
-                //Get the existing user
-                UserEntity userEntity = userRepository.findById(userEmail).get();
-
-                //Delete the user
-                userRepository.delete(userEntity);
-
-                //Return an accept status (202)
-                return ResponseEntity.accepted().build();
-            }else {
-                //Return an forbidden (403)
-                return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-            }
-        }catch (NoSuchElementException e){
-            //Return an not found status status (404)
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }catch (JWTVerificationException | NullPointerException ex){
-            //Return an unauthorized status (401)
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        }*/
-
         try {
             DecodedToken decodedToken = (DecodedToken) request.getAttribute("decodedToken");
             if(decodedToken.getRole().equals(Roles.ADMIN.toString())){
@@ -152,31 +99,6 @@ public class UsersApiController implements UsersApi {
     @Override
     public ResponseEntity<UserDTO> getUserById(@ApiParam(value = "",required=true ) @PathVariable("userEmail") String userEmail,
                                                @ApiParam(value = "" ,required=true) @RequestHeader(value="Authorization", required=true) String authorization) {
-
-        /*try {
-
-            DecodedToken decodedToken = jwtService.verifyToken(authorization);
-            if((decodedToken.getEmail().equals(userEmail) && decodedToken.getRole().equals(Roles.USER.toString())) || decodedToken.getRole().equals(Roles.ADMIN.toString())) {
-                //Get the existing user
-                UserEntity userEntity = userRepository.findById(userEmail).get();
-
-                //Change userEntity to userDTO
-                UserDTO userDTO = toUserDTO(userEntity);
-
-                //Return the user and ok status (200)
-                return ResponseEntity.ok(userDTO);
-            }else {
-                //Return an forbidden status (403)
-                return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-            }
-
-        }catch(NoSuchElementException e) {
-            //Return an not found status (404)
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }catch (JWTVerificationException | NullPointerException ex){
-            //Return an unauthorized status (401)
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        }*/
 
         try {
             DecodedToken decodedToken = (DecodedToken) request.getAttribute("decodedToken");
@@ -204,27 +126,6 @@ public class UsersApiController implements UsersApi {
     @Override
     public ResponseEntity<List<UserDTO>> getUsers(@ApiParam(value = "" ,required=true) @RequestHeader(value="Authorization", required=true) String authorization) {
 
-        /*List<UserDTO> usersDTO = new ArrayList<>();
-
-        try {
-            DecodedToken decodedToken = jwtService.verifyToken(authorization);
-            if(decodedToken.getRole().equals(Roles.ADMIN.toString())){
-                //Get all users
-                for (UserEntity userEntity : userRepository.findAll()) {
-                    usersDTO.add(toUserDTO(userEntity));
-                }
-
-                //Return an array of user and an ok status (200)
-                return ResponseEntity.ok(usersDTO);
-            }else {
-                //Return an forbidden status (403)
-                return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-            }
-        }catch (JWTVerificationException | NullPointerException ex){
-            //Return an unauthorized status (401)
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        }*/
-
         List<UserDTO> usersDTO = new ArrayList<>();
         DecodedToken decodedToken = (DecodedToken) request.getAttribute("decodedToken");
         if(decodedToken.getRole().equals(Roles.ADMIN.toString())){
@@ -245,36 +146,6 @@ public class UsersApiController implements UsersApi {
     public ResponseEntity<Void> updateUser(@ApiParam(value = "",required=true ) @PathVariable("userEmail") String userEmail,
                                            @ApiParam(value = "" ,required=true) @RequestHeader(value="Authorization", required=true) String authorization,
                                            @ApiParam(value = "", required = true) @Valid @RequestBody Password password) {
-
-        /*try {
-            DecodedToken decodedToken = jwtService.verifyToken(authorization);
-            if((decodedToken.getEmail().equals(userEmail) && decodedToken.getRole().equals(Roles.USER.toString()))
-                    || decodedToken.getRole().equals(Roles.ADMIN.toString())){
-
-                //Get the existing user
-                UserEntity userEntity = userRepository.findById(userEmail).get();
-
-                //Update the user password
-                String hashedPassword = authenticateService.hashPassword(password.getPassword());
-                userEntity.setPassword(hashedPassword);
-
-                //Save the user
-                userRepository.save(userEntity);
-
-                //Return an accept status (202)
-                return ResponseEntity.accepted().build();
-
-            }else{
-                //Return an forbidden status (403)
-                return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-            }
-        }catch (NoSuchElementException e){
-            //Return an not found status (404)
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }catch (JWTVerificationException | NullPointerException ex){
-            //Return an unauthorized status (401)
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        }*/
 
         try {
             DecodedToken decodedToken = (DecodedToken) request.getAttribute("decodedToken");
