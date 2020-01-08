@@ -14,10 +14,10 @@ public class Environment {
 
     private DefaultApi api = new DefaultApi();
 
-    public ApiResponse lastApiResponse;
-    public ApiException lastApiException;
-    public boolean lastApiCallThrewException;
-    public int lastStatusCode;
+    private ApiResponse lastApiResponse;
+    private ApiException lastApiException;
+    private boolean lastApiCallThrewException;
+    private int lastStatusCode;
 
     public Environment() throws IOException {
         Properties properties = new Properties();
@@ -31,19 +31,35 @@ public class Environment {
         return api;
     }
 
-    /*public ApiResponse getLastApiResponse() {
+    public ApiResponse getLastApiResponse() {
         return lastApiResponse;
+    }
+
+    public void setLastApiResponse(ApiResponse lastApiResponse) {
+        this.lastApiResponse = lastApiResponse;
     }
 
     public ApiException getLastApiException() {
         return lastApiException;
     }
 
+    public void setLastApiException(ApiException lastApiException) {
+        this.lastApiException = lastApiException;
+    }
+
     public boolean lastApiCallThrewException(){
         return lastApiCallThrewException;
     }
 
+    public void setLastApiCallThrewException(boolean lastApiCallThrewException) {
+        this.lastApiCallThrewException = lastApiCallThrewException;
+    }
+
     public int getLastStatusCode() {
         return lastStatusCode;
-    }*/
+    }
+
+    public void setLastStatusCode(int lastStatusCode) {
+        this.lastStatusCode = lastStatusCode;
+    }
 }

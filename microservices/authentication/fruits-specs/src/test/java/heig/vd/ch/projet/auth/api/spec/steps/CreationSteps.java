@@ -51,22 +51,22 @@ public class CreationSteps {
     @When("^I POST it to the /users endpoint$")
     public void i_POST_it_to_the_users_endpoint() throws Throwable {
         try {
-            environment.lastApiResponse = api.createUserWithHttpInfo("myToken",user);
-            environment.lastApiCallThrewException = false;
-            environment.lastApiException = null;
-            environment.lastStatusCode = environment.lastApiResponse.getStatusCode();
+            environment.setLastApiResponse(api.createUserWithHttpInfo("Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQGFkbWluLmNoIn0.elXPVmY4-sfOn6Qk4mFt85_gOvMjVrm02FDeAFfp3xU",user));
+            environment.setLastApiCallThrewException(false);
+            environment.setLastApiException(null);
+            environment.setLastStatusCode(environment.getLastApiResponse().getStatusCode());
         } catch (ApiException e) {
-            environment.lastApiCallThrewException = true;
-            environment.lastApiResponse = null;
-            environment.lastApiException = e;
-            environment.lastStatusCode = environment.lastApiException.getCode();
+            environment.setLastApiCallThrewException(true);
+            environment.setLastApiResponse(null);
+            environment.setLastApiException(e);
+            environment.setLastStatusCode(environment.getLastApiException().getCode());
         }
 
     }
 
     @Then("^I receive a (\\d+) status code$")
     public void i_receive_a_status_code(int code) throws Throwable {
-        assertEquals(code, environment.lastStatusCode);
+        assertEquals(code, environment.getLastStatusCode());
     }
 
 }
