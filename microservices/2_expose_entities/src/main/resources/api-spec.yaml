@@ -88,26 +88,34 @@ definitions:
     properties:
       email:
         type: string
-      first_name:
-        type: string
-      last_name:
-        type: string
-      password:
-        type: string
-      isBlocked:
-        type: boolean
-      isValidated:
-        type: boolean
-      isAdmin:
-        type: boolean
     required:
       - email
-      - first_name
-      - last_name
-      - password
-      - isBlocked
-      - isValidated
-      - isAdmin
+  Movie:
+    type: object
+    properties:
+      id:
+        type: number
+      title:
+        type: string
+    required:
+      - id
+      - title
+  Character:
+    type: object
+    properties:
+      id:
+        type: number
+      actor:
+        type: string
+      movie:
+        type: number
+      charName:
+        type: string
+    required:
+      - id
+      - actor
+      - movie
+      - charName
   JWTToken:
     type: object
     properties:
