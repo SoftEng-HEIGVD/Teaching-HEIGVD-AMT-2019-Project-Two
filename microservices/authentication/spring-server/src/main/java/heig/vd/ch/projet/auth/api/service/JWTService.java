@@ -38,13 +38,13 @@ public class JWTService implements IJWTService{
     @Override
     public String createToken(UserEntity userEntity) {
         //Create the token
-        Algorithm algorithm = Algorithm.HMAC256(secret); //TODO -> secret in env file
+        Algorithm algorithm = Algorithm.HMAC256(secret);
         String jwttoken = JWT.create()
                 .withClaim("email",userEntity.getEmail())
                 .withClaim("role",userEntity.getRole())
                 .sign(algorithm);
 
-        return "bearer " + jwttoken;
+        return "Bearer " + jwttoken;
 
     }
 }
