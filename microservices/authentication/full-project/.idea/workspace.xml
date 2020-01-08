@@ -59,6 +59,7 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="heig.vd.ch.projet.auth.api" />
       <recent name="io.avalia.fruits.api.exceptions" />
       <recent name="io.avalia.fruits.api.util" />
       <recent name="io.avalia.fruits.api.endpoints" />
@@ -539,7 +540,7 @@
       <workItem from="1578297739283" duration="6563000" />
       <workItem from="1578306082930" duration="12203000" />
       <workItem from="1578398280288" duration="2876000" />
-      <workItem from="1578470065815" duration="14071000" />
+      <workItem from="1578470065815" duration="15244000" />
     </task>
     <servers />
   </component>
@@ -578,14 +579,14 @@
           <option name="timeStamp" value="4" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/../spring-server/src/main/java/heig/vd/ch/projet/auth/interceptor/JWTInterceptor.java</url>
-          <line>21</line>
-          <option name="timeStamp" value="9" />
+          <url>file://$PROJECT_DIR$/../spring-server/src/main/java/heig/vd/ch/projet/auth/api/interceptor/JWTInterceptor.java</url>
+          <line>22</line>
+          <option name="timeStamp" value="11" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/../spring-server/src/main/java/heig/vd/ch/projet/auth/api/service/JWTService.java</url>
-          <line>23</line>
-          <option name="timeStamp" value="10" />
+          <line>24</line>
+          <option name="timeStamp" value="12" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

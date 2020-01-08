@@ -1,15 +1,16 @@
-package heig.vd.ch.projet.auth.interceptor;
+package heig.vd.ch.projet.auth.api.interceptor;
 
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import heig.vd.ch.projet.auth.api.service.DecodedToken;
 import heig.vd.ch.projet.auth.api.service.JWTService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+@Service
 public class JWTInterceptor extends HandlerInterceptorAdapter {
 
     @Autowired
@@ -24,7 +25,7 @@ public class JWTInterceptor extends HandlerInterceptorAdapter {
             return true;
         }catch (JWTVerificationException | NullPointerException exception){
             //Return an unauthorized status (401)
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             return false;
         }
     }
