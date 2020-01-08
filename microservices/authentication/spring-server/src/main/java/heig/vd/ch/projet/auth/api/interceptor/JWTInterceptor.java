@@ -25,7 +25,7 @@ public class JWTInterceptor extends HandlerInterceptorAdapter {
             return true;
         }catch (JWTVerificationException | NullPointerException exception){
             //Return an unauthorized status (401)
-            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             return false;
         }
     }

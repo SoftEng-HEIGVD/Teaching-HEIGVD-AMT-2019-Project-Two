@@ -502,6 +502,11 @@
             <path>
               <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
               <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@72a4fd5e" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@77c1c70f" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+            </path>
+            <path>
+              <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@72a4fd5e" type="7427dc5b:ServiceModel$ServiceGroupNode" />
               <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@a5577a6a" type="7427dc5b:ServiceModel$ServiceGroupNode" />
             </path>
           </expand>
@@ -540,7 +545,7 @@
       <workItem from="1578297739283" duration="6563000" />
       <workItem from="1578306082930" duration="12203000" />
       <workItem from="1578398280288" duration="2876000" />
-      <workItem from="1578470065815" duration="15244000" />
+      <workItem from="1578470065815" duration="22262000" />
     </task>
     <servers />
   </component>
@@ -564,16 +569,6 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/../spring-server/src/main/java/heig/vd/ch/projet/auth/api/endpoints/UsersApiController.java</url>
-          <line>182</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/../spring-server/src/main/java/heig/vd/ch/projet/auth/api/endpoints/UsersApiController.java</url>
-          <line>154</line>
-          <option name="timeStamp" value="3" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/../fruits-specs/src/test/java/heig/vd/ch/projet/auth/api/spec/steps/CreationSteps.java</url>
           <line>53</line>
           <option name="timeStamp" value="4" />
@@ -581,12 +576,7 @@
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/../spring-server/src/main/java/heig/vd/ch/projet/auth/api/interceptor/JWTInterceptor.java</url>
           <line>22</line>
-          <option name="timeStamp" value="11" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/../spring-server/src/main/java/heig/vd/ch/projet/auth/api/service/JWTService.java</url>
-          <line>24</line>
-          <option name="timeStamp" value="12" />
+          <option name="timeStamp" value="20" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
