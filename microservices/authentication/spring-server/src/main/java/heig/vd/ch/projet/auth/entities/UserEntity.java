@@ -1,6 +1,5 @@
 package heig.vd.ch.projet.auth.entities;
 
-import heig.vd.ch.projet.auth.api.model.Roles;
 import lombok.*;
 
 import javax.persistence.*;

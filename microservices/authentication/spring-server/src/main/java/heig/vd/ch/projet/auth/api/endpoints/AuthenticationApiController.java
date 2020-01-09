@@ -1,7 +1,5 @@
 package heig.vd.ch.projet.auth.api.endpoints;
 
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.algorithms.Algorithm;
 import heig.vd.ch.projet.auth.api.AuthenticationApi;
 import heig.vd.ch.projet.auth.api.model.AuthDTO;
 import heig.vd.ch.projet.auth.api.model.Token;

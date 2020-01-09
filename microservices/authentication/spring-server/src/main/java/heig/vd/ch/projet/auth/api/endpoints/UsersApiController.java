@@ -1,13 +1,10 @@
 package heig.vd.ch.projet.auth.api.endpoints;
 
-
-import com.auth0.jwt.exceptions.JWTVerificationException;
 import heig.vd.ch.projet.auth.api.model.Password;
 import heig.vd.ch.projet.auth.api.model.Roles;
 import heig.vd.ch.projet.auth.api.model.UserDTO;
 import heig.vd.ch.projet.auth.api.service.AuthenticateService;
 import heig.vd.ch.projet.auth.api.service.DecodedToken;
-import heig.vd.ch.projet.auth.api.service.JWTService;
 import heig.vd.ch.projet.auth.entities.UserEntity;
 import heig.vd.ch.projet.auth.api.UsersApi;
 import heig.vd.ch.projet.auth.api.model.User;
@@ -20,7 +17,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
