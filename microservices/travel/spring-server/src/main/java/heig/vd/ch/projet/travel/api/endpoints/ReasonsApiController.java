@@ -2,6 +2,7 @@ package heig.vd.ch.projet.travel.api.endpoints;
 
 import heig.vd.ch.projet.travel.api.ReasonsApi;
 import heig.vd.ch.projet.travel.api.model.Reason;
+import heig.vd.ch.projet.travel.entities.ReasonEntity;
 import heig.vd.ch.projet.travel.repositories.ReasonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +24,17 @@ public class ReasonsApiController implements ReasonsApi{
 
     @Override
     public ResponseEntity<List<Reason>> getReasons() {
+        List<Reason> reasons = reasonRepository.findAll().map(this::toCountry).toList();
 
-        return null;
+        return ResponseEntity.ok(reasons);
+    }
+
+    /*Utils*/
+    private  Reason toCountry(ReasonEntity reasonEntity) {
+        Reason reason = new Reason();
+        reason.setIdReason(reasonEntity.getIdReason());
+        reason.setName(reasonEntity.getName());
+
+        return reason;
     }
 }
