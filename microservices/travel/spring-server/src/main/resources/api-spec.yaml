@@ -1,0 +1,78 @@
+swagger: '2.0'
+info:
+  version: '0.1.0'
+  title: Travel API
+  description: Draft API to to test Swagger and Spring Boot
+host: localhost:8081
+basePath: /api
+schemes:
+  - http
+paths:
+  /trips:
+    get:
+      description: get the list of trips from the user
+      operationId: getTrips
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: success
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Trip'
+# TODO check if we need to specify pages here
+  /countries:
+    get:
+      description: get the list of all the countries
+      operationId: getCountries
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: success
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Country'
+  /reasons:
+    get:
+      description: get the list of all the reasons
+      operationId: getReasons
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: success
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Reason'
+definitions:
+  Trip:
+    type: object
+    properties:
+      User_email:
+        type: string
+      Country:
+        $ref: '#/definitions/Country'
+      reason:
+        $ref: '#/definitions/Reason'
+      date:
+        type: string
+      visited:
+        type: boolean
+  Reason:
+    type: object
+    properties:
+      idReason:
+        type: integer
+      name:
+        type: string
+  Country:
+    type: object
+    properties:
+      idCountry:
+        type: integer
+      name:
+        type: string
