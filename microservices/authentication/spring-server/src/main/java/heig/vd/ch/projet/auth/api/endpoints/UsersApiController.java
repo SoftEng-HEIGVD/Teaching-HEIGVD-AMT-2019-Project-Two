@@ -83,8 +83,8 @@ public class UsersApiController implements UsersApi {
                 //Delete the user
                 userRepository.delete(userEntity);
 
-                //Return an accept status (202)
-                return ResponseEntity.accepted().build();
+                //Return an no content status (204)
+                return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
             }else {
                 //Return an forbidden (403)
                 return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
