@@ -11,10 +11,13 @@ import ch.heigvd.amt.users.entities.UserEntity;
 import ch.heigvd.amt.users.repositories.UserRepository;
 import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
+@Component
 public class JWTToken {
+
     @Autowired
     UserRepository userRepository;
 
@@ -32,21 +35,13 @@ public class JWTToken {
         byte[] apiKeySecretBytes = DatatypeConverter.parseBase64Binary(SECRET);
         Key signingKey = new SecretKeySpec(apiKeySecretBytes, signatureAlgorithm.getJcaName());
 
-        JwtBuilder builder = Jwts.builder().claim("email", userEntity.getEmail()).claim("administrator", userEntity.getAdministrator())
+        JwtBuilder builder = Jwts.builder().setSubject(userEntity.getEmail()).claim("administrator", userEntity.getAdministrator())
                 .setIssuedAt(currentDate).setExpiration(expirationTime).signWith(signatureAlgorithm, signingKey);
 
         return builder.compact();
     }
 
-    public boolean isTokenValid(Claims decodeJWT){
-        String email = decodeJWT.getSubject();
-        if(userRepository.findByEmail(email) != null){
-            return true;
-        }
-        return false;
-    }
-
-    public Claims decodeJWT(String jwt){
+    public static Claims decodeJWT(String jwt){
         Claims claims = Jwts.parser().setSigningKey(DatatypeConverter.parseBase64Binary(SECRET)).parseClaimsJws(jwt).getBody();
         return claims;
     }

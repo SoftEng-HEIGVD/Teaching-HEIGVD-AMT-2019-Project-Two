@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bc9bf3c1-9d6e-484b-992a-a6886feabb34" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/../../images/mysql/data/script_creation_db_users.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../../images/mysql/data/script_creation_db_users.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../spring-server/src/main/java/ch/heigvd/amt/users/api/filter/ApplyConfigFilter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../spring-server/src/main/java/ch/heigvd/amt/users/api/filter/isValidTokenFilter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../spring-server-generated/spring-server/.swagger-codegen-ignore" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../../spring-server-generated/spring-server/.swagger-codegen/VERSION" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../../spring-server-generated/spring-server/README.md" beforeDir="false" />
@@ -22,10 +23,8 @@
       <change beforePath="$PROJECT_DIR$/../../spring-server-generated/spring-server/src/main/java/io/swagger/model/User.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../../spring-server-generated/spring-server/src/main/resources/application.properties" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../spring-server/src/main/java/ch/heigvd/amt/users/api/endpoints/UsersApiController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../spring-server/src/main/java/ch/heigvd/amt/users/api/endpoints/UsersApiController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../spring-server/src/main/java/ch/heigvd/amt/users/api/util/HashPassword.java" beforeDir="false" afterPath="$PROJECT_DIR$/../spring-server/src/main/java/ch/heigvd/amt/users/api/util/HashPassword.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../spring-server/src/main/java/ch/heigvd/amt/users/api/util/JWTToken.java" beforeDir="false" afterPath="$PROJECT_DIR$/../spring-server/src/main/java/ch/heigvd/amt/users/api/util/JWTToken.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../spring-server/src/main/java/ch/heigvd/amt/users/repositories/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../spring-server/src/main/java/ch/heigvd/amt/users/repositories/UserRepository.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -417,13 +416,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Swagger2SpringBoot" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
-      <module name="swagger-spring" />
-      <option name="SPRING_BOOT_MAIN_CLASS" value="ch.heigvd.amt.users.Swagger2SpringBoot" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration default="true" type="TestNG">
       <option name="TEST_OBJECT" value="CLASS" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
@@ -456,7 +448,6 @@
       <item itemvalue="Cucumber java.Feature: creation" />
       <item itemvalue="Cucumber java.Feature: creation (1)" />
       <item itemvalue="Spring Boot.Execute with Spring Boot" />
-      <item itemvalue="Spring Boot.Swagger2SpringBoot" />
     </list>
     <recent_temporary>
       <list>
@@ -496,7 +487,7 @@
       <workItem from="1510217218267" duration="3250000" />
       <workItem from="1575259789900" duration="3706000" />
       <workItem from="1578346220002" duration="1781000" />
-      <workItem from="1578348148084" duration="10679000" />
+      <workItem from="1578348148084" duration="14319000" />
     </task>
     <servers />
   </component>
@@ -521,10 +512,10 @@
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="588" y="214" width="800" height="677" key="#Notifications/67.27.1853.1053@67.27.1853.1053" timestamp="1578348166240" />
-    <state x="684" y="201" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1578347744790">
+    <state x="389" y="103" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1578477936019">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state x="684" y="201" key="#com.intellij.execution.impl.EditConfigurationsDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1578347744790" />
+    <state x="389" y="103" key="#com.intellij.execution.impl.EditConfigurationsDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1578477936019" />
     <state x="834" y="444" width="308" height="216" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog" timestamp="1578346354257">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
