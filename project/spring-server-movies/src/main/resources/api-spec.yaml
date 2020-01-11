@@ -10,10 +10,29 @@ host: localhost:8080
 basePath: /api
 schemes:
   - http
-  - https
+
+securityDefinitions:
+  JwtAuthentication:
+    type: apiKey
+    name: auth
+    in: header
+    description: Requests should pass an authorization header.
+
+security:
+  - JwtAuthentication: []
+
+parameters:
+  authHeader:
+    in: header
+    name: auth
+    type: string
+    description: The authorization header containing jwt token
+
 paths:
   /movies:
     post:
+      tags:
+        - movies
       summary: Create movie
       description: Create a new movie.
       operationId: createMovie
@@ -31,7 +50,11 @@ paths:
           description: created
           schema:
             type: object
+        400:
+          description: Bad Request
     get:
+      tags:
+        - movies
       summary: Get movies
       description: Get all movies.
       operationId: getMovies
@@ -44,8 +67,12 @@ paths:
             type: array
             items:
               $ref: '#/definitions/Movie'
+        404:
+          description: Not Found
   /movies/{movieId}:
     get:
+      tags:
+        - movies
       summary: Find movie by ID
       description: Returns a single movie with specified ID
       operationId: findMovieById
@@ -67,7 +94,11 @@ paths:
           description: Invalid ID supplied
         404:
           description: Movie not found
+        403:
+          description: Not authorized
     delete:
+      tags:
+        - movies
       summary: Deletes a movie
       description: Deletes a movie by Id
       operationId: deleteMovie
@@ -87,9 +118,13 @@ paths:
           description: Invalid ID supplied
         404:
           description: Movie not found
+        403:
+          description: Not authorized
 
   /actors:
     post:
+      tags:
+        - actors
       summary: Create actor
       description: Create a new actor.
       operationId: createActor
@@ -109,6 +144,8 @@ paths:
             type: object
 
     get:
+      tags:
+        - actors
       summary: Get actors
       description: Get all actors.
       operationId: getActors
@@ -124,6 +161,8 @@ paths:
 
   /actors/{actorId}:
     get:
+      tags:
+        - actors
       summary: Find actor by id
       description: Returns a single actor
       operationId: findActorById
@@ -147,6 +186,8 @@ paths:
           description: Actor not found
 
     delete:
+      tags:
+        - actors
       summary: Deletes an actor
       description: Deletes an actor by Id
       operationId: deleteActor

@@ -24,6 +24,7 @@ public class ActorEntity implements Serializable {
     private String firstname;
     private String lastname;
     private ExpertiseEnum expertise;
+    private String ownerId;
 
     /**
      * TV, film or theater actor

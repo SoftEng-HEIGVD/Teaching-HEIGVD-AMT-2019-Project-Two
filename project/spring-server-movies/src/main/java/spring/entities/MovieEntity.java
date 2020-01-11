@@ -23,4 +23,5 @@ public class MovieEntity implements Serializable {
     private double production;
     private double revenue;
     private double rating;
+    private String ownerId;
 }

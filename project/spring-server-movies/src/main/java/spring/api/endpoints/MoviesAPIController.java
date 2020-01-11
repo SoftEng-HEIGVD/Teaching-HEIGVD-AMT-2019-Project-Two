@@ -1,5 +1,7 @@
 package spring.api.endpoints;
 
+import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -7,10 +9,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import spring.api.MoviesApi;
+import spring.api.exceptions.NotAuthenticatedException;
+import spring.api.util.jwt.JwtUtil;
 import spring.entities.MovieEntity;
 import spring.model.Movie;
 import spring.repositories.MoviesRepository;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.ArrayList;
@@ -25,9 +30,18 @@ public class MoviesAPIController implements MoviesApi {
     @Autowired
     MoviesRepository moviesRepository;
 
+    @Autowired
+    HttpServletRequest httpServletRequest;
+
     @Override
     public ResponseEntity<Object> createMovie(@ApiParam(value = "", required = true) @Valid @RequestBody Movie movie) {
+        // Processing header already done in interceptor
+        String authorization = httpServletRequest.getHeader("Authorization");
+        DecodedJWT decodedJWT = JwtUtil.decodeToken(JwtUtil.extractToken(authorization));
+        String owner = decodedJWT.getSubject();
+
         MovieEntity movieEntity = toMovieEntity(movie);
+        movieEntity.setOwnerId(owner);
         moviesRepository.save(movieEntity);
         Long id = movieEntity.getId();
 
