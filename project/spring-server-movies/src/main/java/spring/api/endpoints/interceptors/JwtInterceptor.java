@@ -1,15 +1,14 @@
 package spring.api.endpoints.interceptors;
 
 import com.auth0.jwt.exceptions.JWTVerificationException;
-import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import spring.api.exceptions.NotAuthenticatedException;
-import spring.api.exceptions.NotFoundException;
-import spring.api.util.jwt.JwtUtil;
+import spring.api.services.JwtUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,6 +16,9 @@ import javax.servlet.http.HttpServletResponse;
 public class JwtInterceptor extends HandlerInterceptorAdapter {
 
     private static Logger log = LoggerFactory.getLogger(JwtInterceptor.class);
+
+    @Autowired
+    JwtUtil jwtUtil;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -28,7 +30,9 @@ public class JwtInterceptor extends HandlerInterceptorAdapter {
         }
 
         try {
-            JwtUtil.verifyToken(JwtUtil.extractToken(authorization));
+            DecodedJWT decodedJWT = jwtUtil.verifyToken(jwtUtil.extractToken(authorization));
+            // Set attribute owner for the controllers to handle authorization
+            request.setAttribute("owner", decodedJWT.getSubject());
         } catch (JWTVerificationException e) {
             throw new NotAuthenticatedException(401, "Not Authenticated: invalid token");
         }

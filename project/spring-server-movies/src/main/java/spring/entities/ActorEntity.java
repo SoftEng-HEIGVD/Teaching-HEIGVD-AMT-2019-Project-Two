@@ -2,6 +2,7 @@ package spring.entities;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
+import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,6 +20,8 @@ import java.io.Serializable;
 public class ActorEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //Disable setters for id
+    @Setter(AccessLevel.NONE)
     private long id;
 
     private String firstname;

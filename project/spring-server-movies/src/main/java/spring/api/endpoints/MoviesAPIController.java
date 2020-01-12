@@ -1,16 +1,15 @@
 package spring.api.endpoints;
 
-import com.auth0.jwt.exceptions.JWTVerificationException;
-import com.auth0.jwt.interfaces.DecodedJWT;
 import io.swagger.annotations.ApiParam;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import spring.api.MoviesApi;
-import spring.api.exceptions.NotAuthenticatedException;
-import spring.api.util.jwt.JwtUtil;
+import spring.api.services.DtoConverter;
 import spring.entities.MovieEntity;
 import spring.model.Movie;
 import spring.repositories.MoviesRepository;
@@ -27,20 +26,23 @@ import java.util.Optional;
 @Controller
 public class MoviesAPIController implements MoviesApi {
 
+    private static final Logger log = LoggerFactory.getLogger(MoviesAPIController.class);
+
     @Autowired
     MoviesRepository moviesRepository;
+
+    @Autowired
+    DtoConverter dtoConverter;
 
     @Autowired
     HttpServletRequest httpServletRequest;
 
     @Override
     public ResponseEntity<Object> createMovie(@ApiParam(value = "", required = true) @Valid @RequestBody Movie movie) {
-        // Processing header already done in interceptor
-        String authorization = httpServletRequest.getHeader("Authorization");
-        DecodedJWT decodedJWT = JwtUtil.decodeToken(JwtUtil.extractToken(authorization));
-        String owner = decodedJWT.getSubject();
 
-        MovieEntity movieEntity = toMovieEntity(movie);
+        String owner = (String) httpServletRequest.getAttribute("owner");
+
+        MovieEntity movieEntity = dtoConverter.toMovieEntity(movie);
         movieEntity.setOwnerId(owner);
         moviesRepository.save(movieEntity);
         Long id = movieEntity.getId();
@@ -54,9 +56,12 @@ public class MoviesAPIController implements MoviesApi {
 
     @Override
     public ResponseEntity<List<Movie>> getMovies() {
+        String requestOwner = (String) httpServletRequest.getAttribute("owner");
         List<Movie> movies = new ArrayList<>();
         for (MovieEntity movieEntity : moviesRepository.findAll()) {
-            movies.add(toMovie(movieEntity));
+            if(movieEntity.getOwnerId().equals(requestOwner)) {
+                movies.add(dtoConverter.toMovie(movieEntity));
+            }
         }
         return ResponseEntity.ok(movies);
     }
@@ -65,7 +70,13 @@ public class MoviesAPIController implements MoviesApi {
     public ResponseEntity<Movie> findMovieById(Long movieId) {
         Optional<MovieEntity> movieOptional = moviesRepository.findById(movieId);
         if(movieOptional.isPresent()) {
-            return ResponseEntity.ok(toMovie(movieOptional.get()));
+            MovieEntity movieEntity = movieOptional.get();
+            String requestOwner = (String) httpServletRequest.getAttribute("owner");
+            if(movieEntity.getOwnerId().equals(requestOwner)) {
+                return ResponseEntity.ok(dtoConverter.toMovie(movieOptional.get()));
+            } else {
+                return ResponseEntity.badRequest().build();
+            }
         } else {
             return ResponseEntity.notFound().build();
         }
@@ -73,32 +84,18 @@ public class MoviesAPIController implements MoviesApi {
 
     @Override
     public ResponseEntity<Void> deleteMovie(Long movieId) {
-        // TODO: Do we need to check first
-        moviesRepository.deleteById(movieId);
-        return ResponseEntity.ok().build();
-    }
-
-    private Movie toMovie(MovieEntity movieEntity) {
-        Movie movie = new Movie();
-        movie.setTitle(movieEntity.getTitle());
-        movie.setDirector(movieEntity.getDirector());
-        movie.setStudio(movieEntity.getStudio());
-        movie.setProduction(movieEntity.getProduction());
-        movie.setRating(movieEntity.getRating());
-        movie.setRevenue(movieEntity.getRevenue());
-        return movie;
-    }
-
-    private MovieEntity toMovieEntity(Movie movie) {
-        MovieEntity movieEntity = new MovieEntity();
-
-        movieEntity.setDirector(movie.getDirector());
-        movieEntity.setProduction(movie.getProduction());
-        movieEntity.setRating(movie.getRating());
-        movieEntity.setStudio(movie.getStudio());
-        movieEntity.setRevenue(movie.getRevenue());
-        movieEntity.setTitle(movie.getTitle());
-
-        return movieEntity;
+        Optional<MovieEntity> movieOptional = moviesRepository.findById(movieId);
+        if(movieOptional.isPresent()) {
+            MovieEntity movieEntity = movieOptional.get();
+            String requestOwner = (String) httpServletRequest.getAttribute("owner");
+            if(movieEntity.getOwnerId().equals(requestOwner)) {
+                moviesRepository.deleteById(movieId);
+                return ResponseEntity.ok().build();
+            } else {
+                return ResponseEntity.badRequest().build();
+            }
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 }
