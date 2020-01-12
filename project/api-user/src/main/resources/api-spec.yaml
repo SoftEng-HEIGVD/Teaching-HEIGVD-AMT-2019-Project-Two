@@ -3,16 +3,111 @@ info:
   version: '0.1.0'
   title: User API
   description: An API for users
-host: localhost:8080
+host: localhost:6060
 basePath: /api
 schemes:
   - http
-  - https
 paths:
-  /users:
+  /registrations:
     post:
       tags:
         - user
+      description: Create a new user.
+      summary: Create user
+      operationId: registerUser
+      consumes:
+        - application/json
+      parameters:
+        - name: user
+          in: body
+          description: Created user object
+          required: true
+          schema:
+            $ref: '#/definitions/User'
+      responses:
+        '201':
+          description: created
+          schema:
+            type: object
+        '400':
+          description: Bad Request
+
+  /authentications:
+    post:
+      tags:
+        - user
+      description: Login user with username and password, returns a jwt token for authorizazion
+      summary: Login with credentials
+      operationId: loginUser
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: user
+          in: body
+          description: credentials
+          required: true
+          schema:
+            $ref: '#/definitions/User'
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/JwtToken'
+        '400':
+          description: Bad Credentials
+        '404':
+          description: Not found
+
+  /passwords:
+    patch:
+      tags:
+        - user
+      summary: change user Password
+      description: Change user password only if he is autenticated.
+      operationId: changePassword
+      consumes:
+        - text/plain
+      parameters:
+        - name: Authorization
+          in: header
+          type: string
+          required: true
+        - name: newPassword
+          in: body
+          required: true
+          description: User's new password.
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Success
+        '400':
+          description: Bad Request
+
+  /users:
+    get:
+      tags:
+        - admin
+      summary: Get all users
+      description: An admin operation to fetch all users in the database
+      operationId: findAllUsers
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Success
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/User'
+        '400':
+          description: Not found
+
+    post:
+      tags:
+        - admin
       summary: Create user
       description: Create a new user.
       operationId: createUser
@@ -30,13 +125,15 @@ paths:
           description: created
           schema:
             type: object
+        '400':
+          description: Bad Request
 
   /users/{username}:
     get:
       tags:
-        - user
+        - admin
       summary: Get user by username
-      description: ""
+      description: Get user using his username.
       operationId: getUserByName
       produces:
         - application/json
@@ -53,28 +150,29 @@ paths:
             type: object
             items:
               $ref: '#/definitions/User'
-    patch:
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+    delete:
       tags:
-        - user
-      summary: change user password
-      description: Change user password only if he is autenticated.
-      operationId: changeUserPassword
+        - admin
+      summary: Delete a user
+      description: Delete a user by username
+      operationId: deleteUser
       parameters:
         - name: username
           in: path
-          description: "username of the user who wishes to change his password"
+          description: username of the user
           required: true
-          type: "string"
-        - name: password
-          in: body
-          description: New password
-          required: true
-          schema:
-            $ref: '#/definitions/User'
+          type: string
       responses:
-        200:
-          description: OK
-
+        '204':
+          description: success
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
 
 definitions:
   User:
@@ -89,4 +187,9 @@ definitions:
       lastName:
         type: string
       password:
+        type: string
+  JwtToken:
+    type: object
+    properties:
+      token:
         type: string

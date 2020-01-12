@@ -21,8 +21,21 @@ Change default port value in application.properties
 Film students, create films bla bla
 
 ## Questions:
-Do I need to add annotations in subclass?
-How about the commands and different paths, need different controllers?
-Autowired class with only static methods?
-Use header token subject as parameter for username?
-Duplicate jwt classes in both projects
+Do I need to add annotations in subclass? (Need to copy yes)
+How about the commands and different paths, need different controllers? (tags, resolved)
+Autowired class with only static methods? (NO need can leave static methods)
+Use header token subject as parameter for username? (Also owner id in entity not dto) (Yes)
+Duplicate jwt classes in both projects (look mvn repository and make jwtutil as library)
+Testing with jwt token (Need to test jwt cucumber)
+
+## TODO 2:
+Finish Controllers + endpoints
+Factorise interceptors and give token content in request attribute
+Tryout Cucumber
+custom exceptions (Good error messages)
+Cucumber tests
+Pagination
+setup docker compose
+test mysql db
+Java 8
+Service hash password

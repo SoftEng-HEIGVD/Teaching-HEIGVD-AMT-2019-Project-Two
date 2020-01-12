@@ -53,6 +53,7 @@
                                 <configPackage>spring.config</configPackage>
                                 <basePackage>spring</basePackage>
                                 <modelPackage>spring.model</modelPackage>
+                                <useTags>true</useTags>
                             </configOptions>
                         </configuration>
                     </execution>

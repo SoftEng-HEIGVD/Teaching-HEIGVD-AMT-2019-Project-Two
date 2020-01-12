@@ -1,4 +1,4 @@
-package spring.api.util.jwt;
+package spring.api.services;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
@@ -12,12 +12,16 @@ import spring.configuration.JwtConfig;
 
 import java.util.Date;
 
+/**
+ * Utility class for generating jwt tokens, verifying or decoding them.
+ * Used as a Component in the Spring Application, but could also be refactored as a static class.
+ */
 @Component
 public class JwtUtil {
 
     private final static int TOKEN_DURATION = 30 * 100000;
 
-    public static String createToken(String username) {
+    public String createToken(String username, boolean isAdmin) {
         String token;
         try {
             Algorithm algorithm = Algorithm.HMAC256(JwtConfig.JWT_SHARED_SECRET.getBytes());
@@ -25,6 +29,7 @@ public class JwtUtil {
                     .withExpiresAt(new Date(System.currentTimeMillis() + TOKEN_DURATION))
                     .withIssuer("Me")
                     .withSubject(username)
+                    .withClaim("isAdmin", isAdmin)
                     .sign(algorithm);
             return token;
         } catch (JWTCreationException exception) {
@@ -32,7 +37,7 @@ public class JwtUtil {
         }
     }
 
-    public static DecodedJWT verifyToken(String token) throws JWTVerificationException {
+    public DecodedJWT verifyToken(String token) throws JWTVerificationException {
         Algorithm algorithm = Algorithm.HMAC256(JwtConfig.JWT_SHARED_SECRET.getBytes());
         JWTVerifier verifier = JWT.require(algorithm)
                 .withIssuer("Me")
@@ -45,7 +50,7 @@ public class JwtUtil {
      * @param token jwt token
      * @return decoded jwt token
      */
-    public static DecodedJWT decodeToken(String token) {
+    public DecodedJWT decodeToken(String token) {
         try {
             return JWT.decode(token);
         } catch (JWTDecodeException exception){
@@ -54,7 +59,7 @@ public class JwtUtil {
         }
     }
 
-    public static String extractToken(String authHeader) {
+    public String extractToken(String authHeader) {
         if (authHeader.startsWith("Bearer ")) {
             return authHeader.substring(7);
         } else {

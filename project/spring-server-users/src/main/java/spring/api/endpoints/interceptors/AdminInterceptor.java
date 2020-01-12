@@ -7,8 +7,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
-import spring.api.util.jwt.JwtUtil;
+import spring.api.services.JwtUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,8 +22,10 @@ public class AdminInterceptor extends HandlerInterceptorAdapter {
     @Autowired
     JwtUtil jwtUtil;
 
+    // TODO: request.setAttribute(usernamme)
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        log.info("Authorizing admin");
         try {
             String authorization = request.getHeader("Authorization");
             if(authorization == null || authorization.isEmpty()) {
@@ -39,5 +42,11 @@ public class AdminInterceptor extends HandlerInterceptorAdapter {
             throw new Error("Could not verify admin token");
         }
         return false;
+    }
+
+    @Override
+    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
+        log.info("Admin authorized");
+        super.postHandle(request, response, handler, modelAndView);
     }
 }

@@ -1,26 +1,29 @@
 package spring.api.endpoints;
 
+import com.auth0.jwt.interfaces.DecodedJWT;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import spring.api.UsersApi;
-import spring.api.util.DtoConverter;
-import spring.api.util.jwt.JwtUtil;
+import spring.api.ApiUtil;
+import spring.api.UserApi;
+import spring.api.services.DtoConverter;
+import spring.api.services.JwtUtil;
 import spring.entities.UserEntity;
+import spring.model.JwtToken;
 import spring.model.User;
 import spring.repositories.UserRepository;
 
 import javax.validation.Valid;
 import java.net.URI;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 @Controller
-public class UserApiController implements UsersApi {
+public class UserApiController implements UserApi {
 
     @Autowired
     UserRepository userRepository;
@@ -28,9 +31,58 @@ public class UserApiController implements UsersApi {
     @Autowired
     JwtUtil jwtUtil;
 
+    @Autowired
+    DtoConverter dtoConverter;
+
     @Override
-    public ResponseEntity<Object> createUser(@ApiParam(required = true) @Valid @RequestBody User user) {
-        UserEntity userEntity = DtoConverter.toUserEntity(user);
+    public ResponseEntity<Void> changePassword(@ApiParam(value = "" ,required=true) @RequestHeader(value="Authorization", required=true) String authorization, @ApiParam(value = "User's new password." ,required=true )  @Valid @RequestBody String newPassword) {
+        // Extract username
+        String token = jwtUtil.extractToken(authorization);
+        DecodedJWT jwt = jwtUtil.decodeToken(token);
+
+        String username = jwt.getSubject();
+        Optional<UserEntity> userEntityOpt = userRepository.findById(username);
+        if(userEntityOpt.isPresent()) {
+            UserEntity userEntity = userEntityOpt.get();
+            userEntity.setPassword(newPassword);
+            userRepository.save(userEntity);
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @Override
+    public ResponseEntity<JwtToken> loginUser(@ApiParam(value = "credentials" ,required=true )  @Valid @RequestBody User user) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"token\" : \"token\" }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        Optional<UserEntity> userEntityOpt = userRepository.findById(user.getUsername());
+        if(userEntityOpt.isPresent()) {
+            // Check password
+            UserEntity userEntity = userEntityOpt.get();
+            if(user.getPassword().equals(userEntity.getPassword())) {
+                String tokenString = jwtUtil.createToken(userEntity.getUsername(), userEntity.isAdmin());
+                JwtToken token = new JwtToken();
+                token.setToken(tokenString);
+                return ResponseEntity.ok(token);
+            } else {
+                return ResponseEntity.badRequest().build();
+            }
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @Override
+    public ResponseEntity<Object> registerUser(@ApiParam(value = "Created user object" ,required=true )  @Valid @RequestBody User user) {
+        UserEntity userEntity = dtoConverter.toUserEntity(user);
         userRepository.save(userEntity);
         String username = userEntity.getUsername();
 
@@ -39,31 +91,5 @@ public class UserApiController implements UsersApi {
                 .buildAndExpand(userEntity.getUsername()).toUri();
 
         return ResponseEntity.created(location).build();
-    }
-
-    @Override
-    public ResponseEntity<List<User>> findAllUsers() {
-        List<User> fruits = new ArrayList<>();
-        for (UserEntity userEntity : userRepository.findAll()) {
-            fruits.add(DtoConverter.toUser(userEntity));
-        }
-
-        if(fruits.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-
-        return ResponseEntity.ok(fruits);
-    }
-
-    @Override
-    public ResponseEntity<Object> getUserByName(String username) {
-        Optional<UserEntity> userEntity = userRepository.findById(username);
-        return userEntity.<ResponseEntity<Object>>map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
-    }
-
-    @Override
-    public ResponseEntity<Void> deleteUser(String username) {
-        userRepository.deleteById(username);
-        return ResponseEntity.ok().build();
     }
 }
