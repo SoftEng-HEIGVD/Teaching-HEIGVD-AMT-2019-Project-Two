@@ -97,7 +97,6 @@ paths:
           required: true
           schema:
             $ref: '#/definitions/Password'
-
       responses:
         '202':
           description: Updated
