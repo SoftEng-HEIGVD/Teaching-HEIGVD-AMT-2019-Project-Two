@@ -1,14 +1,26 @@
 swagger: '2.0'
 info:
   version: '1.0.0'
-  title: Manage account
-  description: An API to manage account of actors
+  title: Expose cinematographic data
+  description: An API which expose actors, characters and movies
 host: localhost:8080
 basePath: /api/v1
 schemes:
   - http
 paths:
   /actors:
+    get:
+      description: get all actors
+      operationId: getActors
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: success
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Actor'
     post:
       description: create an actor
       operationId: createActor
@@ -25,9 +37,10 @@ paths:
           description: created
           schema:
             type: object
+  /actors/{id}:
     get:
-      description: get the list of all actors
-      operationId: getActors
+      description: get an actor
+      operationId: getActor
       produces:
         - application/json
       responses:
@@ -37,32 +50,216 @@ paths:
             type: array
             items:
               $ref: '#/definitions/Actor'
-    patch:
-      description: modify the password of an actor
-      operationId: modifyPassword
+      parameters:
+        - in: path
+          name: id
+          required: true
+          type: number
+          description: The actor's id
+    delete:
+      description: delete an actor
+      operationId: deleteActor
+      parameters:
+        - in: path
+          name: id
+          required: true
+          type: number
+          description: The actor's id
+      responses:
+        200:
+          description: deleted
+    put:
+      description: modify an actor
+      operationId: modifyActor
+      produces:
+        - application/json
+      parameters:
+        - name: actor
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Actor'
+        - name: id
+          in: path
+          required: true
+          type: number
+          description: The actor's id
+      responses:
+        200:
+          description: updated
+  /movies:
+    get:
+      description: get all movies
+      operationId: getMovies
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: success
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Movie'
+    post:
+      description: create a movie
+      operationId: createMovie
       consumes:
         - application/json
       parameters:
-        - in: body
-          name: patchActor
-          description: The data to modify
+        - name: movie
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Movie'
+      responses:
+        '201':
+          description: created
           schema:
             type: object
-            required:
-              - email
-            properties:
-              email:
-                type: string
-              newPass:
-                type: string
-              isBlocked:
-                type: boolean
-              isValidated:
-                type: boolean
+  /movies/{id}:
+    get:
+      description: get a movie
+      operationId: getMovie
+      produces:
+        - application/json
       responses:
-        201:
-          description: Modified
-
+        '200':
+          description: success
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Movie'
+      parameters:
+        - in: path
+          name: id
+          required: true
+          type: number
+          description: The movie's id
+    delete:
+      description: delete a movie
+      operationId: deleteMovie
+      parameters:
+        - in: path
+          name: id
+          required: true
+          type: number
+          description: The movie's id
+      responses:
+        200:
+          description: deleted
+    put:
+      description: modify a movie
+      operationId: putMovie
+      produces:
+        - application/json
+      parameters:
+        - name: movie
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Movie'
+        - name: id
+          in: path
+          required: true
+          type: number
+          description: The movie's id
+      responses:
+        200:
+          description: updated
+  /character:
+    get:
+      description: get all characters
+      operationId: getCharacters
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: success
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Character'
+    post:
+      description: create a character
+      operationId: createCharacter
+      consumes:
+        - application/json
+      parameters:
+        - name: character
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Character'
+      responses:
+        '201':
+          description: created
+          schema:
+            type: object
+  /characters/{id_actor}/{id_movie}:
+    get:
+      description: get a character
+      operationId: getCharacter
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: success
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Character'
+      parameters:
+        - in: path
+          name: id_actor
+          required: true
+          type: number
+          description: The actor's id
+        - in: path
+          name: id_movie
+          required: true
+          type: number
+          description: The movie's id
+    delete:
+      description: delete a character
+      operationId: deleteCharacter
+      parameters:
+        - in: path
+          name: id_actor
+          required: true
+          type: number
+          description: The actor's id
+        - in: path
+          name: id_movie
+          required: true
+          type: number
+          description: The movie's id
+      responses:
+        200:
+          description: deleted
+    put:
+      description: modify a character
+      operationId: putCharacter
+      produces:
+        - application/json
+      parameters:
+        - name: character
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Character'
+        - in: path
+          name: id_actor
+          required: true
+          type: number
+          description: The actor's id
+        - in: path
+          name: id_movie
+          required: true
+          type: number
+          description: The movie's id
+      responses:
+        200:
+          description: updated
   /login:
     post:
       description: login - receive JWT token
@@ -86,9 +283,15 @@ definitions:
   Actor:
     type: object
     properties:
+      id:
+        type: number
+      fullname:
+        type: string
       email:
         type: string
     required:
+      - id
+      - fullname
       - email
   Movie:
     type: object
@@ -106,7 +309,7 @@ definitions:
       id:
         type: number
       actor:
-        type: string
+        type: number
       movie:
         type: number
       charName:
