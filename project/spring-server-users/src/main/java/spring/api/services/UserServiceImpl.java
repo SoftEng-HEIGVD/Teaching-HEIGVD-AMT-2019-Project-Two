@@ -34,13 +34,18 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public URI saveUser(User user) throws BadRequestException {
+        if(user.getUsername() == null || user.getUsername().isEmpty() ||
+                user.getPassword() == null || user.getPassword().isEmpty()) {
+            throw new BadRequestException("Please provide username AND password.");
+        }
         // TODO: Other way to check for duplicate entries
         // Check if user with given username already exists
         if(userRepository.findById(user.getUsername()).isPresent()) {
-            throw new BadRequestException("User with username " + user.getUsername() + " already exists");
+            throw new BadRequestException("User with username " + user.getUsername() + " already exists.");
         }
+
         UserEntity userEntity = dtoConverter.toUserEntity(user);
-        userEntity.setPassword(authenticationService.hashPassword(user.getPassword()));
+        setPassword(userEntity, user.getPassword());
         userRepository.save(userEntity);
         String username = userEntity.getUsername();
 
@@ -79,6 +84,11 @@ public class UserServiceImpl implements UserService {
     }
 
     public JwtToken authenticateUser(User user) throws ApiException {
+        if(user.getUsername() == null || user.getUsername().isEmpty() ||
+                user.getPassword() == null || user.getPassword().isEmpty()) {
+            throw new BadRequestException("Please provide username AND password.");
+        }
+
         UserEntity userEntity = userRepository.findById(user.getUsername())
                 .orElseThrow(() -> new NotFoundException(buildNotFoundExceptionMessage(user.getUsername())));
 
@@ -94,11 +104,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void changePassword(String username, String newPassword) throws NotFoundException {
+    public void changePassword(String username, String newPassword) throws NotFoundException, BadRequestException {
         UserEntity userEntity = userRepository.findById(username)
                 .orElseThrow(() -> new NotFoundException(buildNotFoundExceptionMessage(username)));
 
-        userEntity.setPassword(authenticationService.hashPassword(newPassword));
+        setPassword(userEntity, newPassword);
         userRepository.save(userEntity);
     }
 
@@ -108,6 +118,14 @@ public class UserServiceImpl implements UserService {
                 .password(authenticationService.hashPassword("root"))
                 .isAdmin(true).build();
         userRepository.save(adminEntity);
+    }
+
+    private void setPassword(UserEntity userEntity, String password) throws BadRequestException {
+        // Check length of password
+        if(password.length() < 6) {
+            throw new BadRequestException("Please choose a password with at least 6 characters.");
+        }
+        userEntity.setPassword(authenticationService.hashPassword(password));
     }
 
     /**

@@ -2,7 +2,7 @@ swagger: '2.0'
 info:
   version: '0.1.0'
   title: User API
-  description: An API for users
+  description: An API for users.
 host: localhost:6060
 basePath: /api
 schemes:
@@ -55,7 +55,7 @@ paths:
           description: Success
           schema:
             $ref: '#/definitions/JwtToken'
-        '400':
+        '401':
           description: Bad Credentials
         '404':
           description: Not found
@@ -70,10 +70,6 @@ paths:
       consumes:
         - text/plain
       parameters:
-        - name: Authorization
-          in: header
-          type: string
-          required: true
         - name: newPassword
           in: body
           required: true

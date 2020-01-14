@@ -55,7 +55,7 @@ public interface UserService {
      * @param username of user
      * @param newPassword new password of user
      */
-    void changePassword(String username, String newPassword) throws NotFoundException;
+    void changePassword(String username, String newPassword) throws NotFoundException, BadRequestException;
 
     /**
      * Method reserved only for the super user system administrator. Used to initialize the admin entity in the db.
