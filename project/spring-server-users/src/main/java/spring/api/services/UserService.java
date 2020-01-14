@@ -35,7 +35,7 @@ public interface UserService {
 
     /**
      * Get a user by his username
-     * @param username
+     * @param username username of the user
      * @return user
      * @throws NotFoundException if no user with username provided
      */
@@ -49,6 +49,13 @@ public interface UserService {
      * @throws AuthenticationException
      */
     JwtToken authenticateUser(User user) throws ApiException;
+
+    /**
+     * CHange password of user.
+     * @param username of user
+     * @param newPassword new password of user
+     */
+    void changePassword(String username, String newPassword) throws NotFoundException;
 
     /**
      * Method reserved only for the super user system administrator. Used to initialize the admin entity in the db.

@@ -94,6 +94,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void changePassword(String username, String newPassword) throws NotFoundException {
+        UserEntity userEntity = userRepository.findById(username)
+                .orElseThrow(() -> new NotFoundException(buildNotFoundExceptionMessage(username)));
+
+        userEntity.setPassword(authenticationService.hashPassword(newPassword));
+        userRepository.save(userEntity);
+    }
+
+    @Override
     public void makeAdmin() {
         UserEntity adminEntity = UserEntity.builder().username("admin")
                 .password(authenticationService.hashPassword("root"))

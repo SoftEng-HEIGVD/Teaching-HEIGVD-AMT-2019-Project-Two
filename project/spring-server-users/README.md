@@ -43,3 +43,5 @@ Service hash password
 ## README
 Describe use cases of admin operation (create user account for somebody)
 Separate context of use between users/ for admin and endpints with specfic commands for users
+Password change verification is done via the subject of the jwt token provided in the auth header.
+Choosing username has downside that a user can create multiple accounts with the same email.
