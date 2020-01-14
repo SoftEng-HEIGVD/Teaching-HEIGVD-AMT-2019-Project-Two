@@ -32,10 +32,14 @@ Testing with jwt token (Need to test jwt cucumber)
 Finish Controllers + endpoints
 Factorise interceptors and give token content in request attribute
 Tryout Cucumber
-custom exceptions (Good error messages)
+custom exceptions (Good error messages) inspiration: https://www.toptal.com/java/spring-boot-rest-api-error-handling
 Cucumber tests
 Pagination
 setup docker compose
 test mysql db
 Java 8
 Service hash password
+
+## README
+Describe use cases of admin operation (create user account for somebody)
+Separate context of use between users/ for admin and endpints with specfic commands for users

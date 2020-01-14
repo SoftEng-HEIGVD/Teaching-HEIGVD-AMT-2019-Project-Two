@@ -3,6 +3,7 @@ package spring.api.endpoints;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -13,6 +14,7 @@ import spring.api.ApiUtil;
 import spring.api.UserApi;
 import spring.api.services.DtoConverter;
 import spring.api.services.JwtUtil;
+import spring.api.services.UserService;
 import spring.entities.UserEntity;
 import spring.model.JwtToken;
 import spring.model.User;
@@ -26,15 +28,33 @@ import java.util.Optional;
 public class UserApiController implements UserApi {
 
     @Autowired
-    UserRepository userRepository;
-
-    @Autowired
-    JwtUtil jwtUtil;
-
-    @Autowired
-    DtoConverter dtoConverter;
+    UserService userService;
 
     @Override
+    public ResponseEntity<Void> changePassword(@ApiParam(value = "User's new password." ,required=true )  @Valid @RequestBody String newPassword) throws Exception {
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+    }
+
+    @Override
+    public ResponseEntity<JwtToken> loginUser(@ApiParam(value = "credentials" ,required=true )  @Valid @RequestBody User user) throws Exception {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"token\" : \"token\" }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return ResponseEntity.ok(userService.authenticateUser(user));
+    }
+
+    @Override
+    public ResponseEntity<Object> registerUser(@ApiParam(value = "Created user object" ,required=true )  @Valid @RequestBody User user) throws Exception {
+        return ResponseEntity.created(userService.saveUser(user)).build();
+    }
+
+    /*@Override
     public ResponseEntity<Void> changePassword(@ApiParam(value = "" ,required=true) @RequestHeader(value="Authorization", required=true) String authorization, @ApiParam(value = "User's new password." ,required=true )  @Valid @RequestBody String newPassword) {
         // Extract username
         String token = jwtUtil.extractToken(authorization);
@@ -50,46 +70,5 @@ public class UserApiController implements UserApi {
         } else {
             return ResponseEntity.notFound().build();
         }
-    }
-
-    @Override
-    public ResponseEntity<JwtToken> loginUser(@ApiParam(value = "credentials" ,required=true )  @Valid @RequestBody User user) {
-        getRequest().ifPresent(request -> {
-            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"token\" : \"token\" }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-            }
-        });
-        Optional<UserEntity> userEntityOpt = userRepository.findById(user.getUsername());
-        if(userEntityOpt.isPresent()) {
-            // Check password
-            UserEntity userEntity = userEntityOpt.get();
-            if(user.getPassword().equals(userEntity.getPassword())) {
-                String tokenString = jwtUtil.createToken(userEntity.getUsername(), userEntity.isAdmin());
-                JwtToken token = new JwtToken();
-                token.setToken(tokenString);
-                return ResponseEntity.ok(token);
-            } else {
-                return ResponseEntity.badRequest().build();
-            }
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
-
-    @Override
-    public ResponseEntity<Object> registerUser(@ApiParam(value = "Created user object" ,required=true )  @Valid @RequestBody User user) {
-        UserEntity userEntity = dtoConverter.toUserEntity(user);
-        userRepository.save(userEntity);
-        String username = userEntity.getUsername();
-
-        URI location = ServletUriComponentsBuilder
-                .fromCurrentRequest().path("/{username}")
-                .buildAndExpand(userEntity.getUsername()).toUri();
-
-        return ResponseEntity.created(location).build();
-    }
+    }*/
 }

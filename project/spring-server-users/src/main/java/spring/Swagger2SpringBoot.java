@@ -1,5 +1,6 @@
 package spring;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.ExitCodeGenerator;
 import org.springframework.boot.SpringApplication;
@@ -7,7 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 
-import spring.entities.UserEntity;
+import spring.api.services.UserService;
 import spring.repositories.UserRepository;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
@@ -15,6 +16,9 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 @ComponentScan(basePackages = { "spring", "spring.api" })
 public class Swagger2SpringBoot implements CommandLineRunner {
+
+    @Autowired
+    UserService userService;
 
     @Override
     public void run(String... arg0) throws Exception {
@@ -40,9 +44,7 @@ public class Swagger2SpringBoot implements CommandLineRunner {
     @Bean
     public CommandLineRunner demo(UserRepository repository) {
         return (args) -> {
-            UserEntity admin = new UserEntity("admin", "root");
-            admin.setAdmin(true);
-            repository.save(admin);
+            userService.makeAdmin();
         };
     }
 }

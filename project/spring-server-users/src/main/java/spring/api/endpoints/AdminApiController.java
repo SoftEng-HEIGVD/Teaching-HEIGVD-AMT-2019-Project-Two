@@ -7,50 +7,39 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import spring.api.AdminApi;
 import spring.api.ApiUtil;
-import spring.api.services.DtoConverter;
-import spring.entities.UserEntity;
+import spring.api.services.UserService;
 import spring.model.User;
-import spring.repositories.UserRepository;
 
 import javax.validation.Valid;
 import java.net.URI;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
+/**
+ * Controller for the endpoint reserved for the system admin. He has all the power.
+ */
 @Controller
 public class AdminApiController implements AdminApi {
 
     @Autowired
-    UserRepository userRepository;
-
-    @Autowired
-    DtoConverter dtoConverter;
+    UserService userService;
 
     @Override
-    public ResponseEntity<Object> createUser(@ApiParam(value = "Created user object" ,required=true )  @Valid @RequestBody User user) {
-        UserEntity userEntity = dtoConverter.toUserEntity(user);
-        userRepository.save(userEntity);
-        String username = userEntity.getUsername();
-
-        URI location = ServletUriComponentsBuilder
-                .fromCurrentRequest().path("/{username}")
-                .buildAndExpand(userEntity.getUsername()).toUri();
+    public ResponseEntity<Object> createUser(@ApiParam(value = "Created user object" ,required=true )  @Valid @RequestBody User user) throws Exception  {
+        URI location = userService.saveUser(user);
 
         return ResponseEntity.created(location).build();
     }
 
     @Override
-    public ResponseEntity<Void> deleteUser(@ApiParam(value = "username of the user",required=true) @PathVariable("username") String username) {
-        userRepository.deleteById(username);
+    public ResponseEntity<Void> deleteUser(@ApiParam(value = "username of the user",required=true) @PathVariable("username") String username) throws Exception {
+        userService.deleteUser(username);
         return ResponseEntity.ok().build();
     }
 
     @Override
-    public ResponseEntity<List<User>> findAllUsers() {
+    public ResponseEntity<List<User>> findAllUsers() throws Exception {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
@@ -60,21 +49,15 @@ public class AdminApiController implements AdminApi {
                 }
             }
         });
-        List<User> users = new ArrayList<>();
-        for (UserEntity userEntity : userRepository.findAll()) {
-            users.add(dtoConverter.toUser(userEntity));
-        }
-
-        if(users.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
+        List<User> users = userService.getAllUsers();
 
         return ResponseEntity.ok(users);
     }
 
     @Override
-    public ResponseEntity<Object> getUserByName(@ApiParam(value = "The username of the user to be fetched.",required=true) @PathVariable("username") String username) {
-        Optional<UserEntity> userEntity = userRepository.findById(username);
-        return userEntity.<ResponseEntity<Object>>map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<Object> getUserByName(@ApiParam(value = "The username of the user to be fetched.",required=true) @PathVariable("username") String username) throws Exception {
+        //Optional<UserEntity> userEntity = userRepository.findById(username);
+        //return userEntity.<ResponseEntity<Object>>map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+        return ResponseEntity.ok(userService.getUserById(username));
     }
 }

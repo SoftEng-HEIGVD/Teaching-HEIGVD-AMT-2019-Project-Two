@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+import spring.api.exceptions.AuthenticationException;
+import spring.api.exceptions.ForbiddenException;
 import spring.api.services.JwtUtil;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,14 +24,13 @@ public class AdminInterceptor extends HandlerInterceptorAdapter {
     @Autowired
     JwtUtil jwtUtil;
 
-    // TODO: request.setAttribute(usernamme)
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         log.info("Authorizing admin");
         try {
             String authorization = request.getHeader("Authorization");
             if(authorization == null || authorization.isEmpty()) {
-                throw new Error("No token provided");
+                throw new AuthenticationException("No token provided");
             }
             String token = jwtUtil.extractToken(authorization);
             DecodedJWT decodedJWT = jwtUtil.verifyToken(token);
@@ -37,11 +38,12 @@ public class AdminInterceptor extends HandlerInterceptorAdapter {
             Claim isAdmin = decodedJWT.getClaim("isAdmin");
             if(isAdmin.asBoolean()) {
                 return super.preHandle(request, response, handler);
+            } else {
+                throw new ForbiddenException("Not authorized: This operation is only reserved for system administrator");
             }
         } catch (JWTVerificationException e) {
-            throw new Error("Could not verify admin token");
+            throw new AuthenticationException("Could not verify admin token");
         }
-        return false;
     }
 
     @Override
