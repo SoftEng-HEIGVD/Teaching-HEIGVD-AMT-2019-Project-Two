@@ -1,4 +1,4 @@
-package spring.api.util.jwt;
+package spring.api.services;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
@@ -15,17 +15,16 @@ import java.util.Date;
 @Component
 public class JwtUtil {
 
-    private final static int TOKEN_DURATION = 30 * 1000;
+    private final static int TOKEN_DURATION = 30 * 100000;
 
-    public String createToken(String username, boolean isAdmin) {
+    public String createToken(String username) {
         String token;
         try {
-            Algorithm algorithm = Algorithm.HMAC256(JwtConfig.JWT_SHARED_SECRET);
+            Algorithm algorithm = Algorithm.HMAC256(JwtConfig.JWT_SHARED_SECRET.getBytes());
             token = JWT.create()
                     .withExpiresAt(new Date(System.currentTimeMillis() + TOKEN_DURATION))
                     .withIssuer("Me")
                     .withSubject(username)
-                    .withClaim("isAdmin", isAdmin)
                     .sign(algorithm);
             return token;
         } catch (JWTCreationException exception) {
@@ -34,7 +33,7 @@ public class JwtUtil {
     }
 
     public DecodedJWT verifyToken(String token) throws JWTVerificationException {
-        Algorithm algorithm = Algorithm.HMAC256(JwtConfig.JWT_SHARED_SECRET);
+        Algorithm algorithm = Algorithm.HMAC256(JwtConfig.JWT_SHARED_SECRET.getBytes());
         JWTVerifier verifier = JWT.require(algorithm)
                 .withIssuer("Me")
                 .build(); //Reusable verifier instance

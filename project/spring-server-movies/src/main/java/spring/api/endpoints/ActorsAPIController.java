@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import spring.api.ActorsApi;
+import spring.api.services.DtoConverter;
 import spring.entities.ActorEntity;
 import spring.model.Actor;
 import spring.repositories.ActorsRepository;
@@ -25,9 +26,12 @@ public class ActorsAPIController implements ActorsApi {
     @Autowired
     ActorsRepository actorsRepository;
 
+    @Autowired
+    DtoConverter dtoConverter;
+
     @Override
     public ResponseEntity<Object> createActor(@ApiParam(value = "", required = true) @Valid @RequestBody Actor actor) {
-        ActorEntity actorEntity = toActorEntity(actor);
+        ActorEntity actorEntity = dtoConverter.toActorEntity(actor);
         actorsRepository.save(actorEntity);
         Long id = actorEntity.getId();
 
@@ -49,7 +53,7 @@ public class ActorsAPIController implements ActorsApi {
     public ResponseEntity<Actor> findActorById(Long actorId) {
         Optional<ActorEntity> actorOptional = actorsRepository.findById(actorId);
         if(actorOptional.isPresent()) {
-            return ResponseEntity.ok(toActor(actorOptional.get()));
+            return ResponseEntity.ok(dtoConverter.toActor(actorOptional.get()));
         } else {
             return ResponseEntity.notFound().build();
         }
@@ -59,46 +63,8 @@ public class ActorsAPIController implements ActorsApi {
     public ResponseEntity<List<Actor>> getActors() {
         List<Actor> actors = new ArrayList<>();
         for (ActorEntity actorEntity : actorsRepository.findAll()) {
-            actors.add(toActor(actorEntity));
+            actors.add(dtoConverter.toActor(actorEntity));
         }
         return ResponseEntity.ok(actors);
-    }
-
-    private Actor toActor(ActorEntity actorEntity) {
-        Actor actor = new Actor();
-        actor.setFirstname(actorEntity.getFirstname());
-        actor.setLastname(actorEntity.getLastname());
-        switch (actorEntity.getExpertise()) {
-            case FILM:
-                actor.setExpertise(Actor.ExpertiseEnum.FILM);
-                break;
-            case TELEVISION:
-                actor.setExpertise(Actor.ExpertiseEnum.TELEVISION);
-                break;
-            case THEATER:
-                actor.setExpertise(Actor.ExpertiseEnum.THEATER);
-                break;
-        }
-        return actor;
-    }
-
-    private ActorEntity toActorEntity(Actor actor) {
-        ActorEntity actorEntity = new ActorEntity();
-
-        actorEntity.setFirstname(actor.getFirstname());
-        actorEntity.setLastname(actor.getLastname());
-        switch (actor.getExpertise()) {
-            case FILM:
-                actorEntity.setExpertise(ActorEntity.ExpertiseEnum.FILM);
-                break;
-            case TELEVISION:
-                actorEntity.setExpertise(ActorEntity.ExpertiseEnum.TELEVISION);
-                break;
-            case THEATER:
-                actorEntity.setExpertise(ActorEntity.ExpertiseEnum.THEATER);
-                break;
-        }
-
-        return actorEntity;
     }
 }

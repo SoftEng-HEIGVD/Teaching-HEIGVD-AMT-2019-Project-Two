@@ -19,7 +19,12 @@ describes all the characters the actor portrayed in this movie. After all, an ac
 Should be able to find all movies of an actor
 Should be able to find all actors in a movie
 Should be able to find role of an actor in a movie (movies/1/actors/2)
+castings to add role
 
 Hot Reload
 
 Why not Spring data REST
+
+how to generate custom exceptions like not authenticated 
+factor out common parameter in endpoints
+how to use swagger security schemes (in the code generated)

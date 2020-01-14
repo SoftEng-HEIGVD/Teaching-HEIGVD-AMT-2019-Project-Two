@@ -2,12 +2,11 @@ swagger: '2.0'
 info:
   version: '0.1.0'
   title: User API
-  description: An API for users
-host: localhost:8080
+  description: An API for users.
+host: localhost:6060
 basePath: /api
 schemes:
   - http
-  - https
 paths:
   /registrations:
     post:
@@ -33,7 +32,7 @@ paths:
         '400':
           description: Bad Request
 
-  /login:
+  /authentications:
     post:
       tags:
         - user
@@ -56,7 +55,7 @@ paths:
           description: Success
           schema:
             $ref: '#/definitions/JwtToken'
-        '400':
+        '401':
           description: Bad Credentials
         '404':
           description: Not found
@@ -71,10 +70,6 @@ paths:
       consumes:
         - text/plain
       parameters:
-        - name: Authorization
-          in: header
-          type: string
-          required: true
         - name: newPassword
           in: body
           required: true
@@ -189,8 +184,6 @@ definitions:
         type: string
       password:
         type: string
-      isAdmin:
-        type: boolean
   JwtToken:
     type: object
     properties:

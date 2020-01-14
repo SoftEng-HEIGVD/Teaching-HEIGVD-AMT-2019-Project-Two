@@ -8,6 +8,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.io.Serializable;
 
+@Builder(toBuilder = true)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@RequiredArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
 @EqualsAndHashCode
@@ -15,12 +19,22 @@ import java.io.Serializable;
 public class MovieEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    //Disable setters for id
+    @Setter(AccessLevel.NONE) private long id;
 
-    private String title;
+    @NonNull private String title;
     private String director;
     private String studio;
-    private double production;
-    private double revenue;
-    private double rating;
+    private Double production;
+    private Double revenue;
+    @Setter(AccessLevel.NONE) private Double rating;
+    private String ownerId; // Here we use the username of the user
+
+    public void setRating(double rating) {
+        if(rating < 0.0 || rating > 5.0) {
+            throw new IllegalArgumentException("Rating must be between 0 and 5");
+        } else {
+            this.rating = rating;
+        }
+    }
 }
