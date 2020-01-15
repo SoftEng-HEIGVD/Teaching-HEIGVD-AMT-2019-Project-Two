@@ -1,0 +1,15 @@
+version: '3.3'
+
+services:
+
+  # MySQL DB
+  db:
+    image: mysql:5.7.28
+    container_name: 2_expose_entities_db
+    restart: on-failure
+    command: --default-authentication-plugin=mysql_native_password --max-allowed-packet=300M
+    environment:
+      MYSQL_DATABASE: 2_expose_entities
+      MYSQL_ROOT_PASSWORD: pwd
+    ports:
+      - 3306:3306

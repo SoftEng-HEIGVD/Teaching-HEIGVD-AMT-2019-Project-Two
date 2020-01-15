@@ -37,7 +37,7 @@ public class ActorsApiController implements ActorsApi {
     }
 
 
-    public ResponseEntity<List<Actor>> getActor() {
+    public ResponseEntity<List<Actor>> getActors() {
         List<Actor> actors = new ArrayList<>();
         for (ActorEntity actorEntity : actorRepository.findAll()) {
             actors.add(toActor(actorEntity));
@@ -45,7 +45,6 @@ public class ActorsApiController implements ActorsApi {
 
         return ResponseEntity.ok(actors);
     }
-
 
     private ActorEntity toActorEntity(Actor actor) {
         ActorEntity entity = new ActorEntity();
