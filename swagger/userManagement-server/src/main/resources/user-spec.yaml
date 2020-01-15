@@ -1,22 +1,17 @@
-swagger: "2.0"
+swagger: '2.0'
 info:
-  description: "Nous permet de gérer les utilisateurs"
-  version: "1.0.0"
-  title: "User Management"
+  description: Nous permet de gérer les utilisateurs
+  version: '0.1.0'
+  title: UserEntity Management
 host: localhost:8181
-basePath: "/userApi"
-tags:
-- name: "user"
-  description: "Operations about user"
+basePath: /userApi
 schemes:
-- "http"
+- http
 paths:
   /user:
     post:
       security:
         - Bearer: []
-      tags:
-      - "user"
       summary: "Create user"
       description: "This can only be done by the logged in user."
       operationId: "createUser"
@@ -36,8 +31,6 @@ paths:
     get:
       security:
         - Bearer: []
-      tags:
-      - "user"
       summary: "Logs user into the system"
       description: ""
       operationId: "loginUser"
@@ -72,10 +65,8 @@ paths:
           description: "Invalid username/password supplied"
   /user/{username}:
     get:
-      security:
-        - Bearer: []
-      tags:
-      - "user"
+      #security:
+       # - Bearer: []
       summary: "Get user by user name"
       description: ""
       operationId: "getUserByName"
@@ -97,10 +88,8 @@ paths:
         404:
           description: "User not found"
     put:
-      security:
-        - Bearer: []
-      tags:
-      - "user"
+     # security:
+      #  - Bearer: []
       summary: "Updated user"
       description: "This can only be done by the logged in user."
       operationId: "updateUser"
@@ -126,8 +115,6 @@ paths:
     delete:
       security:
         - Bearer: []
-      tags:
-      - "user"
       summary: "Delete user"
       description: "This can only be done by the logged in user."
       operationId: "deleteUser"

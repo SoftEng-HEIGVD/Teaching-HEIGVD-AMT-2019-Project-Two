@@ -17,7 +17,7 @@ public class SwaggerDocumentationConfig {
 
     ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-            .title("User Management")
+            .title("UserEntity Management")
             .description("Nous permet de gérer les utilisateurs")
             .license("")
             .licenseUrl("http://unlicense.org")
