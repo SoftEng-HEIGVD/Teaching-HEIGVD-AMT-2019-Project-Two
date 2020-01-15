@@ -99,7 +99,7 @@ public class TripsApiController implements TripsApi {
 
     @Override
     public ResponseEntity<Void> updateTrip(@ApiParam(value = "" ,required=true) @RequestHeader(value="Authorization", required=true) String authorization,
-                                           @ApiParam(value = "" ,required=true) @PathVariable("idTrip") Integer idTrip,
+                                           @ApiParam(value = "idTrip" ,required=true) @PathVariable("idTrip") Integer idTrip,
                                            @ApiParam(value = "", required = true) @Valid @RequestBody Trip trip) {
         try {
             DecodedToken decodedToken = (DecodedToken) request.getAttribute("decodedToken");
