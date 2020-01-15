@@ -29,7 +29,7 @@ paths:
           description: "successful operation"
     get:
       description: get the list of all users
-      operationId: getAllUsers
+      operationId: getUsers
       produces:
       - application/json
       responses:
