@@ -494,17 +494,7 @@
       <serviceView>
         <option name="contentProportion" value="0.2405694" />
         <treeState>
-          <expand>
-            <path>
-              <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@1f8f1876" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-            </path>
-            <path>
-              <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@1f8f1876" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@d3d3c5c1" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-            </path>
-          </expand>
+          <expand />
           <select />
         </treeState>
       </serviceView>
@@ -545,6 +535,7 @@
       <workItem from="1578562547392" duration="4931000" />
       <workItem from="1578903160410" duration="86000" />
       <workItem from="1578903407107" duration="10472000" />
+      <workItem from="1579075387285" duration="324000" />
     </task>
     <servers />
   </component>
