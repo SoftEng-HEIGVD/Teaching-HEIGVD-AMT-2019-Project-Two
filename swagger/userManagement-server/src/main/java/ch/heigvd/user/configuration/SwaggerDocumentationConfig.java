@@ -22,7 +22,7 @@ public class SwaggerDocumentationConfig {
             .license("")
             .licenseUrl("http://unlicense.org")
             .termsOfServiceUrl("")
-            .version("1.0.0")
+            .version("0.1.0")
             .contact(new Contact("Nair Alic & Robel Teklehaimanot","", "nair.alic@heig-vd.ch"))
             .build();
     }

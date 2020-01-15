@@ -1,12 +1,12 @@
 swagger: '2.0'
 info:
-  description: Nous permet de gérer les utilisateurs
   version: '0.1.0'
   title: UserEntity Management
+  description: Nous permet de gérer les utilisateurs
 host: localhost:8181
-basePath: /userApi
+basePath: /userapi
 schemes:
-- http
+  - http
 paths:
   /user:
     post:
@@ -27,6 +27,18 @@ paths:
       responses:
         default:
           description: "successful operation"
+    get:
+      description: get the list of all users
+      operationId: getAllUsers
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: success
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/User'
   /user/login:
     get:
       security:
