@@ -1,0 +1,155 @@
+swagger: '2.0'
+info:
+  version: '0.1.0'
+  title: Travel API
+  description: Draft API to to test Swagger and Spring Boot
+host: localhost:8081
+basePath: /api
+schemes:
+  - http
+
+parameters:
+  idTrip:
+    in: path
+    name: idTrip
+    type: integer
+    required: true
+  token:
+    in: header
+    name: Authorization
+    type: string
+    required: true
+paths:
+  /trips:
+    parameters:
+      - $ref: '#/parameters/token'
+    get:
+      description: get the list of trips from the user
+      operationId: getTrips
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: success
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/TripDTO'
+    # TODO check if we need to specify pages here
+    post:
+      description: create a trip
+      operationId: createTrip
+      consumes:
+        - application/json
+      parameters:
+        - name: trip
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Trip'
+      responses:
+        '201':
+          description: Created
+        '401':
+          description: unauthorized
+  /trips/{idTrip}:
+    parameters:
+      - $ref: '#/parameters/token'
+      - $ref: '#/parameters/idTrip'
+    delete:
+      description: delete a trip
+      operationId: deleteTrip
+      consumes:
+        - application/json
+      responses:
+        '204':
+          description: Deleted
+        '403':
+          description: Forbiden
+        '404':
+          description: Not found
+    patch:
+      description: update a trip
+      operationId: updateTrip
+      consumes:
+        - application/json
+      parameters:
+        - name: trip
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Trip'
+      responses:
+        '202':
+          description: Updated
+        '403':
+          description: Forbiden
+        '404':
+          description: Not found
+  /countries:
+    get:
+      description: get the list of all the countries
+      operationId: getCountries
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: success
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Country'
+  /reasons:
+    get:
+      description: get the list of all the reasons
+      operationId: getReasons
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: success
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Reason'
+definitions:
+  Trip:
+    type: object
+    properties:
+      Country:
+        $ref: '#/definitions/Country'
+      reason:
+        $ref: '#/definitions/Reason'
+      date:
+        type: string
+      visited:
+        type: boolean
+  TripDTO:
+    type: object
+    properties:
+      idTrip:
+        type: integer
+      User_email:
+        type: string
+      Country:
+        $ref: '#/definitions/Country'
+      reason:
+        $ref: '#/definitions/Reason'
+      date:
+        type: string
+      visited:
+        type: boolean
+  Reason:
+    type: object
+    properties:
+      idReason:
+        type: integer
+      name:
+        type: string
+  Country:
+    type: object
+    properties:
+      idCountry:
+        type: integer
+      name:
+        type: string
