@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="bc9bf3c1-9d6e-484b-992a-a6886feabb34" name="Default" comment="" />
+    <list default="true" id="bc9bf3c1-9d6e-484b-992a-a6886feabb34" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/../../../topology/prod/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../topology/prod/docker-compose.yml" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -536,6 +538,8 @@
       <workItem from="1578903160410" duration="86000" />
       <workItem from="1578903407107" duration="10472000" />
       <workItem from="1579075387285" duration="324000" />
+      <workItem from="1579115317345" duration="66000" />
+      <workItem from="1579116384075" duration="1709000" />
     </task>
     <servers />
   </component>
