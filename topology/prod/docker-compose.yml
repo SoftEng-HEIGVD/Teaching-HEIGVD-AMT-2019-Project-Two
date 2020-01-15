@@ -1,7 +1,7 @@
 version: '3.1'
 services:
   mysql_auth:
-    build: ../docker-images/auth/mysql
+    build: ../../docker-images/auth/mysql
     restart: always
     command: --default-authentication-plugin=mysql_native_password --secure-file-priv=""
     environment:
@@ -11,15 +11,27 @@ services:
       - '3306:3306'
     volumes:
       - mysql_data:/data/db
+  travel_api:
+    build: ../../microservices/travel
+    depends_on:
+      - mysql_travel
+    environment: 
+      - DB_HOST=mysql_travel
+      - DB_PORT=3306
+      - DB_USERNAME=$DB_USERNAME
+      - DB_PASSWORD=$ROOT_PASSWORD
+      - TOKEN_SECRET=$TOKEN_SECRET
+    # command: ["cd", "/usr/scripts/", "ls"] 
+    command: ["/usr/scripts/wait-for-it.sh", "mysql_travel:3306", "-t", "0", "--", "java", "-jar", "/usr/app/myjar.jar"]
   mysql_travel:
-    build: ../docker-images/travel/mysql
+    build: ../../docker-images/travel/mysql
     restart: always
     command: --default-authentication-plugin=mysql_native_password --secure-file-priv=""
     environment:
       - MYSQL_ROOT_PASSWORD=$ROOT_PASSWORD
       - MYSQL_DATABASE=$MYSQL_DATABASE_TRAVEL
     ports:
-      - '3307:3306'
+      - '3307:3306' # Don't need to expose TODO
     volumes:
       - mysql_data:/data/db
 
