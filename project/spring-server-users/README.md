@@ -28,20 +28,32 @@ Use header token subject as parameter for username? (Also owner id in entity not
 Duplicate jwt classes in both projects (look mvn repository and make jwtutil as library)
 Testing with jwt token (Need to test jwt cucumber)
 
+swagger-ui.html doesn't work with enable webmvc in webConfig
+swagger-ui.html can't add to exclude path
+check for duplicate entries
+entity jpa specify many many usefulness?
+features cucumber many files
+cucumber authorization (need jwt util?)
+
 ## TODO 2:
 Finish Controllers + endpoints
-Factorise interceptors and give token content in request attribute
-Tryout Cucumber
-custom exceptions (Good error messages) inspiration: https://www.toptal.com/java/spring-boot-rest-api-error-handling
+*Factorise interceptors and give token content in request attribute
+*Tryout Cucumber
+*custom exceptions (Good error messages) inspiration: https://www.toptal.com/java/spring-boot-rest-api-error-handling
 Cucumber tests
 Pagination
-setup docker compose
-test mysql db
-Java 8
-Service hash password
+*setup docker compose
+*test mysql db
+*Java 8
+*Service hash password
+update firstname or lastname
 
 ## README
 Describe use cases of admin operation (create user account for somebody)
 Separate context of use between users/ for admin and endpints with specfic commands for users
 Password change verification is done via the subject of the jwt token provided in the auth header.
 Choosing username has downside that a user can create multiple accounts with the same email.
+
+Docker compose problem of distributed system containers: Wait for it
+
+Movies what defined them? the title? No multiple movies can have same title.

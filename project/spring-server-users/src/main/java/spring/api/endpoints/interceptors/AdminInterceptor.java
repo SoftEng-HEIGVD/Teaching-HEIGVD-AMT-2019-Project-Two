@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 @Component
 public class AdminInterceptor extends HandlerInterceptorAdapter {
 
-    private static Logger log = LoggerFactory.getLogger(JwtInterceptor.class);
+    private static Logger log = LoggerFactory.getLogger(AdminInterceptor.class);
 
     @Autowired
     JwtUtil jwtUtil;

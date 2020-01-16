@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
  * Custom formatted api error to be shown to the end user
  */
 @Data
-@JsonTypeName("Api Error")
+@JsonTypeName("User Api Error")
 @JsonTypeInfo(include = JsonTypeInfo.As.WRAPPER_OBJECT, use = JsonTypeInfo.Id.NAME)
 public class ApiError {
     private HttpStatus status;
