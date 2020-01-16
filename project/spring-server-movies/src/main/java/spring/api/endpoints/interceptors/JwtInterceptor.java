@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
-import spring.api.exceptions.NotAuthenticatedException;
+import spring.api.exceptions.AuthenticationException;
 import spring.api.services.JwtUtil;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,7 +26,7 @@ public class JwtInterceptor extends HandlerInterceptorAdapter {
 
         String authorization = request.getHeader("Authorization");
         if(authorization == null || authorization.isEmpty()) {
-            throw new Error("Authentication failed, no token provided");
+            throw new AuthenticationException("Not Authenticated: no token provided");
         }
 
         try {
@@ -34,7 +34,7 @@ public class JwtInterceptor extends HandlerInterceptorAdapter {
             // Set attribute owner for the controllers to handle authorization
             request.setAttribute("owner", decodedJWT.getSubject());
         } catch (JWTVerificationException e) {
-            throw new NotAuthenticatedException(401, "Not Authenticated: invalid token");
+            throw new AuthenticationException("Not Authenticated: invalid token, " + e.getMessage());
         }
 
         return super.preHandle(request, response, handler);

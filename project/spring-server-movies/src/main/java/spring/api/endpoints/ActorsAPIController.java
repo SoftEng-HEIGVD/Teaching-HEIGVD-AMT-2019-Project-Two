@@ -7,11 +7,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import spring.api.ActorsApi;
+import spring.api.services.ActorsService;
 import spring.api.services.DtoConverter;
 import spring.entities.ActorEntity;
 import spring.model.Actor;
 import spring.repositories.ActorsRepository;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.ArrayList;
@@ -28,6 +30,12 @@ public class ActorsAPIController implements ActorsApi {
 
     @Autowired
     DtoConverter dtoConverter;
+
+    @Autowired
+    ActorsService actorsService;
+
+    @Autowired
+    HttpServletRequest httpServletRequest;
 
     @Override
     public ResponseEntity<Object> createActor(@ApiParam(value = "", required = true) @Valid @RequestBody Actor actor) {

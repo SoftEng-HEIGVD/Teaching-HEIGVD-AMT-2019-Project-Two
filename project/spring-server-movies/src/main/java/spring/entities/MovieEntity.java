@@ -10,11 +10,8 @@ import java.io.Serializable;
 
 @Builder(toBuilder = true)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@RequiredArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
-@EqualsAndHashCode
+@Data
 @Entity
 public class MovieEntity implements Serializable {
     @Id

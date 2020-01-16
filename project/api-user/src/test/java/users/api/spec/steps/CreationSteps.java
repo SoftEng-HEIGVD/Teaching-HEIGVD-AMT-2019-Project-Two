@@ -34,6 +34,11 @@ public class CreationSteps {
         assertNotNull(api);
     }
 
+    @Given("^I have a user payload with no username or password$")
+    public void iHaveAUserPayloadWithNoUsernameOrPassword() {
+        this.user = new users.api.dto.User();
+    }
+
     @Given("^I have a user payload with username and password$")
     public void iHaveAUserPayloadWithUsernameAndPassword() {
         user = new users.api.dto.User();
@@ -58,7 +63,8 @@ public class CreationSteps {
     }
 
     @Then("^I receive a (\\d+) status code$")
-    public void i_receive_a_status_code(int arg1) throws Throwable {
-        assertEquals(201, lastStatusCode);
+    public void i_receive_a_status_code(int expectedCode) throws Throwable {
+        assertEquals(expectedCode, lastStatusCode);
     }
+
 }

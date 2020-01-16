@@ -1,11 +1,13 @@
 package spring.api.exceptions;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2017-07-26T19:36:34.802Z")
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
+import static spring.api.exceptions.HttpStatusCodes.NOT_FOUND;
+
+@ResponseStatus(code = HttpStatus.NOT_FOUND)
 public class NotFoundException extends ApiException {
-    private int code;
-    public NotFoundException (int code, String msg) {
-        super(code, msg);
-        this.code = code;
+    public NotFoundException (String msg) {
+        super(NOT_FOUND, msg);
     }
 }

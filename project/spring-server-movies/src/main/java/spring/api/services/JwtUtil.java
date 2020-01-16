@@ -12,6 +12,10 @@ import spring.configuration.JwtConfig;
 
 import java.util.Date;
 
+/**
+ * Utility class for generating jwt tokens, verifying or decoding them.
+ * Used as a Component in the Spring Application, but could also be refactored as a static class.
+ */
 @Component
 public class JwtUtil {
 
@@ -54,11 +58,18 @@ public class JwtUtil {
         }
     }
 
+    /**
+     * Extracts the token from the authorization header by removing the Bearer keyword.
+     * @param authHeader the authorization header containing the jwt token preceded by Bearer
+     * @return the extracted token
+     * @throws JWTVerificationException if authorization header is not valid.
+     */
     public String extractToken(String authHeader) {
         if (authHeader.startsWith("Bearer ")) {
             return authHeader.substring(7);
         } else {
-            throw new Error("Header does not have authorization token");
+            throw new JWTVerificationException("Malformed authorization header: Token must start with Bearer " +
+                    "followed by blank space");
         }
     }
 }

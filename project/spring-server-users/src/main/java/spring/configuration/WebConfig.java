@@ -8,7 +8,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import spring.api.endpoints.interceptors.AdminInterceptor;
 import spring.api.endpoints.interceptors.JwtInterceptor;
 
-@EnableWebMvc
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 
@@ -24,10 +23,18 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(getJwtInterceptor())
+        /*registry.addInterceptor(getJwtInterceptor())
                 .excludePathPatterns("/registrations", "/registrations/*",
-                        "/authentications", "/authentications/*");
+                        "/authentications", "/authentications/*",
+                        "/swagger-ui.html",
+                        "/swagger-ui.html*",
+                        "/swagger-ui.html/",
+                        "/swagger-ui.html/**",
+                        "/swagger-ui.html/*", "/");*/
+        registry.addInterceptor(getJwtInterceptor())
+                .addPathPatterns("/passwords/", "/passwords");
         registry.addInterceptor(getAdminInterceptor())
-                .addPathPatterns("/users/*");
+                .addPathPatterns("/users/*", "/users/**",
+                        "/users");
     }
 }

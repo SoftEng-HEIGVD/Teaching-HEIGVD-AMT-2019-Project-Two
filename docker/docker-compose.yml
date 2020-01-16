@@ -1,32 +1,46 @@
 version: '3.7'
 
 services:
-
-  filmapp:
-    build: ../../images_docker/filmapp
-    environment:
-      PAYARA_ARGS: "--debug"
-    ports:
-      - 8080:8080
-      - 4848:4848
-      - 9009:9009
   db:
-    build: ../../images_docker/mysql
+    build: docker-images/db
     command: --default-authentication-plugin=mysql_native_password
     restart: always
     ports:
       - 3306:3306
     environment:
-      MYSQL_DATABASE: amt_project_one
-      MYSQL_ROOT_PASSWORD: bananaSplat
+      MYSQL_DATABASE: db_rest_api
+      MYSQL_ROOT_PASSWORD: mypassword
+
+  filmapp:
+    build: docker-images/backend-movies
+    ports:
+      - 8080:8080
+    depends_on:
+      - "db"
+    environment:
+      DB_HOST: db
+      # SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/db_rest_api?useSSL=false
+    command: ["./wait-for-it.sh", "db:3306", "--", "java", "-jar", "/opt/app/server-movies.jar"]
+
+  userapp:
+    build: docker-images/backend-users
+    ports:
+      - 6060:6060
+    depends_on:
+      - "db"
+    environment:
+      DB_HOST: db
+      # SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/db_rest_api?useSSL=false
+    command: ["./wait-for-it.sh", "db:3306", "--", "java", "-jar", "/opt/app/server-users.jar"]
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     environment:
       - PMA_HOST=db
+      - PMA_USER=root
+      - PMA_PASSWORD=mypassword
     restart: always
     depends_on:
       - db
     ports:
-      - 6060:80
-
+      - 5506:80
