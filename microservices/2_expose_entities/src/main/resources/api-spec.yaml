@@ -7,11 +7,22 @@ host: localhost:8080
 basePath: /api/v1
 schemes:
   - http
+
+tags:
+  - name: actors
+    description: Retrieve your actors's activities
+  - name: characters
+    description: Retrieve the infos about the characters
+  - name: movies
+    description: Retrieve the infos about the movies
+
 paths:
   /actors:
     get:
       description: get all actors
       operationId: getActors
+      tags:
+        - actors
       produces:
         - application/json
       responses:
@@ -54,7 +65,7 @@ paths:
         - in: path
           name: id
           required: true
-          type: number
+          type: integer
           description: The actor's id
     delete:
       description: delete an actor
@@ -63,7 +74,8 @@ paths:
         - in: path
           name: id
           required: true
-          type: number
+          type: integer
+          format: int64
           description: The actor's id
       responses:
         200:
@@ -82,7 +94,7 @@ paths:
         - name: id
           in: path
           required: true
-          type: number
+          type: integer
           description: The actor's id
       responses:
         200:
@@ -133,7 +145,7 @@ paths:
         - in: path
           name: id
           required: true
-          type: number
+          type: integer
           description: The movie's id
     delete:
       description: delete a movie
@@ -142,7 +154,7 @@ paths:
         - in: path
           name: id
           required: true
-          type: number
+          type: integer
           description: The movie's id
       responses:
         200:
@@ -161,7 +173,7 @@ paths:
         - name: id
           in: path
           required: true
-          type: number
+          type: integer
           description: The movie's id
       responses:
         200:
@@ -212,12 +224,12 @@ paths:
         - in: path
           name: id_actor
           required: true
-          type: number
+          type: integer
           description: The actor's id
         - in: path
           name: id_movie
           required: true
-          type: number
+          type: integer
           description: The movie's id
     delete:
       description: delete a character
@@ -226,12 +238,12 @@ paths:
         - in: path
           name: id_actor
           required: true
-          type: number
+          type: integer
           description: The actor's id
         - in: path
           name: id_movie
           required: true
-          type: number
+          type: integer
           description: The movie's id
       responses:
         200:
@@ -250,12 +262,12 @@ paths:
         - in: path
           name: id_actor
           required: true
-          type: number
+          type: integer
           description: The actor's id
         - in: path
           name: id_movie
           required: true
-          type: number
+          type: integer
           description: The movie's id
       responses:
         200:
@@ -283,39 +295,31 @@ definitions:
   Actor:
     type: object
     properties:
-      id:
-        type: number
       fullname:
         type: string
       email:
         type: string
     required:
-      - id
-      - fullname
       - email
   Movie:
     type: object
     properties:
-      id:
-        type: number
       title:
         type: string
     required:
-      - id
       - title
   Character:
     type: object
     properties:
-      id:
-        type: number
       actor:
-        type: number
+        type: integer
+        format: int64
       movie:
-        type: number
+        type: integer
+        format: int64
       charName:
         type: string
     required:
-      - id
       - actor
       - movie
       - charName
