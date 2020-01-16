@@ -50,7 +50,7 @@
     <property name="WebServerToolWindowFactoryState" value="true" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="dynamic.classpath" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../travel/full-project" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../fruits-specs/src/test/resources/scenarios" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -66,6 +66,7 @@
       <recent name="io.avalia.fruits" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Mon pc\Dropbox\HEIG-VD\Semestre 5\AMT\Labo\Teaching-HEIGVD-AMT-2019-Project-Two\microservices\authentication\fruits-specs\src\test\resources\scenarios" />
       <recent name="$PROJECT_DIR$/../spring-server/src/main/resources" />
     </key>
   </component>
@@ -86,7 +87,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Spring Boot.Execute with Spring Boot">
+  <component name="RunManager" selected="JUnit.SpecificationTest (1)">
     <configuration default="true" type="DjangoTestsConfigurationType" factoryName="Django tests">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -497,12 +498,12 @@
           <expand>
             <path>
               <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@bf61f810" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@574b96bc" type="7427dc5b:ServiceModel$ServiceGroupNode" />
             </path>
             <path>
               <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@bf61f810" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@10e5af3e" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@574b96bc" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@98c71b3d" type="7427dc5b:ServiceModel$ServiceGroupNode" />
             </path>
           </expand>
           <select />
@@ -549,6 +550,7 @@
       <workItem from="1579115317345" duration="66000" />
       <workItem from="1579116384075" duration="1709000" />
       <workItem from="1579170401681" duration="6939000" />
+      <workItem from="1579181881364" duration="10718000" />
     </task>
     <servers />
   </component>
@@ -573,13 +575,8 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/../fruits-specs/src/test/java/heig/vd/ch/projet/auth/api/spec/steps/CreationSteps.java</url>
-          <line>53</line>
+          <line>62</line>
           <option name="timeStamp" value="4" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/../spring-server/src/main/java/heig/vd/ch/projet/auth/api/endpoints/UsersApiController.java</url>
-          <line>51</line>
-          <option name="timeStamp" value="21" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

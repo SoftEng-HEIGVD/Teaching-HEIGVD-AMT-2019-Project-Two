@@ -27,6 +27,17 @@ paths:
       operationId: getUsers
       produces:
         - application/json
+      parameters:
+        - in: query
+          name: offset
+          type: integer
+          default: 0
+          required: false
+        - in: query
+          name: limit
+          type: integer
+          default: 10
+          required: false
       responses:
         '200':
           description: success
@@ -34,6 +45,10 @@ paths:
             type: array
             items:
               $ref: '#/definitions/UserDTO'
+        '400':
+          description: bad request
+        '401':
+          description: unauthorized
         '403':
           description: forbidden
     post:
@@ -50,8 +65,8 @@ paths:
       responses:
         '201':
           description: Created
-        '400':
-          description: Bad request
+        '401':
+          description: unauthorized
         '403':
           description: Forbidden
         '409':
@@ -70,6 +85,8 @@ paths:
           description: Success
           schema:
             $ref: '#/definitions/UserDTO'
+        '401':
+          description: unauthorized
         '403':
           description: Forbiden
         '404':
@@ -82,6 +99,8 @@ paths:
       responses:
         '204':
           description: Deleted
+        '401':
+          description: unauthorized
         '403':
           description: Forbiden
         '404':
@@ -101,8 +120,8 @@ paths:
       responses:
         '202':
           description: Updated
-        '400':
-          description: Bad request
+        '401':
+          description: unauthorized
         '403':
           description: Forbiden
         '404':
@@ -130,6 +149,8 @@ paths:
           description: Bad request
         '401':
           description: unauthorized
+        '404':
+          description: not found
 definitions:
   User:
     type: object
