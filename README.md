@@ -82,7 +82,7 @@ You don't have to follow this sequence if you prefer to do some of the tasks bef
 
 **Week 2 (December 9th):**
 
-* ~~Implement a **first endpoint** (one of the 2 main entities) end-to-end. You should be able to perform CRUD operations on the endpoint and~~ validate that it works with Cucumber. ~~One person can focus on the backend,~~ the other on the Cucumber tests.
+* ~~Implement a **first endpoint** (one of the 2 main entities) end-to-end. You should be able to perform CRUD operations on the endpoint and~~ validate that it works with Cucumber. ~~One person can focus on the backend, the other on the Cucumber tests.~~
 * ~~Be mindful that **created resources have an owner**, and that only the owner should be able to access its resources (for RUD operations). Plan for that, even if you don't have your authentication service fully implemented.~~
 
 **Week 3 (December 16th):**
