@@ -14,12 +14,15 @@ import heig.vd.ch.projet.travel.repositories.ReasonRepository;
 import heig.vd.ch.projet.travel.repositories.TripRepository;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -27,6 +30,7 @@ import java.sql.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2017-07-26T19:36:34.802Z")
 
@@ -87,14 +91,28 @@ public class TripsApiController implements TripsApi {
     }
 
     @Override
-    public ResponseEntity<List<TripDTO>> getTrips(@ApiParam(value = "" ,required=true) @RequestHeader(value="Authorization", required=true) String authorization) {
-        DecodedToken decodedToken = (DecodedToken) request.getAttribute("decodedToken");
+    public ResponseEntity<List<TripDTO>> getTrips(@ApiParam(value = "" ,required=true) @RequestHeader(value="Authorization", required=true) String authorization,
+                                                  @ApiParam(value = "", defaultValue = "0") @Valid @RequestParam(value = "offset", required = false, defaultValue="0") Integer offset,
+                                                  @ApiParam(value = "", defaultValue = "10") @Valid @RequestParam(value = "limit", required = false, defaultValue="10") Integer limit) {
 
-        //Get all trips by email
-        List<TripDTO> tripDTOS = tripRepository.findAllByEmailEquals(decodedToken.getEmail()).map(this::toTripDTO).toList();
+        try {
+            DecodedToken decodedToken = (DecodedToken) request.getAttribute("decodedToken");
 
-        //Return an array of trip and an ok status (200)
-        return ResponseEntity.ok(tripDTOS);
+            //Get the page of tripEntity
+            Page<TripEntity> tripEntities = tripRepository.findAllByEmailEquals(decodedToken.getEmail(), PageRequest.of(offset,limit));
+
+            //Get all trips by email
+            List<TripDTO> tripDTOS = tripEntities.get().map(tripEntity -> toTripDTO(tripEntity)).collect(Collectors.toList());
+
+
+            //List<TripDTO> tripDTOS = tripRepository.findAllByEmailEquals(decodedToken.getEmail()).map(this::toTripDTO).toList();
+
+            //Return an array of trip and an ok status (200)
+            return ResponseEntity.ok(tripDTOS);
+        }catch (IllegalArgumentException e){
+            //Return an bad request status (403)
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
     }
 
     @Override

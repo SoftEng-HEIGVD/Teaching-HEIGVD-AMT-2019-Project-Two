@@ -566,7 +566,7 @@
       <workItem from="1578903655705" duration="11507000" />
       <workItem from="1578922128492" duration="10384000" />
       <workItem from="1579075481506" duration="319000" />
-      <workItem from="1579170611190" duration="943000" />
+      <workItem from="1579170611190" duration="2191000" />
     </task>
     <servers />
   </component>
@@ -615,7 +615,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/../spring-server/src/main/java/heig/vd/ch/projet/travel/api/endpoints/TripsApiController.java</url>
-          <line>109</line>
+          <line>127</line>
           <option name="timeStamp" value="24" />
         </line-breakpoint>
       </breakpoints>
