@@ -19,6 +19,10 @@ public class ActorEntity implements Serializable {
     @Setter
     private long id;
 
+    @Getter
+    @Setter
+    private long idOwner;
+
     @Column(nullable = false)
     @Getter
     @Setter
