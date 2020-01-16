@@ -54,6 +54,7 @@
                                 <basePackage>spring</basePackage>
                                 <modelPackage>spring.model</modelPackage>
                                 <useTags>true</useTags>
+                                <unhandledException>true</unhandledException>
                             </configOptions>
                         </configuration>
                     </execution>
@@ -84,6 +85,14 @@
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
         </dependency>
+
+        <!-- mysql dependency -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
         <!--SpringFox dependencies -->
         <dependency>
             <groupId>io.springfox</groupId>
