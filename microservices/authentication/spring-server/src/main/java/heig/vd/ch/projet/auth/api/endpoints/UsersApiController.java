@@ -11,18 +11,24 @@ import heig.vd.ch.projet.auth.api.model.User;
 import heig.vd.ch.projet.auth.repositories.UserRepository;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
+import javax.validation.constraints.Min;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2017-07-26T19:36:34.802Z")
 
@@ -120,21 +126,28 @@ public class UsersApiController implements UsersApi {
     }
 
     @Override
-    public ResponseEntity<List<UserDTO>> getUsers(@ApiParam(value = "" ,required=true) @RequestHeader(value="Authorization", required=true) String authorization) {
+    public ResponseEntity<List<UserDTO>> getUsers(@ApiParam(value = "" ,required=true) @RequestHeader(value="Authorization", required=true) String authorization,
+                                                  @ApiParam(value = "", defaultValue = "0") @Valid @RequestParam(value = "offset", required = false, defaultValue="0") Integer offset,
+                                                  @ApiParam(value = "", defaultValue = "10") @Valid @RequestParam(value = "limit", required = false, defaultValue="10") Integer limit) {
 
-        List<UserDTO> usersDTO = new ArrayList<>();
-        DecodedToken decodedToken = (DecodedToken) request.getAttribute("decodedToken");
-        if(decodedToken.getRole().equals(Roles.ADMIN.toString())){
-            //Get all users
-            for (UserEntity userEntity : userRepository.findAll()) {
-                usersDTO.add(toUserDTO(userEntity));
+        try {
+            DecodedToken decodedToken = (DecodedToken) request.getAttribute("decodedToken");
+            if(decodedToken.getRole().equals(Roles.ADMIN.toString())){
+                //Get the page
+                Page<UserEntity> userEntities = userRepository.findAll(PageRequest.of(offset,limit));
+
+                //Get all users
+                List<UserDTO> usersDTO = userEntities.get().map(userEntity -> toUserDTO(userEntity)).collect(Collectors.toList());
+
+                //Return an array of user and an ok status (200)
+                return ResponseEntity.ok(usersDTO);
+            }else {
+                //Return an forbidden status (403)
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
             }
-
-            //Return an array of user and an ok status (200)
-            return ResponseEntity.ok(usersDTO);
-        }else {
-            //Return an forbidden status (403)
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }catch (IllegalArgumentException e){
+            //Return an bad request status (403)
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
 
