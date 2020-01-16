@@ -27,6 +27,17 @@ paths:
       operationId: getUsers
       produces:
         - application/json
+      parameters:
+        - in: query
+          name: offset
+          type: integer
+          default: 0
+          required: false
+        - in: query
+          name: limit
+          type: integer
+          default: 10
+          required: false
       responses:
         '200':
           description: success
@@ -34,6 +45,8 @@ paths:
             type: array
             items:
               $ref: '#/definitions/UserDTO'
+        '400':
+          description: bad request
         '401':
           description: unauthorized
         '403':

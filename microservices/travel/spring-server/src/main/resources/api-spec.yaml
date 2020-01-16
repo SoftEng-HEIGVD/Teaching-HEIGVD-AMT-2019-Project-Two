@@ -28,6 +28,17 @@ paths:
       operationId: getTrips
       produces:
         - application/json
+      parameters:
+        - in: query
+          name: offset
+          type: integer
+          default: 0
+          required: false
+        - in: query
+          name: limit
+          type: integer
+          default: 10
+          required: false
       responses:
         '200':
           description: success

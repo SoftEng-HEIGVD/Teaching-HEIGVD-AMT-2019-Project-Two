@@ -1,0 +1,35 @@
+version: '3.1'
+services:
+  mysql_auth:
+    build: ../../docker-images/auth/mysql
+    restart: always
+    command: --default-authentication-plugin=mysql_native_password --secure-file-priv=""
+    environment:
+      - MYSQL_ROOT_PASSWORD=$ROOT_PASSWORD
+      - MYSQL_DATABASE=$MYSQL_DATABASE_AUTH
+    ports:
+      - '3306:3306'
+    volumes:
+      - mysql_data:/data/db
+  mysql_travel:
+    build: ../../docker-images/travel/mysql
+    restart: always
+    command: --default-authentication-plugin=mysql_native_password --secure-file-priv=""
+    environment:
+      - MYSQL_ROOT_PASSWORD=$ROOT_PASSWORD
+      - MYSQL_DATABASE=$MYSQL_DATABASE_TRAVEL
+    ports:
+      - '3307:3306'
+    volumes:
+      - mysql_data:/data/db
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    environment:
+      - MYSQL_ROOT_PASSWORD=$ROOT_PASSWORD
+      - PMA_HOSTS=mysql_auth,mysql_travel
+    ports:
+      - '6060:80'
+
+volumes: 
+  mysql_data:

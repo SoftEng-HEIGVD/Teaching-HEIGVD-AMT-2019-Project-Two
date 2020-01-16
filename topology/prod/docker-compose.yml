@@ -1,0 +1,75 @@
+version: '3.1'
+services:
+  traefik:
+    image: traefik:2.1
+    command: 
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+    ports: 
+      - 80:80
+      - 2020:8080
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+  auth_api:
+    build: ../../microservices/authentication
+    depends_on:
+      - mysql_auth
+    environment: 
+      - DB_HOST=mysql_auth
+      - DB_PORT=3306
+      - DB_USERNAME=$DB_USERNAME
+      - DB_PASSWORD=$ROOT_PASSWORD
+      - TOKEN_SECRET=$TOKEN_SECRET
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.auth-api-router.rule=Host(`www.todotravel.ch`) && PathPrefix(`/api-auth`)
+      - traefik.http.services.auth-api-service.loadbalancer.server.port=8080
+    command: ["/usr/scripts/wait-for-it.sh", "mysql_auth:3306", "-t", "0", "--", "java", "-jar", "/usr/app/myjar.jar"]
+  
+  travel_api:
+    build: ../../microservices/travel
+    depends_on:
+      - mysql_travel
+    environment: 
+      - DB_HOST=mysql_travel
+      - DB_PORT=3306
+      - DB_USERNAME=$DB_USERNAME
+      - DB_PASSWORD=$ROOT_PASSWORD
+      - TOKEN_SECRET=$TOKEN_SECRET
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.travel-api-router.rule=Host(`www.todotravel.ch`) && PathPrefix(`/api-travel`)
+      - traefik.http.services.travel-api-service.loadbalancer.server.port=8081
+    command: ["/usr/scripts/wait-for-it.sh", "mysql_travel:3306", "-t", "0", "--", "java", "-jar", "/usr/app/myjar.jar"]
+  
+  mysql_auth:
+    build: ../../docker-images/auth/mysql
+    restart: always
+    command: --default-authentication-plugin=mysql_native_password --secure-file-priv=""
+    environment:
+      - MYSQL_ROOT_PASSWORD=$ROOT_PASSWORD
+      - MYSQL_DATABASE=$MYSQL_DATABASE_AUTH
+    volumes:
+      - mysql_data:/data/db
+
+  mysql_travel:
+    build: ../../docker-images/travel/mysql
+    restart: always
+    command: --default-authentication-plugin=mysql_native_password --secure-file-priv=""
+    environment:
+      - MYSQL_ROOT_PASSWORD=$ROOT_PASSWORD
+      - MYSQL_DATABASE=$MYSQL_DATABASE_TRAVEL
+    volumes:
+      - mysql_data:/data/db
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    environment:
+      - MYSQL_ROOT_PASSWORD=$ROOT_PASSWORD
+      - PMA_HOSTS=mysql_auth,mysql_travel
+    ports:
+      - '6060:80'
+
+volumes: 
+  mysql_data:
