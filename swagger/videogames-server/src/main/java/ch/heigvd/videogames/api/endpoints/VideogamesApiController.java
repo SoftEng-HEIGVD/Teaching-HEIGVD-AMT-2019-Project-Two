@@ -58,7 +58,7 @@ public class VideogamesApiController implements VideogamesApi {
         VideogameEntity videogameEntity = videogameRepository.findById(id).get();
 
         videogameRepository.delete(videogameEntity);
-        return new ResponseEntity<Void>(HttpStatus.OK);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
 

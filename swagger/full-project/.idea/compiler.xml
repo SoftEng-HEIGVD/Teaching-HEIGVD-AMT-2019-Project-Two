@@ -7,19 +7,19 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="userManagement-spring" />
-        <module name="videogamesSpecification" />
         <module name="videogames-spring" />
+        <module name="videogamesSpecification" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="userManagement-spring" target="1.7" />
+      <module name="userManagement-spring" target="1.8" />
       <module name="videogames-spring" target="1.8" />
       <module name="videogamesSpecification" target="1.8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="userManagement-spring" options="" />
+      <module name="userManagement-spring" options="-parameters" />
       <module name="videogames-spring" options="-parameters" />
     </option>
   </component>

@@ -12,7 +12,7 @@ import javax.persistence.Id;
 @Entity
 public class UserEntity implements Serializable {
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  //@GeneratedValue(strategy = GenerationType.IDENTITY)
   private String email;
 
   private String username;
