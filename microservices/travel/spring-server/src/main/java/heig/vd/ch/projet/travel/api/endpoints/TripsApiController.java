@@ -9,9 +9,11 @@ import heig.vd.ch.projet.travel.api.service.DecodedToken;
 import heig.vd.ch.projet.travel.entities.CountryEntity;
 import heig.vd.ch.projet.travel.entities.ReasonEntity;
 import heig.vd.ch.projet.travel.entities.TripEntity;
+import heig.vd.ch.projet.travel.entities.UserEntity;
 import heig.vd.ch.projet.travel.repositories.CountryRepository;
 import heig.vd.ch.projet.travel.repositories.ReasonRepository;
 import heig.vd.ch.projet.travel.repositories.TripRepository;
+import heig.vd.ch.projet.travel.repositories.UserRepository;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -47,12 +49,18 @@ public class TripsApiController implements TripsApi {
     ReasonRepository reasonRepository;
 
     @Autowired
+    UserRepository userRepository;
+
+    @Autowired
     HttpServletRequest request;
 
     @Override
     public ResponseEntity<Void> createTrip(@ApiParam(value = "" ,required=true) @RequestHeader(value="Authorization", required=true) String authorization,
                                            @ApiParam(value = "", required = true) @Valid @RequestBody Trip trip) {
         DecodedToken decodedToken = (DecodedToken) request.getAttribute("decodedToken");
+
+        //Check if user exist. If not we create him
+        addUserIfNotExist(decodedToken.getEmail());
 
         //Create a trip
         TripEntity tripEntity = toTripEntity(trip,decodedToken.getEmail());
@@ -97,6 +105,9 @@ public class TripsApiController implements TripsApi {
 
         try {
             DecodedToken decodedToken = (DecodedToken) request.getAttribute("decodedToken");
+
+            //Check if user exist. If not we create him
+            addUserIfNotExist(decodedToken.getEmail());
 
             //Get the page of tripEntity
             Page<TripEntity> tripEntities = tripRepository.findAllByEmailEquals(decodedToken.getEmail(), PageRequest.of(offset,limit));
@@ -153,6 +164,14 @@ public class TripsApiController implements TripsApi {
     }
 
     /*Utils*/
+    private void addUserIfNotExist(String email){
+        if(!userRepository.existsById(email)){
+            UserEntity userEntity = new UserEntity();
+            userEntity.setEmail(email);
+            userRepository.save(userEntity);
+        }
+    }
+
     private  TripDTO toTripDTO(TripEntity tripEntity) {
         TripDTO trip = new TripDTO();
         trip.setIdTrip(tripEntity.getIdTrip());

@@ -87,7 +87,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.SpecificationTest (1)">
+  <component name="RunManager" selected="Spring Boot.Execute with Spring Boot">
     <configuration default="true" type="DjangoTestsConfigurationType" factoryName="Django tests">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -495,17 +495,7 @@
       <serviceView>
         <option name="contentProportion" value="0.2405694" />
         <treeState>
-          <expand>
-            <path>
-              <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@574b96bc" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-            </path>
-            <path>
-              <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@574b96bc" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@98c71b3d" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-            </path>
-          </expand>
+          <expand />
           <select />
         </treeState>
       </serviceView>
@@ -550,7 +540,8 @@
       <workItem from="1579115317345" duration="66000" />
       <workItem from="1579116384075" duration="1709000" />
       <workItem from="1579170401681" duration="6939000" />
-      <workItem from="1579181881364" duration="10718000" />
+      <workItem from="1579181881364" duration="11807000" />
+      <workItem from="1579247638712" duration="671000" />
     </task>
     <servers />
   </component>
