@@ -65,6 +65,9 @@
       <recent name="io.avalia.fruits.api.endpoints" />
       <recent name="io.avalia.fruits" />
     </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="heig.vd.ch.projet.auth.api.spec.steps" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Mon pc\Dropbox\HEIG-VD\Semestre 5\AMT\Labo\Teaching-HEIGVD-AMT-2019-Project-Two\microservices\authentication\fruits-specs\src\test\resources\scenarios" />
       <recent name="$PROJECT_DIR$/../spring-server/src/main/resources" />
@@ -87,7 +90,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Spring Boot.Execute with Spring Boot">
+  <component name="RunManager" selected="JUnit.SpecificationTest (1)">
     <configuration default="true" type="DjangoTestsConfigurationType" factoryName="Django tests">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -495,7 +498,17 @@
       <serviceView>
         <option name="contentProportion" value="0.2405694" />
         <treeState>
-          <expand />
+          <expand>
+            <path>
+              <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@fbc621e7" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+            </path>
+            <path>
+              <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@fbc621e7" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@83b7ddf7" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+            </path>
+          </expand>
           <select />
         </treeState>
       </serviceView>
@@ -541,7 +554,8 @@
       <workItem from="1579116384075" duration="1709000" />
       <workItem from="1579170401681" duration="6939000" />
       <workItem from="1579181881364" duration="11807000" />
-      <workItem from="1579247638712" duration="671000" />
+      <workItem from="1579247638712" duration="1299000" />
+      <workItem from="1579263333370" duration="5890000" />
     </task>
     <servers />
   </component>
@@ -566,7 +580,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/../fruits-specs/src/test/java/heig/vd/ch/projet/auth/api/spec/steps/CreationSteps.java</url>
-          <line>62</line>
+          <line>65</line>
           <option name="timeStamp" value="4" />
         </line-breakpoint>
       </breakpoints>

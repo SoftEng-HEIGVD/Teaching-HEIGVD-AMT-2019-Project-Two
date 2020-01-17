@@ -7,11 +7,11 @@ import heig.vd.ch.projet.auth.api.DefaultApi;
 import heig.vd.ch.projet.auth.api.dto.AuthDTO;
 import heig.vd.ch.projet.auth.api.spec.helpers.Environment;
 
-public class AuthenticationSteps {
+public class UpdateUserSteps {
     private Environment environment;
     private DefaultApi api;
 
-    public AuthenticationSteps(Environment environment) {
+    public UpdateUserSteps(Environment environment) {
         this.environment = environment;
         this.api = environment.getApi();
     }

@@ -3,6 +3,7 @@ package heig.vd.ch.projet.auth.api.spec.helpers;
 import heig.vd.ch.projet.auth.ApiException;
 import heig.vd.ch.projet.auth.ApiResponse;
 import heig.vd.ch.projet.auth.api.DefaultApi;
+import heig.vd.ch.projet.auth.api.dto.AuthDTO;
 
 import java.io.IOException;
 import java.util.Properties;
@@ -18,6 +19,10 @@ public class Environment {
     private ApiException lastApiException;
     private boolean lastApiCallThrewException;
     private int lastStatusCode;
+
+    private String token;
+    private AuthDTO authDTO;
+
 
     public Environment() throws IOException {
         Properties properties = new Properties();
@@ -61,5 +66,22 @@ public class Environment {
 
     public void setLastStatusCode(int lastStatusCode) {
         this.lastStatusCode = lastStatusCode;
+    }
+
+
+    public AuthDTO getAuthDTO() {
+        return authDTO;
+    }
+
+    public void setAuthDTO(AuthDTO authDTO) {
+        this.authDTO = authDTO;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }
