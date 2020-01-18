@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="bc9bf3c1-9d6e-484b-992a-a6886feabb34" name="Default" comment="" />
+    <list default="true" id="bc9bf3c1-9d6e-484b-992a-a6886feabb34" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/../../../docker-images/auth/mysql/data/b-auth-data.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../../../docker-images/auth/mysql/data/b-auth-data.sql" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -501,12 +503,12 @@
           <expand>
             <path>
               <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@fbc621e7" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@56bef9eb" type="7427dc5b:ServiceModel$ServiceGroupNode" />
             </path>
             <path>
               <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@fbc621e7" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@83b7ddf7" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@56bef9eb" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@85e90e20" type="7427dc5b:ServiceModel$ServiceGroupNode" />
             </path>
           </expand>
           <select />
@@ -555,7 +557,8 @@
       <workItem from="1579170401681" duration="6939000" />
       <workItem from="1579181881364" duration="11807000" />
       <workItem from="1579247638712" duration="1299000" />
-      <workItem from="1579263333370" duration="5890000" />
+      <workItem from="1579263333370" duration="5896000" />
+      <workItem from="1579349518127" duration="1607000" />
     </task>
     <servers />
   </component>
