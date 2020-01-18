@@ -126,6 +126,14 @@ public class UserServiceImpl implements UserService {
         userRepository.save(userEntity);
     }
 
+    private void setPassword(UserEntity userEntity, String password) throws BadRequestException {
+        // Check length of password
+        if(password.length() < 6) {
+            throw new BadRequestException("Please choose a password with at least 6 characters.");
+        }
+        userEntity.setPassword(authenticationService.hashPassword(password));
+    }
+
     @Override
     public void makeAdmin() {
         UserEntity adminEntity = UserEntity.builder().username("admin")
@@ -134,12 +142,12 @@ public class UserServiceImpl implements UserService {
         userRepository.save(adminEntity);
     }
 
-    private void setPassword(UserEntity userEntity, String password) throws BadRequestException {
-        // Check length of password
-        if(password.length() < 6) {
-            throw new BadRequestException("Please choose a password with at least 6 characters.");
-        }
-        userEntity.setPassword(authenticationService.hashPassword(password));
+    @Override
+    public void makeTestUser() {
+        UserEntity userEntity = UserEntity.builder().username("user1")
+                .password(authenticationService.hashPassword("password"))
+                .isAdmin(false).build();
+        userRepository.save(userEntity);
     }
 
     /**

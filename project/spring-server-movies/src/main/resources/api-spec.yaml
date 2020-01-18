@@ -19,14 +19,7 @@ securityDefinitions:
     description: Requests should pass an authorization header.
 
 security:
-  - Bearer: []
-
-parameters:
-  authHeader:
-    in: header
-    name: auth
-    type: string
-    description: The authorization header containing jwt token
+  - Jwt: []
 
 paths:
   /movies:

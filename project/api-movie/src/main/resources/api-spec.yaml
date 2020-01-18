@@ -12,21 +12,14 @@ schemes:
   - http
 
 securityDefinitions:
-  JwtAuthentication:
+  Jwt:
     type: apiKey
-    name: auth
+    name: Authorization
     in: header
     description: Requests should pass an authorization header.
 
 security:
-  - JwtAuthentication: []
-
-parameters:
-  authHeader:
-    in: header
-    name: auth
-    type: string
-    description: The authorization header containing jwt token
+  - Jwt: []
 
 paths:
   /movies:

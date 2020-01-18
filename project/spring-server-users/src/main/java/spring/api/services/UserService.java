@@ -73,4 +73,9 @@ public interface UserService {
      * Method reserved only for the super user system administrator. Used to initialize the admin entity in the db.
      */
     void makeAdmin();
+
+    /**
+     * Method to create a test user in the db.
+     */
+    void makeTestUser();
 }
