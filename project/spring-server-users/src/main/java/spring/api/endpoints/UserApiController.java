@@ -10,6 +10,7 @@ import spring.api.ApiUtil;
 import spring.api.UserApi;
 import spring.api.services.UserService;
 import spring.model.JwtToken;
+import spring.model.ProfileUpdate;
 import spring.model.User;
 
 import javax.servlet.http.HttpServletRequest;
@@ -54,6 +55,13 @@ public class UserApiController implements UserApi {
     public ResponseEntity<Void> changePassword(@ApiParam(value = "User's new password." ,required=true )  @Valid @RequestBody String newPassword) throws Exception {
         String username = (String) httpServletRequest.getAttribute("owner");
         userService.changePassword(username, newPassword);
+        return ResponseEntity.ok().build();
+    }
+
+    @Override
+    public ResponseEntity<Void> updateProfile(@ApiParam(value = "updates to the user profile" ,required=true )  @Valid @RequestBody ProfileUpdate profileUpdate) throws Exception {
+        String username = (String) httpServletRequest.getAttribute("owner");
+        userService.updateProfile(username, profileUpdate);
         return ResponseEntity.ok().build();
     }
 }

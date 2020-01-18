@@ -9,6 +9,7 @@ import spring.api.exceptions.BadRequestException;
 import spring.api.exceptions.NotFoundException;
 import spring.entities.UserEntity;
 import spring.model.JwtToken;
+import spring.model.ProfileUpdate;
 import spring.model.User;
 import spring.repositories.UserRepository;
 
@@ -109,6 +110,17 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(() -> new NotFoundException(buildNotFoundExceptionMessage(username)));
 
         setPassword(userEntity, newPassword);
+        userRepository.save(userEntity);
+    }
+
+    @Override
+    public void updateProfile(String username, ProfileUpdate profileUpdate) throws NotFoundException, BadRequestException {
+        UserEntity userEntity = userRepository.findById(username)
+                .orElseThrow(() -> new NotFoundException(buildNotFoundExceptionMessage(username)));
+
+        userEntity.setEmail(profileUpdate.getEmail());
+        userEntity.setFirstName(profileUpdate.getFirstName());
+        userEntity.setLastName(profileUpdate.getLastName());
         userRepository.save(userEntity);
     }
 

@@ -7,6 +7,14 @@ host: localhost:6060
 basePath: /api
 schemes:
   - http
+
+securityDefinitions:
+  Jwt:
+    type: apiKey
+    name: Authorization
+    in: header
+    description: Requests should pass an authorization header.
+
 paths:
   /registrations:
     post:
@@ -64,6 +72,8 @@ paths:
     patch:
       tags:
         - user
+      security:
+        - Jwt: []
       summary: change user Password
       description: Change user password only if he is autenticated.
       operationId: changePassword
@@ -82,10 +92,36 @@ paths:
         '400':
           description: Bad Request
 
+  /profileUpdates:
+    put:
+      tags:
+        - user
+      security:
+        - Jwt: []
+      summary: Update user profile
+      description: Update user profile info like firstname, lastname or email.
+      operationId: updateProfile
+      consumes:
+        - application/json
+      parameters:
+        - name: profileUpdate
+          in: body
+          required: true
+          description: updates to the user profile
+          schema:
+            $ref: '#/definitions/ProfileUpdate'
+      responses:
+        '200':
+          description: updated
+        '400':
+          description: Bad Request
+
   /users:
     get:
       tags:
         - admin
+      security:
+        - Jwt: []
       summary: Get all users
       description: An admin operation to fetch all users in the database
       operationId: findAllUsers
@@ -98,12 +134,14 @@ paths:
             type: array
             items:
               $ref: '#/definitions/User'
-        '400':
+        '404':
           description: Not found
 
     post:
       tags:
         - admin
+      security:
+        - Jwt: []
       summary: Create user
       description: Create a new user.
       operationId: createUser
@@ -128,6 +166,8 @@ paths:
     get:
       tags:
         - admin
+      security:
+        - Jwt: []
       summary: Get user by username
       description: Get user using his username.
       operationId: getUserByName
@@ -153,6 +193,8 @@ paths:
     delete:
       tags:
         - admin
+      security:
+        - Jwt: []
       summary: Delete a user
       description: Delete a user by username
       operationId: deleteUser
@@ -183,6 +225,15 @@ definitions:
       lastName:
         type: string
       password:
+        type: string
+  ProfileUpdate:
+    type: object
+    properties:
+      firstName:
+        type: string
+      lastName:
+        type: string
+      email:
         type: string
   JwtToken:
     type: object

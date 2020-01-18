@@ -63,14 +63,14 @@ public class JwtUtil {
      * Extracts the token from the authorization header by removing the Bearer keyword.
      * @param authHeader the authorization header containing the jwt token preceded by Bearer
      * @return the extracted token
-     * @throws JWTVerificationException
+     * @throws JWTVerificationException if authorization header was malformed
      */
     public String extractToken(String authHeader) {
         if (authHeader.startsWith("Bearer ")) {
             return authHeader.substring(7);
         } else {
-            throw new JWTVerificationException("Malformed authorization header: Token must start with Bearer " +
-                    "followed by blank space");
+            throw new JWTVerificationException("Malformed authorization header: must start with Bearer " +
+                    "followed by blank space followed by the jwt token");
         }
     }
 }

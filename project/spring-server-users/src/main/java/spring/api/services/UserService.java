@@ -5,6 +5,7 @@ import spring.api.exceptions.AuthenticationException;
 import spring.api.exceptions.BadRequestException;
 import spring.api.exceptions.NotFoundException;
 import spring.model.JwtToken;
+import spring.model.ProfileUpdate;
 import spring.model.User;
 
 import java.net.URI;
@@ -45,8 +46,8 @@ public interface UserService {
      * Authenticate user with credentials provided and return jwt token.
      * @param user the user dto containing his credentials
      * @return the jwt token when authenticated
-     * @throws NotFoundException
-     * @throws AuthenticationException
+     * @throws NotFoundException user was not found
+     * @throws AuthenticationException if credentials could not be verified
      */
     JwtToken authenticateUser(User user) throws ApiException;
 
@@ -56,6 +57,15 @@ public interface UserService {
      * @param newPassword new password of user
      */
     void changePassword(String username, String newPassword) throws NotFoundException, BadRequestException;
+
+    /**
+     * Update user's profile instance
+     * @param username username of the user
+     * @param profileUpdate the profile info updates
+     * @throws NotFoundException if no user with username was found
+     * @throws BadRequestException if profile update was badly constructed
+     */
+    void updateProfile(String username, ProfileUpdate profileUpdate) throws NotFoundException, BadRequestException;
 
     /**
      * Method reserved only for the super user system administrator. Used to initialize the admin entity in the db.
