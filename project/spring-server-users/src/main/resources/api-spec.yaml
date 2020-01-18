@@ -127,6 +127,22 @@ paths:
       operationId: findAllUsers
       produces:
         - application/json
+      parameters:
+        - in: query
+          name: page
+          type: integer
+          required: false
+          default: 0
+          minimum: 0
+          description: The number of the displayed page.
+        - in: query
+          name: pageSize
+          type: integer
+          required: false
+          default: 20
+          minimum: 0
+          maximum: 100
+          description: The number of items to be displayed on one page.
       responses:
         '200':
           description: Success

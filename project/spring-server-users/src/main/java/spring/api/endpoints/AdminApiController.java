@@ -7,12 +7,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import spring.api.AdminApi;
 import spring.api.ApiUtil;
 import spring.api.services.UserService;
 import spring.model.User;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import java.net.URI;
 import java.util.List;
 
@@ -39,17 +42,17 @@ public class AdminApiController implements AdminApi {
     }
 
     @Override
-    public ResponseEntity<List<User>> findAllUsers() throws Exception {
+    public ResponseEntity<List<User>> findAllUsers(@Min(0)@ApiParam(value = "The number of the displayed page.", defaultValue = "0") @Valid @RequestParam(value = "page", required = false, defaultValue="0") Integer page,@Min(0) @Max(100) @ApiParam(value = "The number of items to be displayed on one page.", defaultValue = "20") @Valid @RequestParam(value = "pageSize", required = false, defaultValue="20") Integer pageSize) throws Exception {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"firstName\" : \"firstName\", \"lastName\" : \"lastName\", \"password\" : \"password\", \"isAdmin\" : true, \"email\" : \"email\", \"username\" : \"username\" }";
+                    String exampleString = "{ \"firstName\" : \"firstName\", \"lastName\" : \"lastName\", \"password\" : \"password\", \"email\" : \"email\", \"username\" : \"username\" }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
             }
         });
-        List<User> users = userService.getAllUsers();
+        List<User> users = userService.getAllUsers(page, pageSize);
 
         return ResponseEntity.ok(users);
     }

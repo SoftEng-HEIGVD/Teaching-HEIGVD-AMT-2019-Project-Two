@@ -42,7 +42,7 @@ public class AdminInterceptor extends HandlerInterceptorAdapter {
                 throw new ForbiddenException("Not authorized: This operation is only reserved for system administrator");
             }
         } catch (JWTVerificationException e) {
-            throw new AuthenticationException("Could not verify admin token");
+            throw new AuthenticationException("Could not verify admin token: " + e.getMessage());
         }
     }
 

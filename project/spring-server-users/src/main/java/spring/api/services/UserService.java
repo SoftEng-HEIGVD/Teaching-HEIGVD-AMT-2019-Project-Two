@@ -29,10 +29,12 @@ public interface UserService {
 
     /**
      * Get all user in db
+     * @param page The number of the displayed page
+     * @param pageSize The number of items to be displayed on one page
      * @return the list of users
      * @throws NotFoundException if no users found
      */
-    List<User> getAllUsers() throws NotFoundException;
+    List<User> getAllUsers(int page, int pageSize) throws NotFoundException;
 
     /**
      * Get a user by his username

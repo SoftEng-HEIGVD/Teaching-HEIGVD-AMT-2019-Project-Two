@@ -19,7 +19,8 @@ import java.util.Date;
 @Component
 public class JwtUtil {
 
-    private final static int TOKEN_DURATION = 30 * 100000;
+    // Token expiry in one day
+    private final static int TOKEN_DURATION = 86400000;
 
     public String createToken(String username, boolean isAdmin) {
         String token;
