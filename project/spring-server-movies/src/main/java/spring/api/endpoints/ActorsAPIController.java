@@ -2,11 +2,15 @@ package spring.api.endpoints;
 
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import spring.api.ActorsApi;
+import spring.api.ApiUtil;
 import spring.api.services.ActorsService;
 import spring.api.services.DtoConverter;
 import spring.entities.ActorEntity;
@@ -38,41 +42,45 @@ public class ActorsAPIController implements ActorsApi {
     HttpServletRequest httpServletRequest;
 
     @Override
-    public ResponseEntity<Object> createActor(@ApiParam(value = "", required = true) @Valid @RequestBody Actor actor) {
-        ActorEntity actorEntity = dtoConverter.toActorEntity(actor);
-        actorsRepository.save(actorEntity);
-        Long id = actorEntity.getId();
-
-        URI location = ServletUriComponentsBuilder
-                .fromCurrentRequest().path("/{id}")
-                .buildAndExpand(actorEntity.getId()).toUri();
-
-        return ResponseEntity.created(location).build();
+    public ResponseEntity<Object> createActor(@ApiParam(value = "Create actor object" ,required=true )  @Valid @RequestBody Actor actor) {
+        String owner = (String) httpServletRequest.getAttribute("owner");
+        return ResponseEntity.created(actorsService.saveActor(actor, owner)).build();
     }
 
     @Override
-    public ResponseEntity<Void> deleteActor(Long actorId) {
-        // TODO: Do we need to check first
-        actorsRepository.deleteById(actorId);
+    public ResponseEntity<Void> deleteActor(@ApiParam(value = "Actor id to delete",required=true) @PathVariable("actorId") Long actorId) throws Exception {
+        String requestOwner = (String) httpServletRequest.getAttribute("owner");
+        actorsService.deleteActor(actorId, requestOwner);
         return ResponseEntity.ok().build();
     }
 
     @Override
-    public ResponseEntity<Actor> findActorById(Long actorId) {
-        Optional<ActorEntity> actorOptional = actorsRepository.findById(actorId);
-        if(actorOptional.isPresent()) {
-            return ResponseEntity.ok(dtoConverter.toActor(actorOptional.get()));
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<Actor> findActorById(@ApiParam(value = "ID of actor to fetch",required=true) @PathVariable("actorId") Long actorId) throws Exception {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"firstname\" : \"firstname\", \"expertise\" : \"theater\", \"lastname\" : \"lastname\" }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        String requestOwner = (String) httpServletRequest.getAttribute("owner");
+        return ResponseEntity.ok(actorsService.findActorById(actorId, requestOwner));
     }
 
     @Override
-    public ResponseEntity<List<Actor>> getActors() {
-        List<Actor> actors = new ArrayList<>();
-        for (ActorEntity actorEntity : actorsRepository.findAll()) {
-            actors.add(dtoConverter.toActor(actorEntity));
-        }
-        return ResponseEntity.ok(actors);
+    public ResponseEntity<List<Actor>> getActors() throws Exception{
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"firstname\" : \"firstname\", \"expertise\" : \"theater\", \"lastname\" : \"lastname\" }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        String owner = (String) httpServletRequest.getAttribute("owner");
+        return ResponseEntity.ok(actorsService.findActorsByUser(owner));
     }
 }

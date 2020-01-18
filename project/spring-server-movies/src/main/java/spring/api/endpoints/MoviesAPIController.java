@@ -42,7 +42,6 @@ public class MoviesAPIController implements MoviesApi {
     @Override
     public ResponseEntity<Object> createMovie(@ApiParam(value = "Created movie object" ,required=true )  @Valid @RequestBody Movie movie) throws Exception {
         String owner = (String) httpServletRequest.getAttribute("owner");
-
         return ResponseEntity.created(moviesService.saveMovie(movie, owner)).build();
     }
 
