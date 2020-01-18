@@ -22,7 +22,7 @@ public class Environment {
     public Environment() throws IOException {
         Properties properties = new Properties();
         properties.load(this.getClass().getClassLoader().getResourceAsStream("environment.properties"));
-        String url = properties.getProperty("heig.vd.ch.projet.auth.server.url");
+        String url = properties.getProperty("heig.vd.ch.projet.travel.server.url");
         api.getApiClient().setBasePath(url);
 
     }

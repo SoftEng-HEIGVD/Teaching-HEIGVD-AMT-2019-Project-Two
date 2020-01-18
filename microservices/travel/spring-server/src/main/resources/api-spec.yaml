@@ -4,7 +4,7 @@ info:
   title: Travel API
   description: Draft API to to test Swagger and Spring Boot
 host: localhost:8081
-basePath: /api
+basePath: /api-travel
 schemes:
   - http
 

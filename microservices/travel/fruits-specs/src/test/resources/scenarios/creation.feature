@@ -1,9 +1,9 @@
-Feature: Creation of users
+Feature: Creation of trips
 
   Background:
-    Given there is a Users server
+    Given there is a travel server
 
-  Scenario: create a user
-    Given I have a user payload
-    When I POST it to the /users endpoint
+  Scenario: create a trips
+    Given I have a trip payload
+    When I POST it to the /trips endpoint
     Then I receive a 201 status code
