@@ -66,19 +66,21 @@ public class UserApiController implements UserApi {
         return ResponseEntity.ok(users);
     }
 
-    public ResponseEntity<String> loginUser(@NotNull @ApiParam(value = "The user name for login", required = true) @Valid @RequestParam(value = "username", required = true) String username,@NotNull @ApiParam(value = "The password for login in clear text", required = true) @Valid @RequestParam(value = "password", required = true) String password) {
 
-
-        return new ResponseEntity<String>(HttpStatus.NOT_IMPLEMENTED);
-    }
-
-    public ResponseEntity<Void> updateUser(@ApiParam(value = "name that need to be updated",required=true) @PathVariable("username") String username,@ApiParam(value = "Updated user object" ,required=true )  @Valid @RequestBody User body) {
+    public ResponseEntity<Void> updateUser(@ApiParam(value = "name that need to be updated",required=true) @PathVariable("email") String username,@ApiParam(value = "Updated user object" ,required=true )  @Valid @RequestBody User body) {
 
         return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
     }
 
-    public ResponseEntity<Void> deleteUser(@ApiParam(value = "The name that needs to be deleted",required=true) @PathVariable("username") String username) {
-        return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
+    public ResponseEntity<Void> deleteUser(@ApiParam(value = "The name that needs to be deleted",required=true) @Valid @RequestBody User user) {
+        UserEntity newUserEntity = toUserEntity(user);
+        userRepository.deleteById(newUserEntity.getEmail());
+
+        URI location = ServletUriComponentsBuilder
+                .fromCurrentRequest().path("/{email}")
+                .buildAndExpand(newUserEntity.getEmail()).toUri();
+
+        return ResponseEntity.created(location).build();
     }
 
     private UserEntity toUserEntity(User user) {

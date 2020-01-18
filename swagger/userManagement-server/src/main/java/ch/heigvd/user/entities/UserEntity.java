@@ -1,10 +1,8 @@
 package ch.heigvd.user.entities;
 
 import java.io.Serializable;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import javax.validation.constraints.Email;
 
 /**
  * UserEntity
@@ -12,7 +10,6 @@ import javax.persistence.Id;
 @Entity
 public class UserEntity implements Serializable {
   @Id
-  //@GeneratedValue(strategy = GenerationType.IDENTITY)
   private String email;
 
   private String username;

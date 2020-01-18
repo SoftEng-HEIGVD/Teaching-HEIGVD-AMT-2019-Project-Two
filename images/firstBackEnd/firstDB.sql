@@ -10,7 +10,7 @@ CREATE TABLE `user_entity` (
   `first_name` varchar(255),
   `last_name` varchar(255),
   `is_admin` boolean,
-  CONSTRAINT FK_Coach_username_ID PRIMARY KEY (username)
+  CONSTRAINT FK_user_email_ID PRIMARY KEY (email)
 
 );
 
