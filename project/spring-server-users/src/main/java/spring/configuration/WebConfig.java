@@ -32,7 +32,8 @@ public class WebConfig implements WebMvcConfigurer {
                         "/swagger-ui.html/**",
                         "/swagger-ui.html/*", "/");*/
         registry.addInterceptor(getJwtInterceptor())
-                .addPathPatterns("/passwords/", "/passwords");
+                .addPathPatterns("/passwords/", "/passwords",
+                        "/profileUpdates/", "/profileUpdates");
         registry.addInterceptor(getAdminInterceptor())
                 .addPathPatterns("/users/*", "/users/**",
                         "/users");
