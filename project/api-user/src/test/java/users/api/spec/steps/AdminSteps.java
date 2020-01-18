@@ -23,8 +23,9 @@ public class AdminSteps {
     private UserApi userApi;
     private AdminApi adminApi;
 
-
     OkHttpClient client;
+
+    private int pageSizeTest = 5;
 
     public AdminSteps(Environment environment) {
         this.environment = environment;
@@ -69,7 +70,7 @@ public class AdminSteps {
     @When("^I GET all users$")
     public void iGETAllUsers() {
         try {
-            this.environment.setLastApiResponse(adminApi.findAllUsersWithHttpInfo());
+            this.environment.setLastApiResponse(adminApi.findAllUsersWithHttpInfo(0, 100));
             this.environment.setLastApiCallThrewException(false);
             this.environment.setLastApiException(null);
             this.environment.setLastStatusCode(this.environment.getLastApiResponse().getStatusCode());
@@ -81,11 +82,34 @@ public class AdminSteps {
         }
     }
 
-    @Then("^I received a list of users$")
-    public void iReceivedAListOfUsers() {
+    @Then("^I receive a list of users$")
+    public void iReceiveAListOfUsers() {
         assertNotNull(this.environment.getLastApiResponse().getData());
         List<User> users = new ArrayList<>((List<User>) this.environment.getLastApiResponse().getData());
         assertFalse(users.isEmpty());
         assertEquals(users.get(0).getUsername(), "admin");
+    }
+
+    @When("^I GET all users with pagination parameters$")
+    public void iGETAllUsersWithPaginationParameters() {
+        try {
+            this.environment.setLastApiResponse(adminApi.findAllUsersWithHttpInfo(0, pageSizeTest));
+            this.environment.setLastApiCallThrewException(false);
+            this.environment.setLastApiException(null);
+            this.environment.setLastStatusCode(this.environment.getLastApiResponse().getStatusCode());
+        } catch (ApiException e) {
+            this.environment.setLastApiResponse(null);
+            this.environment.setLastApiCallThrewException(true);
+            this.environment.setLastApiException(e);
+            this.environment.setLastStatusCode(this.environment.getLastApiException().getCode());
+        }
+    }
+
+    @Then("^I receive a list of users with the specified pagination size$")
+    public void iReceiveAListOfUsersWithTheSpecifiedPaginationSize() {
+        assertNotNull(this.environment.getLastApiResponse().getData());
+        List<User> users = new ArrayList<>((List<User>) this.environment.getLastApiResponse().getData());
+        assertFalse(users.isEmpty());
+        assertTrue(users.size() <= pageSizeTest);
     }
 }

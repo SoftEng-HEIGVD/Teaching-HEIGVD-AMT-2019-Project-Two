@@ -1,6 +1,7 @@
 package spring.api.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import spring.api.exceptions.ApiException;
@@ -66,9 +67,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getAllUsers() throws NotFoundException {
+    public List<User> getAllUsers(int page, int pageSize) throws NotFoundException {
         List<User> users = new ArrayList<>();
-        for (UserEntity userEntity : userRepository.findAll()) {
+
+        for (UserEntity userEntity : userRepository.findAll(PageRequest.of(page, pageSize))) {
             users.add(dtoConverter.toUser(userEntity));
         }
 

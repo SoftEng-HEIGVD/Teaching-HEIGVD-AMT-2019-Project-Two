@@ -13,4 +13,6 @@ Feature: Admin operations
   Scenario: get all users
     When I GET all users
     Then I receive a 200 status code
-    Then I received a list of users
+    Then I receive a list of users
+    When I GET all users with pagination parameters
+    Then I receive a list of users with the specified pagination size
