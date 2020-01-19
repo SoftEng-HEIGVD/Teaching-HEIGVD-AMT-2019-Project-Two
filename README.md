@@ -57,6 +57,12 @@ If you need the specification of both APIs, you can visit the following:
 * Travel API: http://www.todotravel.ch/api-travel
 * Auth API: http://www.todotravel.ch/api-auth
 
+In case you want to check the swagger spec files, you can see them in here:
+
+`microservices/travel/spring-server/src/main/resources/api-spec.yaml`
+
+`microservices/authentication/spring-server/src/main/resources/api-spec.yaml`
+
 #### Demo
 
 Here is a usage example:
