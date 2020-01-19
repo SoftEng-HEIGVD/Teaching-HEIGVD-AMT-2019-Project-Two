@@ -2,7 +2,7 @@ CREATE DATABASE IF NOT EXISTS users_amt CHARACTER SET utf8 COLLATE utf8_general_
 
 USE users_amt;
 
-CREATE TABLE IF NOT EXISTS users
+CREATE TABLE IF NOT EXISTS user_entity
 ( 
     email VARCHAR(255) PRIMARY KEY UNIQUE NOT NULL,
     first_name VARCHAR(255) NOT NULL, 
@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS users
 
 
 
-INSERT INTO users(`email`, `first_name`, `last_name`, `password`, `administrator`) VALUES
-('julien@boozify.ch', 'julien','huguet', 'test123', 1),
-('test@boozify.ch', 'test', 'test', '1234', 0);
+INSERT INTO user_entity(`email`, `first_name`, `last_name`, `password`, `administrator`) VALUES
+('john.doe@boozify.ch', 'john','doe', '$2a$10$91tXEkxOx1HPNbGIibif.O7t462t.nFAwymUOOwBtKQnCH.4o6FN6', 1),
+('user@boozify.ch', 'user', 'user', '$2a$10$91tXEkxOx1HPNbGIibif.O7t462t.nFAwymUOOwBtKQnCH.4o6FN6', 0);
 
