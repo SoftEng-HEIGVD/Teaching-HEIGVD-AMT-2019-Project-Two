@@ -45,7 +45,7 @@ public class Swagger2SpringBoot implements CommandLineRunner {
     public CommandLineRunner demo(UserRepository repository) {
         return (args) -> {
             userService.makeAdmin();
-            userService.makeTestUser();
+            userService.makeTestUser("user1");
         };
     }
 }

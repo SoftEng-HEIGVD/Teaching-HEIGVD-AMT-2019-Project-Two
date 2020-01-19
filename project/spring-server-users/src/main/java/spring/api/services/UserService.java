@@ -76,8 +76,9 @@ public interface UserService {
 
     /**
      * Method to create a test user in the db.
+     * @param randomUsername random username of the newly created user
      */
-    void makeTestUser();
+    void makeTestUser(String randomUsername);
 
     /**
      * Updates the user block status.

@@ -165,8 +165,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void makeTestUser() {
-        UserEntity userEntity = UserEntity.builder().username("user1")
+    public void makeTestUser(String randomUsername) {
+        UserEntity userEntity = UserEntity.builder().username(randomUsername)
                 .password(authenticationService.hashPassword("password"))
                 .isAdmin(false).build();
         userRepository.save(userEntity);

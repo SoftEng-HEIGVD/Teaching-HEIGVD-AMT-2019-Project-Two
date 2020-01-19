@@ -1,13 +1,11 @@
 package spring.api.endpoints;
 
-import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import spring.api.AdminApi;
 import spring.api.ApiUtil;
 import spring.api.services.UserService;
@@ -68,6 +66,18 @@ public class AdminApiController implements AdminApi {
     @Override
     public ResponseEntity<Void> updateUserBlockedStatus(@ApiParam(value = "The username of the user to be fetched.",required=true) @PathVariable("username") String username,@NotNull @ApiParam(value = "boolean describing whether user should be blocked or not.", required = true) @Valid @RequestParam(value = "blocked", required = true) Boolean blocked) throws Exception {
         userService.updateUserBlockedStatus(username, blocked);
+        return ResponseEntity.ok().build();
+    }
+
+    /**
+     * Endpoint to create a test user in the db. This is an admin operation only used for performance tests.
+     * Must have an admin token
+     * @return Response entity with ok http status if test user was created
+     * @throws Exception if test user could not be created.
+     */
+    @PostMapping(value = "/testUsers")
+    public ResponseEntity<Object> createRandomTestUser() throws Exception {
+        userService.makeTestUser("user" + System.currentTimeMillis());
         return ResponseEntity.ok().build();
     }
 }

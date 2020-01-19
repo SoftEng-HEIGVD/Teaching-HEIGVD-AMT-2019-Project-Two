@@ -36,6 +36,6 @@ public class WebConfig implements WebMvcConfigurer {
                         "/profileUpdates/", "/profileUpdates");
         registry.addInterceptor(getAdminInterceptor())
                 .addPathPatterns("/users/*", "/users/**",
-                        "/users");
+                        "/users", "/testUsers", "/testUsers/");
     }
 }

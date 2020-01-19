@@ -10,6 +10,7 @@ import movies.api.MoviesApi;
 import movies.api.dto.Movie;
 import okhttp3.*;
 import users.api.spec.helpers.Environment;
+import util.JwtUtil;
 
 import java.io.IOException;
 
@@ -43,20 +44,10 @@ public class CreationSteps {
 
     @Given("^I have a jwt token$")
     public void iHaveAJwtToken() throws ApiException {
-        RequestBody body = RequestBody.create("{\"username\": \"user1\", \"password\":\"password\"}", JSON);
-        Request request = new Request.Builder()
-                .url("http://localhost:6060/api/authentications/")
-                .post(body)
-                .build();
-        try (Response response = client.newCall(request).execute()) {
-            String jwtToken = response.body().string();
-            JsonObject jsonObject = gson.fromJson(jwtToken, JsonObject.class);
-            this.environment.setLastToken(jsonObject.get("token").getAsString());
-            this.moviesApi.getApiClient().setApiKey("Bearer " + this.environment.getLastToken());
-        } catch (NullPointerException | IOException e) {
-            throw new ApiException("Could not retrieve jwt token from the authentications endpoint");
-        }
-
+        String randomUsername = "user" + System.currentTimeMillis();
+        //this.environment.setLastToken(getJwtTokenByAuthenticatingToUsersApi("user1"));
+        this.environment.setLastToken(new JwtUtil().createToken(randomUsername, false, false));
+        this.moviesApi.getApiClient().setApiKey("Bearer " + this.environment.getLastToken());
     }
 
     @Given("^I have a valid movie payload$")
@@ -83,5 +74,27 @@ public class CreationSteps {
     @Then("^I receive a (\\d+) status code$")
     public void iReceiveAStatusCode(int expectedCode) {
         assertEquals(expectedCode, this.environment.getLastStatusCode());
+    }
+
+    /**
+     * Get the jwt token by authenticating directly to the users api server.
+     * @param username username
+     * @return jwt token when authenticated
+     * @throws ApiException if couldn't authenticate
+     */
+    private String getJwtTokenByAuthenticatingToUsersApi(String username) throws ApiException {
+        RequestBody body = RequestBody.create("{\"username\": \"" +
+                username + "\", \"password\":\"password\"}", JSON);
+        Request request = new Request.Builder()
+                .url("http://localhost:6060/api/authentications/")
+                .post(body)
+                .build();
+        try (Response response = client.newCall(request).execute()) {
+            String jwtToken = response.body().string();
+            JsonObject jsonObject = gson.fromJson(jwtToken, JsonObject.class);
+            return jsonObject.get("token").getAsString();
+        } catch (NullPointerException | IOException e) {
+            throw new ApiException("Could not retrieve jwt token from the authentications endpoint");
+        }
     }
 }

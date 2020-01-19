@@ -41,14 +41,14 @@ Finish Controllers + endpoints
 *Tryout Cucumber
 *custom exceptions (Good error messages) inspiration: https://www.toptal.com/java/spring-boot-rest-api-error-handling
 Cucumber tests
-Pagination
+*Pagination
 *setup docker compose
 *test mysql db
 *Java 8
 *Service hash password
 *update firstname or lastname
 cleanup
-block user
+*block user
 jmeter
 put name id or unique in entities like title of movie
 
