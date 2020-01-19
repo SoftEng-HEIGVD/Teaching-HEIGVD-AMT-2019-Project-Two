@@ -46,7 +46,11 @@ Pagination
 *test mysql db
 *Java 8
 *Service hash password
-update firstname or lastname
+*update firstname or lastname
+cleanup
+block user
+jmeter
+put name id or unique in entities like title of movie
 
 ## README
 Describe use cases of admin operation (create user account for somebody)

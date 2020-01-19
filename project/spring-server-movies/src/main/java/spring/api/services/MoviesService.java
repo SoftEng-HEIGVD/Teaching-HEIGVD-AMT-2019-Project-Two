@@ -1,6 +1,6 @@
 package spring.api.services;
 
-import org.springframework.http.ResponseEntity;
+import spring.api.exceptions.BadRequestException;
 import spring.api.exceptions.ForbiddenException;
 import spring.api.exceptions.NotFoundException;
 import spring.model.Movie;
@@ -16,7 +16,7 @@ public interface MoviesService {
      * @param ownerID the username of the owner of the resource
      * @return the location of the movie resource created
      */
-    URI saveMovie(Movie movie, String ownerID);
+    URI saveMovie(Movie movie, String ownerID) throws BadRequestException;
 
     /**
      * Return all movies owned by user.
@@ -44,4 +44,16 @@ public interface MoviesService {
      * @throws ForbiddenException if trying to get a movie owned by another user
      */
     Movie findMovieById(Long movieId, String requestOwner) throws NotFoundException, ForbiddenException;
+
+    /**
+     * Update a movie in the database
+     * @param movieId the id of the movie to be updated
+     * @param updatedMovie the updated movie dto
+     * @param requestOwner the owner of the movie resource
+     * @throws NotFoundException if movie was not found in db
+     * @throws BadRequestException if movie was badly formed
+     * @throws ForbiddenException if trying to update another user's movie
+     */
+    void updateMovie(Long movieId, Movie updatedMovie, String requestOwner) throws NotFoundException,
+            BadRequestException, ForbiddenException;
 }

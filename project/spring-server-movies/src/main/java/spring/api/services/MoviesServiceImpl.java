@@ -3,6 +3,7 @@ package spring.api.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import spring.api.exceptions.BadRequestException;
 import spring.api.exceptions.ForbiddenException;
 import spring.api.exceptions.NotFoundException;
 import spring.entities.MovieEntity;
@@ -23,7 +24,7 @@ public class MoviesServiceImpl implements MoviesService {
     DtoConverter dtoConverter;
 
     @Override
-    public URI saveMovie(Movie movie, String ownerID) {
+    public URI saveMovie(Movie movie, String ownerID) throws BadRequestException {
         MovieEntity movieEntity = dtoConverter.toMovieEntity(movie);
         movieEntity.setOwnerId(ownerID);
         moviesRepository.save(movieEntity);
@@ -71,5 +72,26 @@ public class MoviesServiceImpl implements MoviesService {
         }
 
         return dtoConverter.toMovie(movieEntity);
+    }
+
+    @Override
+    public void updateMovie(Long movieId, Movie updatedMovie, String requestOwner) throws NotFoundException,
+            BadRequestException, ForbiddenException {
+        MovieEntity movieEntity = moviesRepository.findById(movieId)
+                .orElseThrow(() -> new NotFoundException("Could not find movie with movie id " + movieId));
+
+        if (!movieEntity.getOwnerId().equals(requestOwner)) {
+            throw new ForbiddenException("Cannot update another's user movie");
+        }
+
+        MovieEntity updatedMovieEntity = dtoConverter.toMovieEntity(updatedMovie);
+        // update original properties
+        movieEntity.setDirector(updatedMovieEntity.getDirector());
+        movieEntity.setProduction(updatedMovieEntity.getProduction());
+        movieEntity.setRating(updatedMovieEntity.getRating());
+        movieEntity.setStudio(updatedMovieEntity.getStudio());
+        movieEntity.setTitle(updatedMovieEntity.getTitle());
+        movieEntity.setRevenue(updatedMovieEntity.getRevenue());
+        moviesRepository.save(movieEntity);
     }
 }

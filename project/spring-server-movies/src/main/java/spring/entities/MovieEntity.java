@@ -1,12 +1,12 @@
 package spring.entities;
 
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Set;
 
 @Builder(toBuilder = true)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -26,6 +26,22 @@ public class MovieEntity implements Serializable {
     private Double revenue;
     @Setter(AccessLevel.NONE) private Double rating;
     private String ownerId; // Here we use the username of the user
+
+    @OneToMany(mappedBy = "movieEntity")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    Set<RoleEntity> roles;
+
+    /*@OneToMany(mappedBy = "movieEntity")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    Set<RoleEntity> roles;*&
+
+    /*@ManyToMany
+    @JoinTable(
+            name = "role_entity",
+            joinColumns = @JoinColumn(name = "actor_id"),
+            inverseJoinColumns = @JoinColumn(name = "movie_id"))
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Set<ActorEntity> movieRoles;*/
 
     public void setRating(double rating) {
         if(rating < 0.0 || rating > 5.0) {

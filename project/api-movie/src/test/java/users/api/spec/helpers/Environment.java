@@ -4,6 +4,7 @@ import movies.ApiException;
 import movies.ApiResponse;
 import movies.api.ActorsApi;
 import movies.api.MoviesApi;
+import movies.api.RolesApi;
 import okhttp3.OkHttpClient;
 
 import java.io.IOException;
@@ -12,6 +13,7 @@ import java.util.Properties;
 public class Environment {
     private MoviesApi moviesApi = new MoviesApi();
     private ActorsApi actorsApi = new ActorsApi();
+    private RolesApi rolesApi = new RolesApi();
 
     private OkHttpClient client = new OkHttpClient();
 
@@ -37,6 +39,10 @@ public class Environment {
 
     public ActorsApi getActorsApi() {
         return actorsApi;
+    }
+
+    public RolesApi getRolesApi() {
+        return rolesApi;
     }
 
     public ApiResponse getLastApiResponse() {

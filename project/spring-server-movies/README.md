@@ -25,6 +25,8 @@ Hot Reload
 
 Why not Spring data REST
 
-how to generate custom exceptions like not authenticated 
-factor out common parameter in endpoints
-how to use swagger security schemes (in the code generated)
+*how to generate custom exceptions like not authenticated 
+*factor out common parameter in endpoints
+*how to use swagger security schemes (in the code generated)
+
+We disabled Unresolved database references in annotations inspection in preferences (settings)

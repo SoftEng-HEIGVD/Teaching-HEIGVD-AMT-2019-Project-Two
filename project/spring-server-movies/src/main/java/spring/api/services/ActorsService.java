@@ -1,5 +1,6 @@
 package spring.api.services;
 
+import spring.api.exceptions.BadRequestException;
 import spring.api.exceptions.ForbiddenException;
 import spring.api.exceptions.NotFoundException;
 import spring.model.Actor;
@@ -43,4 +44,16 @@ public interface ActorsService {
      * @throws ForbiddenException if trying to get an actor owned by another user
      */
     Actor findActorById(Long actorId, String requestOwner) throws NotFoundException, ForbiddenException;
+
+    /**
+     * Update an actor in the database
+     * @param actorId the id of the actor to be updated
+     * @param updatedActor the updated actor dto
+     * @param requestOwner the owner of the actor resource
+     * @throws NotFoundException if actor was not found in db
+     * @throws BadRequestException if actor dto was badly formed
+     * @throws ForbiddenException if trying to update another user's actor
+     */
+    void updateActor(Long actorId, Actor updatedActor, String requestOwner) throws NotFoundException,
+            BadRequestException, ForbiddenException;
 }

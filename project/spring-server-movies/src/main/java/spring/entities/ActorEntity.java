@@ -1,12 +1,12 @@
 package spring.entities;
 
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Set;
 
 @Data
 @Entity
@@ -21,6 +21,18 @@ public class ActorEntity implements Serializable {
     private String lastname;
     private ExpertiseEnum expertise;
     private String ownerId;
+
+    @OneToMany(mappedBy = "actorEntity")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Set<RoleEntity> roles;
+
+    /*@OneToMany(mappedBy = "actorEntity")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    Set<RoleEntity> roles;*/
+
+    /*@ManyToMany(mappedBy = "movieRoles")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Set<MovieEntity> actorRoles;*/
 
     /**
      * TV, film or theater actor

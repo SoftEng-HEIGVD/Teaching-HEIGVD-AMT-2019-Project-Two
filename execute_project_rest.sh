@@ -21,7 +21,7 @@ docker-compose up --build
 # Shut everything down when done
 docker-compose down
 
-# Clean docker (For my memory)
+# Clean docker (For my memory). You can comment these lines if you don't want a clean up of your system.
 docker system prune
 docker volume prune
 
