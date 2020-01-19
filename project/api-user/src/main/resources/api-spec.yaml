@@ -179,6 +179,12 @@ paths:
           description: Bad Request
 
   /users/{username}:
+    parameters:
+      - name: username
+        in: path
+        description: The username of the user to be fetched.
+        required: true
+        type: string
     get:
       tags:
         - admin
@@ -189,12 +195,6 @@ paths:
       operationId: getUserByName
       produces:
         - application/json
-      parameters:
-        - name: username
-          in: path
-          description: The username of the user to be fetched.
-          required: true
-          type: string
       responses:
         '200':
           description: success
@@ -214,12 +214,6 @@ paths:
       summary: Delete a user
       description: Delete a user by username
       operationId: deleteUser
-      parameters:
-        - name: username
-          in: path
-          description: username of the user
-          required: true
-          type: string
       responses:
         '204':
           description: success
@@ -227,6 +221,29 @@ paths:
           description: Bad Request
         '404':
           description: Not Found
+
+    patch:
+      tags:
+        - admin
+      security:
+        - Jwt: []
+      summary: Block or unblock a user
+      description: Block or unblock a user. A blocked user cannot access the api unless unblocked again by the admin.
+      operationId: updateUserBlockedStatus
+      parameters:
+        - in: query
+          name: blocked
+          type: boolean
+          required: true
+          description: boolean describing whether user should be blocked or not.
+      responses:
+        200:
+          description: User Blocked
+        400:
+          description: Bad Request
+        404:
+          description: Not Found
+
 
 definitions:
   User:

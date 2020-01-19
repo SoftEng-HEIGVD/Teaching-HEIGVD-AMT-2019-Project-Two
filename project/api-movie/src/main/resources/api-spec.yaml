@@ -53,6 +53,22 @@ paths:
       operationId: getMovies
       produces:
         - application/json
+      parameters:
+        - in: query
+          name: page
+          type: integer
+          required: false
+          default: 0
+          minimum: 0
+          description: The number of the displayed page.
+        - in: query
+          name: pageSize
+          type: integer
+          required: false
+          default: 20
+          minimum: 0
+          maximum: 100
+          description: The number of items to be displayed on one page.
       responses:
         200:
           description: Success
@@ -148,6 +164,21 @@ paths:
           required: true
           type: integer
           format: int64
+        - in: query
+          name: page
+          type: integer
+          required: false
+          default: 0
+          minimum: 0
+          description: The number of the displayed page.
+        - in: query
+          name: pageSize
+          type: integer
+          required: false
+          default: 20
+          minimum: 0
+          maximum: 100
+          description: The number of items to be displayed on one page.
       responses:
         200:
           description: ok
@@ -190,6 +221,22 @@ paths:
       operationId: getActors
       produces:
         - application/json
+      parameters:
+        - in: query
+          name: page
+          type: integer
+          required: false
+          default: 0
+          minimum: 0
+          description: The number of the displayed page.
+        - in: query
+          name: pageSize
+          type: integer
+          required: false
+          default: 20
+          minimum: 0
+          maximum: 100
+          description: The number of items to be displayed on one page.
       responses:
         200:
           description: Success
@@ -279,6 +326,21 @@ paths:
           required: true
           type: integer
           format: int64
+        - in: query
+          name: page
+          type: integer
+          required: false
+          default: 0
+          minimum: 0
+          description: The number of the displayed page.
+        - in: query
+          name: pageSize
+          type: integer
+          required: false
+          default: 20
+          minimum: 0
+          maximum: 100
+          description: The number of items to be displayed on one page.
       responses:
         200:
           description: ok
@@ -319,23 +381,23 @@ paths:
         403:
           description: Forbidden
 
-  /firings/{roleId}:
-    delete:
+  /firings:
+    post:
       tags:
         - roles
       summary: fire an actor.
-      description: detele a role of an actor for a movie
-      operationId: deleteRole
+      description: Fire an actor from his role in a movie.
+      operationId: fireActor
       parameters:
         - name: roleId
-          in: path
-          description: ID of the role to delete
+          in: body
+          description: id of the actor and the id of the movie of the role to delete
           required: true
-          type: integer
-          format: int64
+          schema:
+            $ref: '#/definitions/RoleIdentifier'
       responses:
         204:
-          description: Deleted
+          description: Actor fired
         404:
           description: Not Found
         403:
@@ -393,3 +455,16 @@ definitions:
         type: boolean
       awards:
         type: integer
+
+  RoleIdentifier:
+    type: object
+    properties:
+      actorId:
+        type: integer
+        format: int64
+      movieId:
+        type: integer
+        format: int64
+    required:
+      - actorId
+      - movieId
