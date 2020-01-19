@@ -6,6 +6,7 @@ import cucumber.api.java.en.When;
 import heig.vd.ch.projet.travel.api.dto.Country;
 import heig.vd.ch.projet.travel.api.dto.Reason;
 import heig.vd.ch.projet.travel.api.dto.Trip;
+import heig.vd.ch.projet.travel.api.dto.TripDTO;
 import heig.vd.ch.projet.travel.api.spec.helpers.Environment;
 import heig.vd.ch.projet.travel.ApiException;
 import heig.vd.ch.projet.travel.api.DefaultApi;
@@ -76,5 +77,7 @@ public class CreationTripSteps {
 
     @Then("^I added successfully a trip$")
     public void i_added_successfully_a_trip() {
+        TripDTO tripDTO = (TripDTO) environment.getLastApiResponse().getData();
+        assertNotNull(tripDTO);
     }
 }

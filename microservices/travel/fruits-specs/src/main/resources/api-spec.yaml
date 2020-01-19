@@ -52,6 +52,8 @@ paths:
       operationId: createTrip
       consumes:
         - application/json
+      produces:
+        - application/json
       parameters:
         - name: trip
           in: body
@@ -61,6 +63,8 @@ paths:
       responses:
         '201':
           description: Created
+          schema:
+            $ref: '#/definitions/TripDTO'
         '401':
           description: unauthorized
   /trips/{idTrip}:

@@ -114,7 +114,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Spring Boot.Execute with Spring Boot">
+  <component name="RunManager" selected="JUnit.SpecificationTest">
     <configuration default="true" type="DjangoTestsConfigurationType" factoryName="Django tests">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -599,7 +599,7 @@
       <workItem from="1579351206266" duration="16374000" />
       <workItem from="1579373842049" duration="3811000" />
       <workItem from="1579392196234" duration="3220000" />
-      <workItem from="1579423486381" duration="8888000" />
+      <workItem from="1579423486381" duration="9525000" />
     </task>
     <servers />
   </component>
