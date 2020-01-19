@@ -4,9 +4,9 @@ USE secondeApi;
 
 CREATE TABLE `videogame_entity` (
   `id` INT(6) UNSIGNED AUTO_INCREMENT,
-  `kind` varchar(255) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `supported_on` varchar(255) NOT NULL,
+  `kind` varchar(255),
+  `name` varchar(255),
+  `supported_on` varchar(255),
 
   CONSTRAINT FK_videoGame_ID PRIMARY KEY (id)
 );

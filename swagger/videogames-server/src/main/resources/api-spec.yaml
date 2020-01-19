@@ -78,7 +78,7 @@ paths:
           in: path
           description: "videogame to delete"
           required: true
-          type: "Long"
+          type: integer
       responses:
         200:
           description: 'Delete done'
