@@ -4,12 +4,12 @@ import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import spring.api.ApiUtil;
 import spring.api.MoviesApi;
 import spring.api.services.MoviesService;
@@ -19,6 +19,8 @@ import spring.model.Role;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import java.util.List;
 
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2019-12-15T19:36:34.802Z")
@@ -44,7 +46,7 @@ public class MoviesAPIController implements MoviesApi {
     }
 
     @Override
-    public ResponseEntity<List<Movie>> getMovies() throws Exception {
+    public ResponseEntity<List<Movie>> getMovies(@Min(0)@ApiParam(value = "The number of the displayed page.", defaultValue = "0") @Valid @RequestParam(value = "page", required = false, defaultValue="0") Integer page, @Min(0) @Max(100) @ApiParam(value = "The number of items to be displayed on one page.", defaultValue = "20") @Valid @RequestParam(value = "pageSize", required = false, defaultValue="20") Integer pageSize) throws Exception {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
@@ -55,7 +57,7 @@ public class MoviesAPIController implements MoviesApi {
             }
         });
         String owner = (String) httpServletRequest.getAttribute("owner");
-        return ResponseEntity.ok(moviesService.findMoviesByUser(owner));
+        return ResponseEntity.ok(moviesService.findMoviesByUser(owner, page, pageSize));
     }
 
     @Override
@@ -81,7 +83,7 @@ public class MoviesAPIController implements MoviesApi {
     }
 
     @Override
-    public ResponseEntity<List<Role>> getAllRolesForAMovie(@ApiParam(value = "Movie Id",required=true) @PathVariable("movieId") Long movieId) throws Exception {
+    public ResponseEntity<List<Role>> getAllRolesForAMovie(@ApiParam(value = "Movie Id",required=true) @PathVariable("movieId") Long movieId,@Min(0)@ApiParam(value = "The number of the displayed page.", defaultValue = "0") @Valid @RequestParam(value = "page", required = false, defaultValue="0") Integer page,@Min(0) @Max(100) @ApiParam(value = "The number of items to be displayed on one page.", defaultValue = "20") @Valid @RequestParam(value = "pageSize", required = false, defaultValue="20") Integer pageSize) throws Exception {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
@@ -92,7 +94,7 @@ public class MoviesAPIController implements MoviesApi {
             }
         });
         String requestOwner = (String) httpServletRequest.getAttribute("owner");
-        return ResponseEntity.ok(rolesService.getAllRolesByMovie(movieId, requestOwner));
+        return ResponseEntity.ok(rolesService.getAllRolesByMovie(movieId, requestOwner, page, pageSize));
     }
 
     @Override

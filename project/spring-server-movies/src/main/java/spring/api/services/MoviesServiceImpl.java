@@ -1,6 +1,7 @@
 package spring.api.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import spring.api.exceptions.BadRequestException;
@@ -35,9 +36,10 @@ public class MoviesServiceImpl implements MoviesService {
                 .buildAndExpand(movieEntity.getId()).toUri();
     }
 
-    public List<Movie> findMoviesByUser(String ownerId) throws NotFoundException {
+    @Override
+    public List<Movie> findMoviesByUser(String ownerId, int page, int pageSize) throws NotFoundException {
         List<Movie> movies = new ArrayList<>();
-        for (MovieEntity movieEntity : moviesRepository.findAll()) {
+        for (MovieEntity movieEntity : moviesRepository.findAll(PageRequest.of(page, pageSize))) {
             if(movieEntity.getOwnerId().equals(ownerId)) {
                 movies.add(dtoConverter.toMovie(movieEntity));
             }

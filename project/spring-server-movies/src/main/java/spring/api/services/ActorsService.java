@@ -21,10 +21,12 @@ public interface ActorsService {
     /**
      * Return all actors owned by user.
      * @param ownerId username of the owner
+     * @param page The number of the displayed page
+     * @param pageSize The number of items to be displayed on one page
      * @return the list of actors owned by user
      * @throws NotFoundException if no actors were for the user
      */
-    List<Actor> findActorsByUser(String ownerId) throws NotFoundException;
+    List<Actor> findActorsByUser(String ownerId, int page, int pageSize) throws NotFoundException;
 
     /**
      * Delete an actor owned by a user.

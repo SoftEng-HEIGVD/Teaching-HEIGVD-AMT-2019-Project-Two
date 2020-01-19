@@ -10,9 +10,9 @@ public interface RolesService {
 
     URI saveRole(Role role, String requestOwner) throws ApiException;
 
-    void deleteRole(Long roleId, String requestOwner) throws ApiException;
+    void deleteRole(Long actorId, Long movieId, String requestOwner) throws ApiException;
 
-    List<Role> getAllRolesByActor(Long actorId, String requestOwner) throws ApiException;
+    List<Role> getAllRolesByActor(Long actorId, String requestOwner, int page, int pageSize) throws ApiException;
 
-    List<Role> getAllRolesByMovie(Long movieId, String requestOwner) throws ApiException;
+    List<Role> getAllRolesByMovie(Long movieId, String requestOwner, int page, int pageSize) throws ApiException;
 }

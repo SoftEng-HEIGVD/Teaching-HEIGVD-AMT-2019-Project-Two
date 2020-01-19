@@ -1,6 +1,7 @@
 package spring.api.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import spring.api.exceptions.BadRequestException;
@@ -35,9 +36,10 @@ public class ActorsServiceImpl implements ActorsService {
                 .buildAndExpand(actorEntity.getId()).toUri();
     }
 
-    public List<Actor> findActorsByUser(String ownerId) throws NotFoundException {
+    @Override
+    public List<Actor> findActorsByUser(String ownerId, int page, int pageSize) throws NotFoundException {
         List<Actor> actors = new ArrayList<>();
-        for (ActorEntity actorEntity : actorsRepository.findAll()) {
+        for (ActorEntity actorEntity : actorsRepository.findAll(PageRequest.of(page, pageSize))) {
             if(actorEntity.getOwnerId().equals(ownerId)) {
                 actors.add(dtoConverter.toActor(actorEntity));
             }

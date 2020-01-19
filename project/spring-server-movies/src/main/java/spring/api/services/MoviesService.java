@@ -21,10 +21,12 @@ public interface MoviesService {
     /**
      * Return all movies owned by user.
      * @param ownerId username of the owner
+     * @param page The number of the displayed page
+     * @param pageSize The number of items to be displayed on one page
      * @return the list of movies owned by user
      * @throws NotFoundException if no movies were for the user
      */
-    List<Movie> findMoviesByUser(String ownerId) throws NotFoundException;
+    List<Movie> findMoviesByUser(String ownerId, int page, int pageSize) throws NotFoundException;
 
     /**
      * Delete a movie owned by a user.

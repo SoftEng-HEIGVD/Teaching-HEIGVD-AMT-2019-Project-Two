@@ -6,11 +6,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import spring.api.RolesApi;
 import spring.api.services.RolesService;
 import spring.model.Role;
+import spring.model.RoleIdentifier;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -35,9 +35,9 @@ public class RolesAPIController implements RolesApi {
     }
 
     @Override
-    public ResponseEntity<Void> deleteRole(@ApiParam(value = "ID of the role to delete",required=true) @PathVariable("roleId") Long roleId) throws Exception {
+    public ResponseEntity<Void> fireActor(@ApiParam(value = "id of the actor and the id of the movie of the role to delete" ,required=true )  @Valid @RequestBody RoleIdentifier roleId) throws Exception {
         String requestOwner = (String) httpServletRequest.getAttribute("owner");
-        rolesService.deleteRole(roleId, requestOwner);
+        rolesService.deleteRole(roleId.getActorId(), roleId.getMovieId(), requestOwner);
         return ResponseEntity.ok().build();
     }
 }

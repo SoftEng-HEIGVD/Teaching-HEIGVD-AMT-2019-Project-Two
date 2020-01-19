@@ -1,6 +1,7 @@
 package spring.api.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import spring.api.exceptions.ApiException;
@@ -63,12 +64,13 @@ public class RolesServiceImpl implements RolesService {
     }
 
     @Override
-    public void deleteRole(Long roleId, String requestOwner) throws ApiException {
-        RoleEntity roleEntity = roleRepository.findById(roleId)
-                .orElseThrow(() -> new NotFoundException("Could not find role with role id " + roleId));
+    public void deleteRole(Long actorId, Long movieId, String requestOwner) throws ApiException {
+        RoleEntity roleEntity = roleRepository.findByActorEntity_IdAndMovieEntity_Id(actorId, movieId)
+                .orElseThrow(() -> new NotFoundException("No role with actor id " + actorId
+                        + " and movie id " + movieId + " found"));
 
         if (roleEntity.getActorEntity().getOwnerId().equals(requestOwner)
-        && roleEntity.getMovieEntity().getOwnerId().equals(requestOwner)) {
+                && roleEntity.getMovieEntity().getOwnerId().equals(requestOwner)) {
             roleRepository.delete(roleEntity);
         } else {
             throw new ForbiddenException("Cannot delete a role you're not associated with");
@@ -76,7 +78,7 @@ public class RolesServiceImpl implements RolesService {
     }
 
     @Override
-    public List<Role> getAllRolesByActor(Long actorId, String requestOwner) throws ApiException {
+    public List<Role> getAllRolesByActor(Long actorId, String requestOwner, int page, int pageSize) throws ApiException {
         ActorEntity actorEntity = actorsRepository.findById(actorId)
                 .orElseThrow(() -> new NotFoundException("No actor with actor id" + actorId + " found"));
 
@@ -86,7 +88,7 @@ public class RolesServiceImpl implements RolesService {
 
         List<Role> rolesList = new ArrayList<>();
 
-        for (RoleEntity roleEntity: roleRepository.findByActorEntity_Id(actorId)) {
+        for (RoleEntity roleEntity: roleRepository.findByActorEntity_Id(actorId, PageRequest.of(page, pageSize))) {
             rolesList.add(dtoConverter.toRole(roleEntity));
         }
 
@@ -98,7 +100,7 @@ public class RolesServiceImpl implements RolesService {
     }
 
     @Override
-    public List<Role> getAllRolesByMovie(Long movieId, String requestOwner) throws ApiException {
+    public List<Role> getAllRolesByMovie(Long movieId, String requestOwner, int page, int pageSize) throws ApiException {
         MovieEntity movieEntity = moviesRepository.findById(movieId)
                 .orElseThrow(() -> new NotFoundException("No movie with movie id" + movieId + " found"));
 
@@ -108,7 +110,7 @@ public class RolesServiceImpl implements RolesService {
 
         List<Role> rolesList = new ArrayList<>();
 
-        for (RoleEntity roleEntity: roleRepository.findByMovieEntity_Id(movieId)) {
+        for (RoleEntity roleEntity: roleRepository.findByMovieEntity_Id(movieId, PageRequest.of(page, pageSize))) {
             rolesList.add(dtoConverter.toRole(roleEntity));
         }
 
