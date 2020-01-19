@@ -67,6 +67,24 @@ paths:
     parameters:
       - $ref: '#/parameters/token'
       - $ref: '#/parameters/idTrip'
+    get:
+      description: get a trip by this id
+      operationId: getTripById
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/TripDTO'
+        '401':
+          description: unauthorized
+        '403':
+          description: Forbiden
+        '404':
+          description: Not found
+
+
     delete:
       description: delete a trip
       operationId: deleteTrip

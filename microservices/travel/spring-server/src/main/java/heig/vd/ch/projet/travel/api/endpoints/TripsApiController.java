@@ -99,6 +99,33 @@ public class TripsApiController implements TripsApi {
     }
 
     @Override
+    public ResponseEntity<TripDTO> getTripById(@ApiParam(value = "" ,required=true) @RequestHeader(value="Authorization", required=true) String authorization,
+                                               @ApiParam(value = "idTrip" ,required=true) @PathVariable("idTrip") Integer idTrip) {
+        try {
+            DecodedToken decodedToken = (DecodedToken) request.getAttribute("decodedToken");
+
+            //Check if user exist. If not we create him
+            addUserIfNotExist(decodedToken.getEmail());
+
+            //Get the page of tripEntity
+            TripEntity tripEntity = tripRepository.findById(idTrip).get();
+
+            if(tripEntity.getEmail().equals(decodedToken.getEmail()) || decodedToken.getRole().equals("admin")){
+                TripDTO tripDTO = toTripDTO(tripEntity);
+
+                //Return an array of trip and an ok status (200)
+                return ResponseEntity.ok(tripDTO);
+            }else{
+                //Return an forbidden (403)
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+            }
+        }catch (IllegalArgumentException e){
+            //Return an bad request status (400)
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+    }
+
+    @Override
     public ResponseEntity<List<TripDTO>> getTrips(@ApiParam(value = "" ,required=true) @RequestHeader(value="Authorization", required=true) String authorization,
                                                   @ApiParam(value = "", defaultValue = "0") @Valid @RequestParam(value = "offset", required = false, defaultValue="0") Integer offset,
                                                   @ApiParam(value = "", defaultValue = "10") @Valid @RequestParam(value = "limit", required = false, defaultValue="10") Integer limit) {
@@ -121,7 +148,7 @@ public class TripsApiController implements TripsApi {
             //Return an array of trip and an ok status (200)
             return ResponseEntity.ok(tripDTOS);
         }catch (IllegalArgumentException e){
-            //Return an bad request status (403)
+            //Return an bad request status (400)
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }

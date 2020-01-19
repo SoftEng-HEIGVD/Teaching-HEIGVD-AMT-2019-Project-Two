@@ -114,7 +114,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.SpecificationTest">
+  <component name="RunManager" selected="Spring Boot.Execute with Spring Boot">
     <configuration default="true" type="DjangoTestsConfigurationType" factoryName="Django tests">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -599,7 +599,7 @@
       <workItem from="1579351206266" duration="16374000" />
       <workItem from="1579373842049" duration="3811000" />
       <workItem from="1579392196234" duration="3220000" />
-      <workItem from="1579423486381" duration="3869000" />
+      <workItem from="1579423486381" duration="5909000" />
     </task>
     <servers />
   </component>
@@ -643,7 +643,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/../spring-server/src/main/java/heig/vd/ch/projet/travel/api/endpoints/TripsApiController.java</url>
-          <line>138</line>
+          <line>165</line>
           <option name="timeStamp" value="24" />
         </line-breakpoint>
       </breakpoints>
