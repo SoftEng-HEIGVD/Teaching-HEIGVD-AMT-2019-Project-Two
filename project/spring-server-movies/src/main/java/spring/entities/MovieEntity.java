@@ -31,18 +31,6 @@ public class MovieEntity implements Serializable {
     @OnDelete(action = OnDeleteAction.CASCADE)
     Set<RoleEntity> roles;
 
-    /*@OneToMany(mappedBy = "movieEntity")
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    Set<RoleEntity> roles;*&
-
-    /*@ManyToMany
-    @JoinTable(
-            name = "role_entity",
-            joinColumns = @JoinColumn(name = "actor_id"),
-            inverseJoinColumns = @JoinColumn(name = "movie_id"))
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    private Set<ActorEntity> movieRoles;*/
-
     public void setRating(double rating) {
         if(rating < 0.0 || rating > 5.0) {
             throw new IllegalArgumentException("Rating must be between 0 and 5");

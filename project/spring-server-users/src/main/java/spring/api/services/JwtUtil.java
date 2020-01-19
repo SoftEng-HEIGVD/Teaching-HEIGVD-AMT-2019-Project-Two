@@ -22,7 +22,7 @@ public class JwtUtil {
     // Token expiry in one day
     private final static int TOKEN_DURATION = 86400000;
 
-    public String createToken(String username, boolean isAdmin) {
+    public String createToken(String username, boolean isAdmin, boolean isBlocked) {
         String token;
         try {
             Algorithm algorithm = Algorithm.HMAC256(JwtConfig.JWT_SHARED_SECRET.getBytes());
@@ -31,12 +31,29 @@ public class JwtUtil {
                     .withIssuer("Me")
                     .withSubject(username)
                     .withClaim("isAdmin", isAdmin)
+                    .withClaim("isBlocked", isBlocked)
                     .sign(algorithm);
             return token;
         } catch (JWTCreationException exception) {
             throw new Error("Could not generate JWT token");
         }
     }
+
+    public String createToken(String username) {
+        String token;
+        try {
+            Algorithm algorithm = Algorithm.HMAC256(JwtConfig.JWT_SHARED_SECRET.getBytes());
+            token = JWT.create()
+                    .withExpiresAt(new Date(System.currentTimeMillis() + TOKEN_DURATION))
+                    .withIssuer("Me")
+                    .withSubject(username)
+                    .sign(algorithm);
+            return token;
+        } catch (JWTCreationException exception) {
+            throw new Error("Could not generate JWT token");
+        }
+    }
+
 
     public DecodedJWT verifyToken(String token) throws JWTVerificationException {
         Algorithm algorithm = Algorithm.HMAC256(JwtConfig.JWT_SHARED_SECRET.getBytes());

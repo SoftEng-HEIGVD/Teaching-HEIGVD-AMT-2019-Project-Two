@@ -97,7 +97,7 @@ public class UserServiceImpl implements UserService {
 
         // Check password
         if (authenticationService.checkPassword(user.getPassword(), userEntity.getPassword())) {
-            String tokenString = jwtUtil.createToken(userEntity.getUsername(), userEntity.isAdmin());
+            String tokenString = jwtUtil.createToken(userEntity.getUsername(), userEntity.isAdmin(), userEntity.isBlocked());
             JwtToken token = new JwtToken();
             token.setToken(tokenString);
             return token;
@@ -124,6 +124,28 @@ public class UserServiceImpl implements UserService {
         userEntity.setFirstName(profileUpdate.getFirstName());
         userEntity.setLastName(profileUpdate.getLastName());
         userRepository.save(userEntity);
+    }
+
+    @Override
+    public void updateUserBlockedStatus(String username, boolean blocked) throws NotFoundException, BadRequestException {
+        UserEntity userEntity = userRepository.findById(username)
+                .orElseThrow(() -> new NotFoundException(buildNotFoundExceptionMessage(username)));
+
+        if (userEntity.isBlocked()) {
+            if (blocked) {
+                throw new BadRequestException("User " + username + " is already blocked");
+            } else {
+                userEntity.setBlocked(false);
+                userRepository.save(userEntity);
+            }
+        } else {
+            if (blocked) {
+                userEntity.setBlocked(true);
+                userRepository.save(userEntity);
+            } else {
+                throw new BadRequestException("User " + username + " is not blocked");
+            }
+        }
     }
 
     private void setPassword(UserEntity userEntity, String password) throws BadRequestException {

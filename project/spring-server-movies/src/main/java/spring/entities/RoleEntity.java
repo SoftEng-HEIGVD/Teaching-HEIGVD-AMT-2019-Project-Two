@@ -23,19 +23,6 @@ public class RoleEntity {
     @JoinColumn(name = "movie_id")
     private MovieEntity movieEntity;
 
-    /*@EmbeddedId
-    RoleKey id;*/
-
-    /*@ManyToOne
-    @MapsId("movieId")
-    @JoinColumn(name = "movie_id")
-    MovieEntity movieEntity;
-
-    @ManyToOne
-    @MapsId("actorId")
-    @JoinColumn(name = "actor_id")
-    ActorEntity actorEntity;*/
-
     String roleName;
     int awards;
     boolean awarded;

@@ -1,6 +1,5 @@
 package spring.api.endpoints.exceptionhandler;
 
-import io.swagger.annotations.Api;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
@@ -10,6 +9,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import spring.api.exceptions.AuthenticationException;
 import spring.api.exceptions.BadRequestException;
+import spring.api.exceptions.ForbiddenException;
 import spring.api.exceptions.NotFoundException;
 import spring.api.util.ApiError;
 
@@ -56,4 +56,14 @@ public class UserRestExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(apiError, apiError.getStatus());
     }
 
+    /**
+     * Handles Forbidden exception.
+     * @param ex the exception
+     * @return the response entity with FORBIDDEN status code
+     */
+    @ExceptionHandler(ForbiddenException.class)
+    protected ResponseEntity<Object> handleForbiddenException(ForbiddenException ex) {
+        ApiError apiError = new ApiError(HttpStatus.FORBIDDEN, ex.getMessage());
+        return new ResponseEntity<>(apiError, apiError.getStatus());
+    }
 }

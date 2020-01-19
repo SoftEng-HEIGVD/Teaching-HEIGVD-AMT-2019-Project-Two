@@ -1,6 +1,7 @@
 package spring.api.endpoints.interceptors;
 
 import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import spring.api.exceptions.AuthenticationException;
+import spring.api.exceptions.ForbiddenException;
 import spring.api.services.JwtUtil;
 
 import javax.servlet.http.HttpServletRequest;
@@ -33,6 +35,14 @@ public class JwtInterceptor extends HandlerInterceptorAdapter {
             DecodedJWT decodedJWT = jwtUtil.verifyToken(jwtUtil.extractToken(authorization));
             // Set attribute owner for the controllers to handle authorization
             request.setAttribute("owner", decodedJWT.getSubject());
+
+            // reroute blocked users to prevent them from doing operations
+            Claim isBlocked = decodedJWT.getClaim("isBlocked");
+
+            if (isBlocked.asBoolean()) {
+                throw new ForbiddenException("Not authorized: Your account has been blocked. Please contact System Administrator");
+            }
+
         } catch (JWTVerificationException e) {
             throw new AuthenticationException("Not Authenticated: invalid token, " + e.getMessage());
         }

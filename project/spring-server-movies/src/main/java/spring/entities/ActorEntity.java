@@ -26,14 +26,6 @@ public class ActorEntity implements Serializable {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<RoleEntity> roles;
 
-    /*@OneToMany(mappedBy = "actorEntity")
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    Set<RoleEntity> roles;*/
-
-    /*@ManyToMany(mappedBy = "movieRoles")
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    private Set<MovieEntity> actorRoles;*/
-
     /**
      * TV, film or theater actor
      */

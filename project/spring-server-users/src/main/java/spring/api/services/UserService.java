@@ -78,4 +78,13 @@ public interface UserService {
      * Method to create a test user in the db.
      */
     void makeTestUser();
+
+    /**
+     * Updates the user block status.
+     * @param username username of the user
+     * @param blocked boolean to indicate whether he should be blocked or not
+     * @throws NotFoundException if user was not found
+     * @throws BadRequestException if trying to block an already blocked user or vice versa
+     */
+    void updateUserBlockedStatus(String username, boolean blocked) throws NotFoundException, BadRequestException;
 }

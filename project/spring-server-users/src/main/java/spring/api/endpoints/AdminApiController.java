@@ -16,6 +16,7 @@ import spring.model.User;
 import javax.validation.Valid;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.net.URI;
 import java.util.List;
 
@@ -62,5 +63,11 @@ public class AdminApiController implements AdminApi {
         //Optional<UserEntity> userEntity = userRepository.findById(username);
         //return userEntity.<ResponseEntity<Object>>map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
         return ResponseEntity.ok(userService.getUserById(username));
+    }
+
+    @Override
+    public ResponseEntity<Void> updateUserBlockedStatus(@ApiParam(value = "The username of the user to be fetched.",required=true) @PathVariable("username") String username,@NotNull @ApiParam(value = "boolean describing whether user should be blocked or not.", required = true) @Valid @RequestParam(value = "blocked", required = true) Boolean blocked) throws Exception {
+        userService.updateUserBlockedStatus(username, blocked);
+        return ResponseEntity.ok().build();
     }
 }
