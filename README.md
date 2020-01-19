@@ -90,7 +90,16 @@ In the second API who manages authentication, we have an extanded full user tabl
 
 ### Implementation
 
-Todo
+Let's dive into the implementation
+
+![implementation](./report-img/implementation.jpg)
+
+* Api
+  * Endpoints: Controllers that define ours HTTP Routes.
+  * Interceptor: We use an interceptor to intercept an incoming HTTP Request, check the Authorization header for a correct token.
+  * Service: A few utils that allow us to create JWT tokens as well as verifying it. Authenticate service is about hashing the password (using BCrypt). 
+* Entities : Here we have our JPA Entities. Simple POJOs that are managed by the Entity Manager
+* Repositories: The repositories, used as an abstraction layer over the DB. 
 
 ## Testing strategy
 
