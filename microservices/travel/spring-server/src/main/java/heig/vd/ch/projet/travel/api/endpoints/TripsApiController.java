@@ -55,7 +55,7 @@ public class TripsApiController implements TripsApi {
     HttpServletRequest request;
 
     @Override
-    public ResponseEntity<Void> createTrip(@ApiParam(value = "" ,required=true) @RequestHeader(value="Authorization", required=true) String authorization,
+    public ResponseEntity<TripDTO> createTrip(@ApiParam(value = "" ,required=true) @RequestHeader(value="Authorization", required=true) String authorization,
                                            @ApiParam(value = "", required = true) @Valid @RequestBody Trip trip) {
         DecodedToken decodedToken = (DecodedToken) request.getAttribute("decodedToken");
 
@@ -68,8 +68,10 @@ public class TripsApiController implements TripsApi {
         //Save the trip
         tripRepository.save(tripEntity);
 
+        TripDTO tripDTO = toTripDTO(tripEntity);
+
         //Return a created status (201)
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        return ResponseEntity.status(HttpStatus.CREATED).body(tripDTO);
     }
 
     @Override

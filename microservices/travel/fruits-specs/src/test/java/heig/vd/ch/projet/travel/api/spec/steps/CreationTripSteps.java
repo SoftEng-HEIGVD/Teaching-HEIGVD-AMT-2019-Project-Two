@@ -74,4 +74,7 @@ public class CreationTripSteps {
         assertEquals(code, environment.getLastStatusCode());
     }
 
+    @Then("^I added successfully a trip$")
+    public void i_added_successfully_a_trip() {
+    }
 }

@@ -548,7 +548,7 @@
             <path>
               <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
               <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@9c9ece1c" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@1af35cec" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@e326adcb" type="7427dc5b:ServiceModel$ServiceGroupNode" />
             </path>
           </expand>
           <select />
@@ -599,7 +599,7 @@
       <workItem from="1579351206266" duration="16374000" />
       <workItem from="1579373842049" duration="3811000" />
       <workItem from="1579392196234" duration="3220000" />
-      <workItem from="1579423486381" duration="5909000" />
+      <workItem from="1579423486381" duration="8888000" />
     </task>
     <servers />
   </component>
@@ -643,8 +643,13 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/../spring-server/src/main/java/heig/vd/ch/projet/travel/api/endpoints/TripsApiController.java</url>
-          <line>165</line>
+          <line>167</line>
           <option name="timeStamp" value="24" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/../spring-server/src/main/java/heig/vd/ch/projet/travel/api/endpoints/TripsApiController.java</url>
+          <line>73</line>
+          <option name="timeStamp" value="32" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
