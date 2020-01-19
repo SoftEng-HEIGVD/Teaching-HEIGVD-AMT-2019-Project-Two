@@ -21,8 +21,6 @@ public class GetCountriesSteps {
     private Environment environment;
     private DefaultApi api;
 
-    Trip trip;
-
     public GetCountriesSteps(Environment environment) {
         this.environment = environment;
         this.api = environment.getApi();

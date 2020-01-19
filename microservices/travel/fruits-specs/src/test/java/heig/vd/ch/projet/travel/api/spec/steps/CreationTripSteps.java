@@ -21,9 +21,6 @@ public class CreationTripSteps {
     private Environment environment;
     private DefaultApi api;
 
-    String token = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQGFkbWluLmNoIn0.elXPVmY4-sfOn6Qk4mFt85_gOvMjVrm02FDeAFfp3xU";
-
-
     public CreationTripSteps(Environment environment) {
         this.environment = environment;
         this.api = environment.getApi();
@@ -57,7 +54,7 @@ public class CreationTripSteps {
     @When("^I POST it to the /trips endpoint$")
     public void i_POST_it_to_the_users_endpoint() throws Throwable {
         try {
-            environment.setLastApiResponse(api.createTripWithHttpInfo(token,environment.getTrip()));
+            environment.setLastApiResponse(api.createTripWithHttpInfo(environment.getToken(),environment.getTrip()));
             environment.setLastApiCallThrewException(false);
             environment.setLastApiException(null);
             environment.setLastStatusCode(environment.getLastApiResponse().getStatusCode());

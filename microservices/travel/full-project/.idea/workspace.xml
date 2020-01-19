@@ -78,10 +78,6 @@
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\Mon pc\Dropbox\HEIG-VD\Semestre 5\AMT\Labo\Teaching-HEIGVD-AMT-2019-Project-Two\microservices\travel\fruits-specs\src\test\resources\scenarios\trips" />
-      <recent name="C:\Users\Mon pc\Dropbox\HEIG-VD\Semestre 5\AMT\Labo\Teaching-HEIGVD-AMT-2019-Project-Two\microservices\travel\fruits-specs\src\test\resources\scenarios" />
-    </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="heig.vd.ch.projet.auth.api" />
       <recent name="io.avalia.fruits.api.exceptions" />
@@ -89,12 +85,16 @@
       <recent name="io.avalia.fruits.api.endpoints" />
       <recent name="io.avalia.fruits" />
     </key>
-    <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="heig.vd.ch.projet.travel.api.spec.steps" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Mon pc\Dropbox\HEIG-VD\Semestre 5\AMT\Labo\Teaching-HEIGVD-AMT-2019-Project-Two\microservices\travel\fruits-specs\src\test\resources\scenarios" />
       <recent name="$PROJECT_DIR$/../spring-server/src/main/resources" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="heig.vd.ch.projet.travel.api.spec.steps" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Mon pc\Dropbox\HEIG-VD\Semestre 5\AMT\Labo\Teaching-HEIGVD-AMT-2019-Project-Two\microservices\travel\fruits-specs\src\test\resources\scenarios\trips" />
+      <recent name="C:\Users\Mon pc\Dropbox\HEIG-VD\Semestre 5\AMT\Labo\Teaching-HEIGVD-AMT-2019-Project-Two\microservices\travel\fruits-specs\src\test\resources\scenarios" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -599,7 +599,7 @@
       <workItem from="1579351206266" duration="16374000" />
       <workItem from="1579373842049" duration="3811000" />
       <workItem from="1579392196234" duration="3220000" />
-      <workItem from="1579423486381" duration="9525000" />
+      <workItem from="1579423486381" duration="13886000" />
     </task>
     <servers />
   </component>
@@ -643,7 +643,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/../spring-server/src/main/java/heig/vd/ch/projet/travel/api/endpoints/TripsApiController.java</url>
-          <line>167</line>
+          <line>170</line>
           <option name="timeStamp" value="24" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">

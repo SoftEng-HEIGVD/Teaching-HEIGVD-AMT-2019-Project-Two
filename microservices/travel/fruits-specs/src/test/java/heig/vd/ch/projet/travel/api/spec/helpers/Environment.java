@@ -21,6 +21,7 @@ public class Environment {
     private int lastStatusCode;
 
     Trip trip;
+    String token;
 
     public Environment() throws IOException {
         Properties properties = new Properties();
@@ -72,5 +73,13 @@ public class Environment {
 
     public void setTrip(Trip trip) {
         this.trip = trip;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public String getToken() {
+        return token;
     }
 }

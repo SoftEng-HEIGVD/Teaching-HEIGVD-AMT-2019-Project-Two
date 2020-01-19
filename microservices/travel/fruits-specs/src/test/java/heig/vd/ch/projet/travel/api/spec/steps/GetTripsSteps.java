@@ -1,35 +1,28 @@
 package heig.vd.ch.projet.travel.api.spec.steps;
 
 import cucumber.api.java.en.Given;
-import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import heig.vd.ch.projet.travel.ApiException;
 import heig.vd.ch.projet.travel.api.DefaultApi;
-import heig.vd.ch.projet.travel.api.dto.Country;
-import heig.vd.ch.projet.travel.api.dto.Reason;
-import heig.vd.ch.projet.travel.api.dto.Trip;
 import heig.vd.ch.projet.travel.api.spec.helpers.Environment;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
 /**
  * Created by Olivier Liechti on 27/07/17.
  */
-public class updateTripSteps {
+public class GetTripsSteps {
 
     private Environment environment;
     private DefaultApi api;
 
-    public updateTripSteps(Environment environment) {
+    public GetTripsSteps(Environment environment) {
         this.environment = environment;
         this.api = environment.getApi();
     }
 
-    @When("^I PATCH it to the /trips/(\\d+) endpoint$")
-    public void i_POST_it_to_the_users_endpoint(Integer idTrip) throws Throwable {
+    @When("^I GET it to the /trips endpoint with offset (\\d+) and limit (\\d+)$")
+    public void i_get_it_to_the_trips_endpoint(Integer offset, Integer limit) throws Throwable {
         try {
-            environment.setLastApiResponse(api.updateTripWithHttpInfo(environment.getToken(),idTrip,environment.getTrip()));
+            environment.setLastApiResponse(api.getTripsWithHttpInfo(environment.getToken(),offset,limit));
             environment.setLastApiCallThrewException(false);
             environment.setLastApiException(null);
             environment.setLastStatusCode(environment.getLastApiResponse().getStatusCode());
@@ -39,5 +32,6 @@ public class updateTripSteps {
             environment.setLastApiException(e);
             environment.setLastStatusCode(environment.getLastApiException().getCode());
         }
+
     }
 }

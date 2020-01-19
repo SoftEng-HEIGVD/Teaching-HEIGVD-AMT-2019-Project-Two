@@ -124,6 +124,9 @@ public class TripsApiController implements TripsApi {
         }catch (IllegalArgumentException e){
             //Return an bad request status (400)
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }catch (NoSuchElementException e){
+            //Return an not found (404)
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
 

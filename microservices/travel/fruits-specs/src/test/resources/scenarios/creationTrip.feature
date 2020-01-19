@@ -5,10 +5,12 @@ Feature: Creation of trips
 
   Scenario: create a trips
     Given I have a trip payload
+    Given I have a admin token
     When I POST it to the /trips endpoint
     Then I receive a 201 status code
 
   Scenario: create a trips
     Given I have a trip payload
+    Given I have a admin token
     When I POST it to the /trips endpoint
     Then I added successfully a trip
