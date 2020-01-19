@@ -7,5 +7,5 @@ Authors : Robel Teklehaimanot & Nair Alic
 Here is the list of the known bugs and limitations of our application.
 
 - Exceptions management
-- Update password in user API missing
+- Update password in user API is working, but we can change password for anyone. need to be updated.
 - Pagination
