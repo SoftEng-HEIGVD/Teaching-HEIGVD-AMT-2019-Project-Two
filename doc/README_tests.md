@@ -12,6 +12,8 @@ We had the time to make only few Cucumber test..
 
 Here you have an output :
 
+[]!(./img/userCucumber.png)
+
 
 
 ### Performance and load tests
