@@ -1,11 +1,11 @@
 package ch.heigvd.amt.users.api.spec.steps;
 
-import ch.heigvd.amt.users.api.ApiException;
+import ch.heigvd.amt.users.ApiException;
 import ch.heigvd.amt.users.api.DefaultApi;
 import ch.heigvd.amt.users.ApiResponse;
 import ch.heigvd.amt.users.api.DefaultApi;
-import ch.heigvd.amt.users.api.model.InlineObject;
-import ch.heigvd.amt.users.api.model.User;
+import ch.heigvd.amt.users.api.dto.InlineObject;
+import ch.heigvd.amt.users.api.dto.User;
 import ch.heigvd.amt.users.api.spec.helpers.Environment;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -13,15 +13,13 @@ import cucumber.api.java.en.When;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import javax.crypto.spec.SecretKeySpec;
 import javax.xml.bind.DatatypeConverter;
 import java.security.Key;
 import java.util.Date;
 
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
 /**
  * Created by Olivier Liechti on 27/07/17.
@@ -114,6 +112,7 @@ public class UsersSteps {
             environment.setLastStatusCode(environment.getApiException().getCode());
         }
     }
+
 
 
 }

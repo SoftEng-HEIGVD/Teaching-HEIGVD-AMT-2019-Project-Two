@@ -2,7 +2,7 @@ package ch.heigvd.amt.users.api.spec.helpers;
 
 import ch.heigvd.amt.users.api.DefaultApi;
 import ch.heigvd.amt.users.ApiResponse;
-import ch.heigvd.amt.users.ApiResponse;
+import ch.heigvd.amt.users.ApiException;
 
 import java.io.IOException;
 import java.util.Properties;

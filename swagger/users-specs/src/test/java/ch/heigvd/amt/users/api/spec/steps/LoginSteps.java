@@ -1,11 +1,12 @@
 package ch.heigvd.amt.users.api.spec.steps;
 
 import ch.heigvd.amt.users.api.dto.UserLogin;
-import ch.heigvd.amt.users.api.ApiException;
 import ch.heigvd.amt.users.api.dto.UserLogin;
 import ch.heigvd.amt.users.api.spec.helpers.Environment;
 import ch.heigvd.amt.users.api.DefaultApi;
-import ch.heigvd.amt.users.api.ApiException;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import ch.heigvd.amt.users.ApiException;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -20,11 +21,6 @@ public class LoginSteps {
     public LoginSteps(Environment environment){
         this.environment = environment;
         this.api = environment.getApi();
-    }
-
-    @Given("^there is an login server$")
-    public void there_is_an_login_server() throws Throwable {
-        assertNotNull(api);
     }
 
     @Given("^I have a credential payload$")
@@ -63,10 +59,6 @@ public class LoginSteps {
         userLogin.setPassword("wrong");
     }
 
-    @Then("^I receive a (\\d+) status code$")
-    public void i_receive_a_status_code(int arg1) throws Throwable {
-        assertEquals(arg1, environment.getLastStatusCode());
-    }
 
 
 
