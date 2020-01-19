@@ -64,4 +64,10 @@ public class UserApiController implements UserApi {
         userService.updateProfile(username, profileUpdate);
         return ResponseEntity.ok().build();
     }
+
+    @Override
+    public ResponseEntity<Object> getUserProfile() throws Exception {
+        String username = (String) httpServletRequest.getAttribute("owner");
+        return ResponseEntity.ok(userService.getUserById(username));
+    }
 }

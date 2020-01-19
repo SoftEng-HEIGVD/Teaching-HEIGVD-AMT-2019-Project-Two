@@ -92,7 +92,27 @@ paths:
         '400':
           description: Bad Request
 
-  /profileUpdates:
+  /profiles:
+    get:
+      tags:
+        - user
+      security:
+        - Jwt: []
+      summary: Get user profile.
+      description: Get the user profile info.
+      operationId: getUserProfile
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: success
+          schema:
+            type: object
+            items:
+              $ref: '#/definitions/User'
+        '401':
+          description: not authenticated
+
     put:
       tags:
         - user
