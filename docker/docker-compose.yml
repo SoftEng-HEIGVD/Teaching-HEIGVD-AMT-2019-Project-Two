@@ -1,6 +1,18 @@
 version: '3.7'
 
 services:
+  reverse-proxy:
+    image: traefik:v2.1.2
+    command: --api.insecure=true --providers.docker --providers.docker.exposedbydefault=false
+
+    ports:
+      # The HTTP port
+      - 80:80
+      # The Web UI (enabled by --api.insecure=true)
+      - 2020:8080
+    volumes:
+      # So that Traefik can listen to the Docker events
+      - /var/run/docker.sock:/var/run/docker.sock
   db:
     build: docker-images/db
     command: --default-authentication-plugin=mysql_native_password
@@ -14,12 +26,17 @@ services:
   filmapp:
     build: docker-images/backend-movies
     ports:
-      - 8080:8080
+      - 8081:8081
     depends_on:
       - "db"
     environment:
       DB_HOST: db
       # SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/db_rest_api?useSSL=false
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.app-router.rule=Host(`localhost`) && PathPrefix(`/api-movies`)"
+      - "traefik.http.middlewares.strip-app-router.stripprefix.prefixes=/api-movies"
+      - "traefik.http.routers.app-router.middlewares=strip-app-router"
     command: ["./wait-for-it.sh", "db:3306", "--", "java", "-jar", "/opt/app/server-movies.jar"]
 
   userapp:
@@ -31,6 +48,11 @@ services:
     environment:
       DB_HOST: db
       # SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/db_rest_api?useSSL=false
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.auth-router.rule=Host(`localhost`) && PathPrefix(`/api-auth`)"
+      - "traefik.http.middlewares.strip-auth-router.stripprefix.prefixes=/api-auth"
+      - "traefik.http.routers.auth-router.middlewares=strip-auth-router"
     command: ["./wait-for-it.sh", "db:3306", "--", "java", "-jar", "/opt/app/server-users.jar"]
 
   phpmyadmin:

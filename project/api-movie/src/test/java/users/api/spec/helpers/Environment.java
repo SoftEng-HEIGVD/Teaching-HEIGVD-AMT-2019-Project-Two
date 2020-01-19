@@ -5,9 +5,11 @@ import movies.ApiResponse;
 import movies.api.ActorsApi;
 import movies.api.MoviesApi;
 import movies.api.RolesApi;
+import movies.api.dto.Movie;
 import okhttp3.OkHttpClient;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Properties;
 
 public class Environment {
@@ -24,6 +26,8 @@ public class Environment {
 
     private String testUserOwner = "ownerUser";
     private String lastToken;
+
+    private Movie testMovie;
 
     public Environment() throws IOException {
         Properties properties = new Properties();
@@ -91,5 +95,19 @@ public class Environment {
 
     public void setLastToken(String lastToken) {
         this.lastToken = lastToken;
+    }
+
+    public Movie getMovie() {
+        return testMovie;
+    }
+
+    public void setTestMovie(Movie testMovie) {
+        this.testMovie = testMovie;
+    }
+
+    public Long retrieveLastCreatedResourceId() {
+        List<String> result = (List<String>) this.lastApiResponse.getHeaders().get("location");
+        String location = result.get(0);
+        return Long.parseLong(location.substring(location.length()-1));
     }
 }

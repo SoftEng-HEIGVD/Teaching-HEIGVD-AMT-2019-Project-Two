@@ -29,8 +29,6 @@ public class CreationSteps {
     private OkHttpClient client;
     private Gson gson;
 
-    Movie movie;
-
     public CreationSteps(Environment environment) {
         this.environment = environment;
         this.moviesApi = this.environment.getMoviesApi();
@@ -63,14 +61,14 @@ public class CreationSteps {
 
     @Given("^I have a valid movie payload$")
     public void iHaveAMoviePayload() {
-        this.movie = new Movie();
-        this.movie.setTitle("The Movie");
+        this.environment.setTestMovie(new Movie());
+        this.environment.getMovie().setTitle("The Movie");
     }
 
     @When("^I POST it to the /movies endpoint$")
     public void iPOSTItToTheMoviesEndpoint() {
         try {
-            this.environment.setLastApiResponse(this.moviesApi.createMovieWithHttpInfo(this.movie));
+            this.environment.setLastApiResponse(this.moviesApi.createMovieWithHttpInfo(this.environment.getMovie()));
             this.environment.setLastApiCallThrewException(false);
             this.environment.setLastApiException(null);
             this.environment.setLastStatusCode(this.environment.getLastApiResponse().getStatusCode());

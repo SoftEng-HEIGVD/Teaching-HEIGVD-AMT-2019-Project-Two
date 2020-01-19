@@ -30,3 +30,4 @@ Why not Spring data REST
 *how to use swagger security schemes (in the code generated)
 
 We disabled Unresolved database references in annotations inspection in preferences (settings)
+Had to stop Apache https://askubuntu.com/questions/1074035/how-can-i-stop-apache2-on-ubuntu-18-04
