@@ -3,6 +3,7 @@ package heig.vd.ch.projet.travel.api.spec.helpers;
 import heig.vd.ch.projet.travel.ApiException;
 import heig.vd.ch.projet.travel.ApiResponse;
 import heig.vd.ch.projet.travel.api.DefaultApi;
+import heig.vd.ch.projet.travel.api.dto.Trip;
 
 import java.io.IOException;
 import java.util.Properties;
@@ -18,6 +19,8 @@ public class Environment {
     private ApiException lastApiException;
     private boolean lastApiCallThrewException;
     private int lastStatusCode;
+
+    Trip trip;
 
     public Environment() throws IOException {
         Properties properties = new Properties();
@@ -61,5 +64,13 @@ public class Environment {
 
     public void setLastStatusCode(int lastStatusCode) {
         this.lastStatusCode = lastStatusCode;
+    }
+
+    public Trip getTrip() {
+        return trip;
+    }
+
+    public void setTrip(Trip trip) {
+        this.trip = trip;
     }
 }

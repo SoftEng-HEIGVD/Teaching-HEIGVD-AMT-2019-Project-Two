@@ -70,7 +70,7 @@
     <property name="WebServerToolWindowFactoryState" value="true" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="dynamic.classpath" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../fruits-specs/src/test/resources/scenarios" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -79,8 +79,8 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\Mon pc\Dropbox\HEIG-VD\Semestre 5\AMT\Labo\Teaching-HEIGVD-AMT-2019-Project-Two\microservices\travel\fruits-specs\src\test\resources\scenarios" />
       <recent name="C:\Users\Mon pc\Dropbox\HEIG-VD\Semestre 5\AMT\Labo\Teaching-HEIGVD-AMT-2019-Project-Two\microservices\travel\fruits-specs\src\test\resources\scenarios\trips" />
+      <recent name="C:\Users\Mon pc\Dropbox\HEIG-VD\Semestre 5\AMT\Labo\Teaching-HEIGVD-AMT-2019-Project-Two\microservices\travel\fruits-specs\src\test\resources\scenarios" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="heig.vd.ch.projet.auth.api" />
@@ -89,7 +89,11 @@
       <recent name="io.avalia.fruits.api.endpoints" />
       <recent name="io.avalia.fruits" />
     </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="heig.vd.ch.projet.travel.api.spec.steps" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Mon pc\Dropbox\HEIG-VD\Semestre 5\AMT\Labo\Teaching-HEIGVD-AMT-2019-Project-Two\microservices\travel\fruits-specs\src\test\resources\scenarios" />
       <recent name="$PROJECT_DIR$/../spring-server/src/main/resources" />
     </key>
   </component>
@@ -539,12 +543,12 @@
           <expand>
             <path>
               <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@cd87f314" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@9c9ece1c" type="7427dc5b:ServiceModel$ServiceGroupNode" />
             </path>
             <path>
               <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@cd87f314" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@bdbdfc88" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@9c9ece1c" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@1af35cec" type="7427dc5b:ServiceModel$ServiceGroupNode" />
             </path>
           </expand>
           <select />
@@ -593,7 +597,9 @@
       <workItem from="1579170611190" duration="2191000" />
       <workItem from="1579247674036" duration="1437000" />
       <workItem from="1579351206266" duration="16374000" />
-      <workItem from="1579373842049" duration="2178000" />
+      <workItem from="1579373842049" duration="3811000" />
+      <workItem from="1579392196234" duration="3220000" />
+      <workItem from="1579423486381" duration="3869000" />
     </task>
     <servers />
   </component>
