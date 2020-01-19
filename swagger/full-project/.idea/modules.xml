@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/../userManagement-server/userManagement-spring.iml" filepath="$PROJECT_DIR$/../userManagement-server/userManagement-spring.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../videogames-server/videgame-spring.iml" filepath="$PROJECT_DIR$/../videogames-server/videgame-spring.iml" />
       <module fileurl="file://$PROJECT_DIR$/../videogames-server/videogames-spring.iml" filepath="$PROJECT_DIR$/../videogames-server/videogames-spring.iml" />
       <module fileurl="file://$PROJECT_DIR$/../videogames-specs/videogamesSpecification.iml" filepath="$PROJECT_DIR$/../videogames-specs/videogamesSpecification.iml" />
     </modules>
