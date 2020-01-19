@@ -13,11 +13,17 @@ The objectives of this project was to design, specify, implement and validate **
 
 #### What we have implemented
 
+We have implemented 2 APIs. One is managing the users and the second one we can manage our products (videogames store). In the user API, there are 2 types of user. Admin and normal user. Admin user can manage all the other users.
 
+The second API a user can manage videogames to his store.
+
+Our APIs are running in Docker containers, to start them check the link on how to do below. We also used Traefik as a dynamic reverse-proxy. Our databases are running on MySQL.
+
+Some BDD tests are made using CucumberJVM, check below links.
 
 #### How we have implemented
 
-
+We have first of all used Swagger-Editor to have a high-level view of our APIs (from a specification). It's top-down methodology as seen in the course. So we started with an already generated skeleton of code. Then we updated the skeleton classes as we needed. We implemented the JWT token for the user authentication.
 
 ## Links
 

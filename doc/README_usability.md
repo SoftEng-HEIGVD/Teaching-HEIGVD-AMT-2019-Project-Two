@@ -4,7 +4,7 @@ Authors : Robel Teklehaimanot & Nair Alic
 
 ## Objectives
 
-Here we explain how to use the api..
+Here we explain how to use the api.
 
 ### Login - Authentication 
 
