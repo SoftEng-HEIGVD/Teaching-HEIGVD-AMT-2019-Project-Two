@@ -22,7 +22,7 @@ Then you should get a token, click on authorize and paste your token to login :
 
 ![](./img/autorize.png)
 
-After that you should be able to do all the other GET/POST/DELETE (only ADMIN)
+After that you should be able to do all the other GET/POST/UPDATE/DELETE (only ADMIN for managing other users)
 
 ![](./img/okAutorize.png)
 

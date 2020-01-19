@@ -8,6 +8,10 @@ Here we explain the tests we've made. We did different tests, below each tests a
 
 ### Cucumber BDD tests
 
+Here we have one test working :
+
+![](./img/cucumberTest.png)
+
 
 
 ### Performance and load tests

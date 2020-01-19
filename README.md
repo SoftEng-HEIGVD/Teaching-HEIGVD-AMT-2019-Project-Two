@@ -23,7 +23,9 @@ Some BDD tests are made using CucumberJVM, check below links.
 
 #### How we have implemented
 
-We have first of all used Swagger-Editor to have a high-level view of our APIs (from a specification). It's top-down methodology as seen in the course. So we started with an already generated skeleton of code. Then we updated the skeleton classes as we needed. We implemented the JWT token for the user authentication.
+We have first of all used Swagger-Editor to have a high-level view of our APIs (from a specification). It's top-down methodology as seen in the course. So we started with an already generated skeleton of code. Then we updated the skeleton classes as we needed. We implemented the JWT token for the user authentication. We used Interceptor in order to check if a user is logged, an admin, etc. Very useful.
+
+A user can only see his videogames. An admin can manage all other users.
 
 ## Links
 
