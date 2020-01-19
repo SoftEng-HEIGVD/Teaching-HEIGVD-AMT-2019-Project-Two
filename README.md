@@ -100,7 +100,7 @@ Let's dive into the implementation
 
 ![implementation](./report-img/implementation.jpg)
 
-* Api
+* Api/
   * Endpoints: Controllers that define ours HTTP Routes.
   * Interceptor: We use an interceptor to intercept an incoming HTTP Request, check the Authorization header for a correct token.
   * Service: A few utils that allow us to create JWT tokens as well as verifying it. Authenticate service is about hashing the password (using BCrypt). 
@@ -108,6 +108,28 @@ Let's dive into the implementation
 * Repositories: The repositories, used as an abstraction layer over the DB. 
 
 ## Testing strategy
+
+### Running tests
+
+To launch tests, we made some scripts to make life easier.
+
+You'll need first to go to the scripts folder, and then start everything with the following:
+
+```bash
+cd scripts
+./start-travel.sh <your-docker-host> 
+# for example localhost or 192.168.99.100
+```
+
+As soon as the spring server is running, you'll be able to run tests, in a separate shell, with:
+
+```
+./test-travel.sh
+```
+
+And that's it. For the second API we have a similar procedure with two scripts: `start-auth.sh` and `test-auth.sh`
+
+> Note: we pass the env variables directly in the commands here. If you need to, you can change them
 
 ### Cucumber tests
 
